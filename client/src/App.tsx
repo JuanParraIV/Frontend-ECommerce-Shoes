@@ -1,19 +1,17 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
+import { Route, BrowserRouter, Routes } from 'react-router-dom'
 import './App.css'
-import Home from './Components/Home/Home';
-import ContenedorHome from './Components/Home/style';
+import HomePage from './Pages/Home/HomePage';
+
 function App() {
 
   return (
-    <ContenedorHome>
-      <Home
-        name='Mario'
-        apellido='ParrAAa'
-        edad={29}
-      />
-    </ContenedorHome>
-
+    <BrowserRouter>
+    <Routes>
+      <Route path='/home' element={<HomePage />}/>
+    </Routes>
+    </BrowserRouter>
   );
 }
 
