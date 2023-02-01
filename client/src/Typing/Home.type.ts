@@ -3,3 +3,4 @@ export interface Props {
   apellido:string,
   edad:number
 }
+

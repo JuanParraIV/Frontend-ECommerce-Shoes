@@ -5,7 +5,9 @@ type Props = {}
 
 const HomeContainer = (props: Props) => {
   return (
+
     <ContenedorHome>
+      {/* NavBar */}
       <Home
         name='Mario'
         apellido='Parra'
