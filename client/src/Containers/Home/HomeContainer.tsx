@@ -6,6 +6,7 @@ type Props = {}
 
 const HomeContainer = (props: Props) => {
   return (
+
     <ContenedorHome>
 
       <Navbar />
