@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import { Route, BrowserRouter, Routes } from 'react-router-dom'
 import './App.css'
 import HomePage from './Pages/Home/HomePage';
+import FormCreateProduct from './Components/Form/Form';
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
     <BrowserRouter>
     <Routes>
       <Route path='/home' element={<HomePage />}/>
+      <Route path='/formCreateProduct' element={<FormCreateProduct/>}/>
     </Routes>
     </BrowserRouter>
   );
