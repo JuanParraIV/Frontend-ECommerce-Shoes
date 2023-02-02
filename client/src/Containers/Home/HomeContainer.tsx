@@ -1,6 +1,7 @@
 import React from 'react'
 import ContenedorHome from '../../Components/Home/style';
 import Home from '../../Components/Home/Home';
+import Banner from '../../Components/Banner/Banner';
 type Props = {}
 
 const HomeContainer = (props: Props) => {
@@ -8,11 +9,7 @@ const HomeContainer = (props: Props) => {
 
     <ContenedorHome>
       {/* NavBar */}
-      <Home
-        name='Mario'
-        apellido='Parra'
-        edad={29}
-      />
+      <Banner/>
     </ContenedorHome>
   )
 }
