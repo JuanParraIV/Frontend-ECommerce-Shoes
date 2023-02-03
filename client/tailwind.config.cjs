@@ -5,6 +5,21 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation:{
+        marquee: 'marquee 10s linear infinite;',
+        marquee2: 'marquee 15s linear infinite;'
+      },
+      keyframes:{
+        marquee: {
+          "0%":{transform: 'translateX(0%)'},
+          "-50%":{transform: 'translateX(-50%)'},
+        }
+      },
+      transform: {
+        'scale-1': 'scale(1, 1)',
+        'scale-1.1': 'scale(1.1, 1.1)',
+
+      },
       backgroundColor: ["responsive", "hover", "focus", "active"],
       fontFamily: {
         raleway: ["Raleway", "sans-serif"],

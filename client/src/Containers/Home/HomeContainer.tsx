@@ -1,17 +1,19 @@
-import React from 'react'
+import React from 'react';
 import ContenedorHome from '../../Components/Home/style';
 import Home from '../../Components/Home/Home';
 import Banner from '../../Components/Banner/Banner';
-type Props = {}
+type Props = {};
 
 const HomeContainer = (props: Props) => {
   return (
 
     <ContenedorHome>
       {/* NavBar */}
-      <Banner/>
+      <main className="max-w-screen-2xl mx-auto">
+        <Banner />
+      </main>
     </ContenedorHome>
-  )
-}
+  );
+};
 
-export default HomeContainer
+export default HomeContainer;
