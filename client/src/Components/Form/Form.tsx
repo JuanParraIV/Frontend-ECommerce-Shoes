@@ -2,6 +2,7 @@ import React, {useState}from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import Validate from './validation';
 import {FormContainer, LabelContainer, Button, Error} from '../Form/style'
+import dates from '../../../sneaker.json'
 // import {useDispatch} from 'react-redux'; 
 
 
@@ -105,14 +106,20 @@ const  [formSend, setFormSend] =  useState(false);
 			 <div >
                 <label htmlFor='brand'>Brand</label>
 				<Field className='input' name='brand' as='select'>
-                    <option>category</option>
-					<option value='Air Jordan'>Air Jordan</option>
+				<option>Brand</option>
+				{dates.sneakers?.map((b)=> {
+                                 return(
+                                     <option 
+                                     value={b.brand_name}>{b.brand_name}</option>
+                                     )
+                                 })}
+					{/* <option value='Air Jordan'>Air Jordan</option>
 					<option value='Champion'>Champion</option>
 					<option value='Converse'>Converse</option>
                     <option value='Gucci'>Gucci</option>
                     <option value='Nike'>Nike</option>
                     <option value='Vans'>Vans</option>
-                    <option value='adidas'>adidas</option>
+                    <option value='adidas'>adidas</option> */}
 				</Field>
 				<Error>
                 <ErrorMessage name='brand' component={()=> (
