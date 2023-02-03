@@ -3,6 +3,8 @@ import Navbar from '../../Components/Navbar/Navbar';
 import Banner from '../../Components/Banner/Banner';
 import { useDispatch, useSelector } from 'react-redux'
 import dates from '../../../sneaker.json'
+import Product from '../../Components/Product/Product';
+import MayLikeProducts from '../../Components/MayLikeProducts/MayLikeProducts';
 
 type Props = {}
 
@@ -14,25 +16,24 @@ const HomeContainer = (props: Props) => {
   return (
 
     <ContenedorHome>
-      <Navbar /> 
+      <Navbar />
       <main className="max-w-screen-2xl mx-auto">
         <Banner />
 
-      
-    {/* PRUEBA PARA MOSTRAR LOS PRODUCTOS */}
 
+    {/* PRUEBA PARA MOSTRAR LOS PRODUCTOS */}
+    <MayLikeProducts props={dates.sneakers} />
     {
-        dates.sneakers?.map( info => {
+        dates.sneakers?.map(info => {
+          console.log(info)
           return (
-            <div className='mt-10'>
-              <h1>{info.brand_name}</h1>
-              <h1>{info.brand_name}</h1>
-              <h1>{info.color}</h1>
-              <h1>{info.gender}</h1>
-              <h1>${info.retail_price_cents}</h1>
-              <img src={info.grid_picture_url} alt="" />
-              <hr />
-            </div>
+            <Product
+            brand_name={info.brand_name}
+            color={info.color}
+            gender={info.gender}
+            grid_picture_url={info.grid_picture_url}
+            retail_price_cents={info.retail_price_cents}
+            />
           )
         })
     }
