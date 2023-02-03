@@ -14,10 +14,11 @@ const HomeContainer = (props: Props) => {
   return (
 
     <ContenedorHome>
-
       <Navbar /> 
-      <Banner/>
+      <main className="max-w-screen-2xl mx-auto">
+        <Banner />
 
+      
     {/* PRUEBA PARA MOSTRAR LOS PRODUCTOS */}
 
     {
@@ -35,9 +36,9 @@ const HomeContainer = (props: Props) => {
           )
         })
     }
-
+     </main>
     </ContenedorHome>
-  )
-}
+  );
+};
 
-export default HomeContainer
+export default HomeContainer;
