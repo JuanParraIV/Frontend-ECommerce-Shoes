@@ -112,7 +112,7 @@ const  [formSend, setFormSend] =  useState(false);
                                      <option 
                                      value={b.brand_name}>{b.brand_name}</option>
                                      )
-                                 })}
+                                 })} 
 					{/* <option value='Air Jordan'>Air Jordan</option>
 					<option value='Champion'>Champion</option>
 					<option value='Converse'>Converse</option>
