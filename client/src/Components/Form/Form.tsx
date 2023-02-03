@@ -46,17 +46,17 @@ const  [formSend, setFormSend] =  useState(false);
 		validate={(value) => Validate(value)}>
 
 			{({ errors})=> (
-		    <Form className='formulario' >
-				<h1>Create Product</h1>
+		    <Form  >
+				<h1 className='text-gray-900 font-bold text-xl mb-2'>Create Product</h1>
 
 
 			<LabelContainer>
 				
 			 <div >
-			  <label htmlFor='name'>Name</label>
+			  <label htmlFor='name' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>Name</label>
 			  
 			  <Field 
-			    className='input'
+			    className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
 			    type='text'
 			    id='name'
 			    name='name' 
@@ -70,9 +70,9 @@ const  [formSend, setFormSend] =  useState(false);
 			 </div>
 
 			 <div >
-			  <label htmlFor='price'>Price</label>
+			  <label htmlFor='price' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>Price</label>
 			  <Field
-			  className='input'
+			  className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
 			  type='text' 
 			  id='price'
 			  name='price' 
@@ -87,9 +87,9 @@ const  [formSend, setFormSend] =  useState(false);
 			 </div>
 
              <div >
-			  <label  htmlFor='stock'>Stock</label>
+			  <label  htmlFor='stock' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>Stock</label>
 			  <Field
-			  className='input'
+			  className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
 			  type='number' 
 			  id='stock'
 			  name='stock' 
@@ -104,22 +104,16 @@ const  [formSend, setFormSend] =  useState(false);
               </div>
 
 			 <div >
-                <label htmlFor='brand'>Brand</label>
-				<Field className='input' name='brand' as='select'>
-				<option>Brand</option>
-				{dates.sneakers?.map((b)=> {
-                                 return(
-                                     <option 
-                                     value={b.brand_name}>{b.brand_name}</option>
-                                     )
-                                 })} 
-					{/* <option value='Air Jordan'>Air Jordan</option>
+                <label htmlFor='brand' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>Brand</label>
+				<Field className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe' name='brand' as='select'>
+				<option>Select Brand</option>
+					<option value='Air Jordan'>Air Jordan</option>
 					<option value='Champion'>Champion</option>
 					<option value='Converse'>Converse</option>
                     <option value='Gucci'>Gucci</option>
                     <option value='Nike'>Nike</option>
                     <option value='Vans'>Vans</option>
-                    <option value='adidas'>adidas</option> */}
+                    <option value='adidas'>adidas</option>
 				</Field>
 				<Error>
                 <ErrorMessage name='brand' component={()=> (
@@ -128,9 +122,9 @@ const  [formSend, setFormSend] =  useState(false);
 				</Error>
 			 </div>
 
-			 <div> Status
+			 <div className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'> Status
 				<hr/>
-				<label>
+				<label >
 					<Field type='radio' name='status' value='New'/>New
 				</label>
 				<label>
@@ -145,8 +139,8 @@ const  [formSend, setFormSend] =  useState(false);
 			 <div >
 				Description
 				<hr/>
-				<label>
-				<Field  className='input' name='description' as='textarea' placeholder='Description'/>
+				<label className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>
+				<Field  className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe' name='description' as='textarea' placeholder='Description'/>
 				</label>
 				<Error>
                 <ErrorMessage name='description' component={()=> (
@@ -156,9 +150,9 @@ const  [formSend, setFormSend] =  useState(false);
 			 </div>
 
              <div>
-                <label htmlFor='image'>Image</label>
+                <label htmlFor='image' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>Image</label>
                 <Field
-				className='input'
+				className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
                 type='text'
                 id='image'
                 name='image'
