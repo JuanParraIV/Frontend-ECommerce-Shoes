@@ -4,6 +4,7 @@ import Banner from '../../Components/Banner/Banner';
 import { useDispatch, useSelector } from 'react-redux'
 import dates from '../../../sneaker.json'
 import Product from '../../Components/Product/Product';
+import MayLikeProducts from '../../Components/MayLikeProducts/MayLikeProducts';
 
 type Props = {}
 
@@ -21,9 +22,10 @@ const HomeContainer = (props: Props) => {
 
 
     {/* PRUEBA PARA MOSTRAR LOS PRODUCTOS */}
-
+    <MayLikeProducts props={dates.sneakers} />
     {
         dates.sneakers?.map(info => {
+          console.log(info)
           return (
             <Product
             brand_name={info.brand_name}

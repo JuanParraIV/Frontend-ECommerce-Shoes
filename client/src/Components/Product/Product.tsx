@@ -17,8 +17,8 @@ const Product = ({brand_name,color,gender,retail_price_cents,grid_picture_url}:P
           <ProductImage
             src={grid_picture_url}
             alt=""
-            width={250}
-            height={250}
+            width={200}
+            height={200}
           />
           <ProductName>{brand_name}</ProductName>
           <ProductName>{color}</ProductName>
