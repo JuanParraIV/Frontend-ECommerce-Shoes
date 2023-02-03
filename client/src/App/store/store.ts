@@ -1,8 +1,10 @@
-/* import { Action, combineReducers, configureStore, ThunkAction } from '@reduxjs/toolkit'
-// ...
+import { Action, combineReducers, configureStore, ThunkAction } from '@reduxjs/toolkit'
+import ProductReducer from '../features/Products/ProductsSlice'
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    counter: ProductReducer
+  }
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
@@ -16,4 +18,3 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
- */
