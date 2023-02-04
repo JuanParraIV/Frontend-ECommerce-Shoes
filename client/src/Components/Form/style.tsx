@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 
 export const FormContainer = styled.div`
- ${tw` flex justify-center p-8 m-8  max-w-sm rounded overflow-hidden shadow-lg bg-gray-100`}`; 
-
+ ${tw`items-center p-8 mt-8 ml-96 mb-8 max-w-sm rounded overflow-hidden shadow-lg bg-gray-100 `}`; 
+ 
  export const LabelContainer = styled.div`
  ${tw` flex flex-col space-y-4 w-80 p-8  `}`;
 

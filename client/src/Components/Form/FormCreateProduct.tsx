@@ -1,52 +1,65 @@
 import React, {useState}from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import Validate from './validation';
-import {FormContainer, LabelContainer, Button, Error} from '../Form/style'
-import dates from '../../../sneaker.json'
+import validateProductForm from './validation';
+import {FormContainer, LabelContainer, Button, Error} from './style';
+import Navbar from '../Navbar/Navbar';
+import Footer from '../Footer/Footer';
+// import dates from '../../../sneaker.json'
 // import {useDispatch} from 'react-redux'; 
 
+interface Props {
+    name: string;
+    price: number;
+    image: string;
+    stock: number;
+    brand: string;
+    description: string;
+    status: string
+  }
+  
 
 
-const FormCreateProduct = () => {
+const FormCreateProduct = ({name, brand, price, image, description, stock, status}: Props) => {
 
-// const dispatch = useDispatch()
+
 	
 
 const  [formSend, setFormSend] =  useState(false);
 
 	
 	return (
+		<div>
 
-	<FormContainer>
-
+			<Navbar/>
+		
+		<FormContainer>
 	
 		<div >
 		<Formik
+		
 		initialValues={{
-			name:'', 
-			brand: '',
-			price: 0, 
-            image: '', 
-            description: '', 
-            stock: 0, 
-            status: ''
-		}}
+			name, 
+			brand,
+			price, 
+			image, 
+			description, 
+			stock,
+			status
+			}}
+	
 
-		
-		
-		onSubmit={(value, {resetForm})=> {
-			resetForm();
-			console.log(value);
-			console.log('Formulario Enviado');
-			setFormSend(true);
-			setTimeout(()=> setFormSend(false), 5000)
-			// dispatch(formCreate(value))
-		}}
-
-		validate={(value) => Validate(value)}>
+			onSubmit={(valores, {resetForm})=> {
+				resetForm();
+				console.log(valores);
+				console.log('Formulario Enviado');
+				setFormSend(true);
+				setTimeout(()=> setFormSend(false), 5000)
+			}}
+			 validate={(values) => validateProductForm(values)}
+			>
 
 			{({ errors})=> (
-		    <Form  >
+		    <Form >
 				<h1 className='text-gray-900 font-bold text-xl mb-2'>Create Product</h1>
 
 
@@ -64,7 +77,7 @@ const  [formSend, setFormSend] =  useState(false);
 				/>	
 			  <Error>
 				<ErrorMessage name='name' component={()=> (
-					<div className='error'>{errors.name}</div> 
+					<div >{errors.name}</div> 
 				)}/>
 			  </Error>
 			 </div>
@@ -80,7 +93,7 @@ const  [formSend, setFormSend] =  useState(false);
 			  />
 			  <Error>
 			  <ErrorMessage name='price' component={()=> (
-					<div className='error'>{errors.price}</div>
+					<div>{errors.price}</div>
 				)}/>	
 
 			  </Error>
@@ -97,7 +110,7 @@ const  [formSend, setFormSend] =  useState(false);
 			  />
 			  <Error>
               <ErrorMessage name='stock' component={()=> (
-					<div className='error'>{errors.stock}</div>
+					<div>{errors.stock}</div>
 				)}/>	
 
 			  </Error>
@@ -117,7 +130,7 @@ const  [formSend, setFormSend] =  useState(false);
 				</Field>
 				<Error>
                 <ErrorMessage name='brand' component={()=> (
-					<div className='error'>{errors.brand}</div>
+					<div>{errors.brand}</div>
 				)}/>
 				</Error>
 			 </div>
@@ -132,7 +145,7 @@ const  [formSend, setFormSend] =  useState(false);
 				</label>
 				<Error>
                 <ErrorMessage name='status' component={()=> (
-					<div className='error'>{errors.status}</div>
+					<div>{errors.status}</div>
 				)}/>
 				</Error>
 			 </div>
@@ -144,7 +157,7 @@ const  [formSend, setFormSend] =  useState(false);
 				</label>
 				<Error>
                 <ErrorMessage name='description' component={()=> (
-					<div className='error'>{errors.description}</div>
+					<div>{errors.description}</div>
 				)}/>
 				</Error>
 			 </div>
@@ -159,7 +172,7 @@ const  [formSend, setFormSend] =  useState(false);
                 />
 				<Error>
                  <ErrorMessage name='image' component={()=> (
-					<div className='error'>{errors.image}</div>
+					<div>{errors.image}</div>
 				)}/>	
 				</Error>
              </div>
@@ -175,6 +188,9 @@ const  [formSend, setFormSend] =  useState(false);
 		
 		</div>
 		</FormContainer>
+		<Footer/>
+        
+		</div>
 	);
 }
 

@@ -1,4 +1,5 @@
-import icons from '../../assets/icons-navbar/icons-navbar'
+import icons from '../../assets/icons-navbar/icons-navbar';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   return (
@@ -13,6 +14,9 @@ export default function Navbar() {
           
           <div className="items-center flex-shrink-0 flex space-x-3">
 			      <button className="self-center px-8 py-3 font-semibold rounded bg-yellow-400 text-gray-900">Sign in</button>
+         <Link to='/formCreateProduct'>
+         <button className="self-center px-2 py-3 font-semibold rounded bg-yellow-400 text-gray-900">Create Product</button>
+         </Link>
             <img src={icons.Cart} alt="Shopping_Cart" className='h-12 w-12 cursor-pointer' />
 		      </div>
 
