@@ -3,7 +3,7 @@ import './App.css'
 import HomePage from './Pages/Home/HomePage';
 import FormCreateProduct from './Components/Form/Form';
 
-function App() {
+function App(){
 
   return (
     <BrowserRouter>
