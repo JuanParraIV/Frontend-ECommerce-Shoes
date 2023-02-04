@@ -12,7 +12,6 @@ type Props = {}
 const HomeContainer = (props: Props) => {
 
   const Products = useSelector((state) => state.counter);
-  console.log(Products);
 
   return (
 
