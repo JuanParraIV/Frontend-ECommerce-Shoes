@@ -1,19 +1,19 @@
-import images from "../../assets/images.js"
+import icons from '../../assets/icons-navbar/icons-navbar'
 
 export default function Navbar() {
   return (
-    <header className="flex bg-gray-100 ">
+    <header className="flex bg-gray-200">
          <div className="flex w-full justify-between  h-14 mt-2 mb-2 mx-5">
           
          <div className="bg-gray-3">
-          <img src={images.logo} className="w-15 h-14" alt="" />
+          <img src={icons.Logo} className="w-14 h-14" alt="" />
           </div>
 
           <div>SEARCHBAR</div>
           
-          <div className="items-center flex-shrink-0 hidden lg:flex space-x-3">
+          <div className="items-center flex-shrink-0 flex space-x-3">
 			      <button className="self-center px-8 py-3 font-semibold rounded bg-yellow-400 text-gray-900">Sign in</button>
-			      <button className="self-center px-8 py-3 font-semibold rounded bg-yellow-400 text-gray-900">Sign up</button>
+            <img src={icons.Cart} alt="Shopping_Cart" className='h-12 w-12 cursor-pointer' />
 		      </div>
 
          </div>

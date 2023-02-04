@@ -7,9 +7,6 @@ type Props = {}
 const HomePage = (props: Props) => {
   return (
     <>
-      <Link to='/formCreateProduct'>
-        <button>Create Products</button>
-      </Link>
       <HomeContainer/>
     </>
   )
