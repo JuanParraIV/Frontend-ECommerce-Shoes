@@ -1,16 +1,17 @@
-import { Route, BrowserRouter, Routes } from 'react-router-dom'
-import './App.css'
+import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import './App.css';
 import HomePage from './Pages/Home/HomePage';
 import FormCreateProduct from './Components/Form/FormCreateProduct';
+import CreateFormPage from './Pages/Form/CreateFormPage';
 
-function App(){
+function App() {
 
   return (
     <BrowserRouter>
-    <Routes>
-      <Route path='/home' element={<HomePage />}/>
-      <Route path='/formCreateProduct' element={<FormCreateProduct name={''} price={0} image={''} stock={0} brand={''} description={''} status={''}/>}/>
-    </Routes>
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/formCreateProduct' element={<CreateFormPage />} />
+      </Routes>
     </BrowserRouter>
   );
 }
