@@ -8,14 +8,9 @@ export default function Navbar() {
           
          <div className="bg-gray-3">
           <img src={icons.Logo} className="w-14 h-14" alt="" />
-          </div>
+        </div>
 
-          <div>SEARCHBAR</div>
-          
-          <div className="items-center flex-shrink-0 flex space-x-3">
-			      <button className="self-center px-8 py-3 font-semibold rounded bg-yellow-400 text-gray-900">Sign in</button>
-            <img src={icons.Cart} alt="Shopping_Cart" className='h-12 w-12 cursor-pointer' />
-		      </div>
+        <div>SEARCHBAR</div>
 
          </div>
 
@@ -52,5 +47,5 @@ export default function Navbar() {
       </div>
          </div>
     </header>
-  )
+  );
 }
