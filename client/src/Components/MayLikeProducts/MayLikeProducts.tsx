@@ -1,11 +1,12 @@
 import React from 'react';
 import { Marquee, MayLikeProductWrapper, MayLikeProductsContainer, ProductsHeading } from './style';
 import Product from '../Product/Product';
-import dates from '../../../sneaker.json';
-import { SneakersType } from '@/Typing/Sneakers.type';
 import { useFetchAllSneaker } from '@/App/hooks/useSneakers';
+import { useStore, StoreState} from '@/App/store/useSneakerStore';
 
 const MayLikeProducts = () => {
+  const { sneakers, fetchSneakers } = useStore() as StoreState;
+
   const { data, isLoading } = useFetchAllSneaker();
   return (
     <MayLikeProductWrapper>
@@ -15,7 +16,7 @@ const MayLikeProducts = () => {
       </ProductsHeading>
       <Marquee>
         <MayLikeProductsContainer>
-          {data?.map(product => (
+          {sneakers?.map(product => (
             <Product key={product.id} product={product} />
           ))}
         </MayLikeProductsContainer>

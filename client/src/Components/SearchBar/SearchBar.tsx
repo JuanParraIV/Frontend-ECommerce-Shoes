@@ -7,8 +7,7 @@ type InputEvent = React.ChangeEvent<HTMLInputElement>;
 const SearchBar = () => {
   const [search, setSearch] = useState('');
   const { sneakers, fetchSneakers } = useStore() as StoreState;
-  console.log(sneakers);
-
+  
   const handleOnSearch = (event: InputEvent) => {
     const { value } = event.target;
     if (event && event.preventDefault) event.preventDefault();
