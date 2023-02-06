@@ -1,4 +1,4 @@
-import { useStore, StoreState} from '@/App/store/useSneakerStore';
+import { useStore, SneakerStoreState } from '@/App/store/useSneakerStore';
 import { StarIcon } from '@heroicons/react/24/solid';
 import React, { useState } from 'react';
 
@@ -6,8 +6,8 @@ type FormEvent = React.FormEvent<HTMLFormElement>;
 type InputEvent = React.ChangeEvent<HTMLInputElement>;
 const SearchBar = () => {
   const [search, setSearch] = useState('');
-  const { sneakers, fetchSneakers } = useStore() as StoreState;
-  
+  const { sneakersByName, fetchSneakersByName} = useStore() as SneakerStoreState;
+
   const handleOnSearch = (event: InputEvent) => {
     const { value } = event.target;
     if (event && event.preventDefault) event.preventDefault();
@@ -16,7 +16,7 @@ const SearchBar = () => {
   };
   const handleSubmit = (event: FormEvent) => {
     if (event && event.preventDefault) event.preventDefault();
-    fetchSneakers(search);
+    fetchSneakersByName(search);
   };
   return (
     <form className='flex-grow' action="" onSubmit={handleSubmit}>
@@ -28,7 +28,7 @@ const SearchBar = () => {
           placeholder="Search"
           className="p-2 h-full w-6 flex-grow flex-shrink rounded-l-md focus:outline-none px-4"
         />
-        <button>
+        <button type='submit'>
           <StarIcon className="h-12 p-4" />
         </button>
       </div>
