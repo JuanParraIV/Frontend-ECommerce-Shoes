@@ -1,7 +1,7 @@
 import React from 'react';
 import FormCreateProduct from '../../Components/Form/FormCreateProduct';
 import Navbar from '../../Components/Navbar/Navbar';
-import Footer from '../../Components/Footer/Footer';
+import Footer from '@/Components/Footer/Footer';
 
 type Props = {};
 

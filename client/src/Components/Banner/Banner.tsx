@@ -24,7 +24,6 @@ const Banner = (props: Props) => {
           <img
             loading="lazy"
             src="https://cdn.shopify.com/s/files/1/0011/8072/9422/files/GEN_banner_36ab20ab-a489-4897-8b8f-5a69b9dbc864.jpg?v=1669058954"
-            layout="fill"
             alt="banner1"
           />
           <CarouselTextContainer>
@@ -39,7 +38,6 @@ const Banner = (props: Props) => {
           <img
             loading="lazy"
             src="https://cdn.shopify.com/s/files/1/0011/8072/9422/files/Untitled_design_1.png?v=1614321421"
-            layout="fill"
             alt="banner2"
           />
           <CarouselTextContainer>
