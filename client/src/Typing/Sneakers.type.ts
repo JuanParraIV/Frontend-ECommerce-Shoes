@@ -14,5 +14,6 @@ export interface SneakersType {
   status: string;
   brandId: number;
   categoryId: number;
+  isFavorite: boolean
 }
 
