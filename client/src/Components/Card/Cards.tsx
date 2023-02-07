@@ -54,7 +54,7 @@ const Card = ({ product, isFavorite}: ProductProps) => {
               <ButtonIcon>
                 <button onClick={handleFavorite}>
                   {
-                     isFavorite ?  <img className="opacity-40 w-4" src={corazon} alt='remove to wishlist' />  : <img className=" w-5" src={corazonrojo} alt='add to wishlist' /> 
+                     !isFavorite ?  <img className="opacity-40 w-4" src={corazon} alt='remove to wishlist' />  : <img className=" w-5" src={corazonrojo} alt='add to wishlist' /> 
                   }   
                 </button>
               </ButtonIcon>
