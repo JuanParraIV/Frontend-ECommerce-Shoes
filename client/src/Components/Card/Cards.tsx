@@ -2,11 +2,10 @@ import React from "react";
 import { CardStyle, Image, ProductTitle, ButtonStyle, ButtonIcon, ButtonRemove } from './style';
 import corazon from '../../assets/icons-card/corazon.png';
 import ojo from '../../assets/icons-card/ojo.png';
-import corazonrojo from '../../assets/icons-card/corazonrojo.png'
+import corazonrojo from '../../assets/icons-card/corazonrojo.png';
 import { SneakersType } from '@/Typing/Sneakers.type';
-import {FavoriteSneakerStore} from '@/App/store/useFavoriteSneakerStore';
+import { FavoriteSneakerStore } from '@/App/store/useFavoriteSneakerStore';
 import {formatCurrency} from '../../Utilities/formatCurrency';
-
 import { stat } from "fs";
 import { remove } from "@antfu/utils";
 import { useShoppingCart } from "@/Context/ShoppingCartContainer";
@@ -15,14 +14,11 @@ import { useShoppingCart } from "@/Context/ShoppingCartContainer";
 
 type ProductProps = {
   product: SneakersType;
-  isFavorite: boolean
+  isFavorite: boolean;
 };
 
-const Card = ({ product, isFavorite}: ProductProps) => {
-
-  const addFavoriteSneaker = FavoriteSneakerStore(state => state.addFavoriteSneaker);
-  const removeFavoriteSneaker = FavoriteSneakerStore(state => state.removeFavoriteSneaker);
-
+const Card = ({ product, isFavorite }: ProductProps) => {
+  const { addFavoriteSneaker, removeFavoriteSneaker } = FavoriteSneakerStore(state => state);
   const {
     getItemQuantity, 
     increaseCartQuantity, 
@@ -30,18 +26,15 @@ const Card = ({ product, isFavorite}: ProductProps) => {
     removeFromCart
   } = useShoppingCart()
 
-
   const quantity = getItemQuantity(product.id); 
 
   const handleFavorite = () => {
-    if(isFavorite) {
-      removeFavoriteSneaker(product.id)
-      return
+    if (isFavorite) {
+      removeFavoriteSneaker(product.id);
+      return;
     }
-    addFavoriteSneaker(product.id)
-  }
- 
-
+    addFavoriteSneaker(product.id);
+  };
   return (
     <>
       <CardStyle>
@@ -71,7 +64,6 @@ const Card = ({ product, isFavorite}: ProductProps) => {
                 <ButtonIcon>
                 <button onClick={handleFavorite}>
                   {
-
                      !isFavorite ?  <img className="opacity-40 w-4" src={corazon} alt='remove to wishlist' />  : <img className=" w-5" src={corazonrojo} alt='add to wishlist' /> 
                   }   
                 </button>
