@@ -7,10 +7,11 @@ export const fetchAllSneaker = async () => {
   return data
 }
 export const fetchByNameSneaker = async (ctx: QueryFunctionContext) => {
-  const [_, name] = ctx.queryKey
+  const [_,name]=ctx.queryKey
   const { data } = await api.get<SneakersType[]>(`sneakers?name=${name}`)
   return data
 }
 
-export const useFetchAllSneaker = () => useQuery(['sneakers'], fetchAllSneaker, { staleTime: 60000 })
-export const useFetchByNameSneaker = (name: string) => useQuery(['sneakersByName', name], fetchByNameSneaker)
+export const useFetchAllSneaker = () => useQuery(['sneakers'], fetchAllSneaker)
+export const useFetchByNameSneaker = (name:string) => useQuery(['sneakersByName',name], fetchByNameSneaker)
+

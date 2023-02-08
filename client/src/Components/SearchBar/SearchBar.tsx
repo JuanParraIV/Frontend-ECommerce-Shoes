@@ -1,4 +1,4 @@
-import { useSneakerStore, SneakerStoreState } from '@/App/store/useSneakerStore';
+import { useStore, SneakerStoreState } from '@/App/store/useSneakerStore';
 import { StarIcon } from '@heroicons/react/24/solid';
 import React, { useState } from 'react';
 
@@ -6,7 +6,8 @@ type FormEvent = React.FormEvent<HTMLFormElement>;
 type InputEvent = React.ChangeEvent<HTMLInputElement>;
 const SearchBar = () => {
   const [search, setSearch] = useState('');
-  const { fetchSneakersByName } = useSneakerStore(state => state);
+  const { sneakersByName, fetchSneakersByName} = useStore() as SneakerStoreState;
+
   const handleOnSearch = (event: InputEvent) => {
     const { value } = event.target;
     if (event && event.preventDefault) event.preventDefault();
