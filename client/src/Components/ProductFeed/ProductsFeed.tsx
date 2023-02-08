@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "@/Components/Card/Cards";
+import Card from '../Card/Cards'; 
 import { useFetchAllSneaker } from '@/App/hooks/useSneakers';
 import { useSneakerStore, SneakerStoreState } from '@/App/store/useSneakerStore';
 import { CardsContainer } from "./styles";

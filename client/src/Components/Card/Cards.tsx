@@ -1,13 +1,16 @@
 import React from "react";
-import { CardStyle, Image, ProductTitle, ButtonStyle, ButtonIcon } from './style';
+import { CardStyle, Image, ProductTitle, ButtonStyle, ButtonIcon, ButtonRemove } from './style';
 import corazon from '../../assets/icons-card/corazon.png';
 import ojo from '../../assets/icons-card/ojo.png';
 import corazonrojo from '../../assets/icons-card/corazonrojo.png';
 import { SneakersType } from '@/Typing/Sneakers.type';
 import { FavoriteSneakerStore } from '@/App/store/useFavoriteSneakerStore';
-
+import {formatCurrency} from '../../Utilities/formatCurrency';
 import { stat } from "fs";
 import { remove } from "@antfu/utils";
+import { useShoppingCart } from "@/Context/ShoppingCartContainer";
+
+
 
 type ProductProps = {
   product: SneakersType;
@@ -15,8 +18,16 @@ type ProductProps = {
 };
 
 const Card = ({ product, isFavorite }: ProductProps) => {
-
   const { addFavoriteSneaker, removeFavoriteSneaker } = FavoriteSneakerStore(state => state);
+  const {
+    getItemQuantity, 
+    increaseCartQuantity, 
+    decreaseCartQuantity, 
+    removeFromCart
+  } = useShoppingCart()
+
+  const quantity = getItemQuantity(product.id); 
+
   const handleFavorite = () => {
     if (isFavorite) {
       removeFavoriteSneaker(product.id);
@@ -39,19 +50,22 @@ const Card = ({ product, isFavorite }: ProductProps) => {
             </ProductTitle>
             <div>
               <span className="text-xl font-bold">
-                {product.retail_price_cents}
+                {formatCurrency(product.retail_price_cents)}
               </span>
             </div>
 
             <div className="mt-5 flex gap-2">
-              <ButtonStyle>
-                <button>Add to Cart</button>
-              </ButtonStyle>
-              <ButtonIcon>
+              {quantity === 0 ? (
+                <>
+                <ButtonStyle>
+                  <button onClick={()=>increaseCartQuantity(product.id)}>Add to Cart</button>
+                </ButtonStyle>
+
+                <ButtonIcon>
                 <button onClick={handleFavorite}>
                   {
-                    isFavorite ? <img className="opacity-40 w-4" src={corazon} alt='remove to wishlist' /> : <img className=" w-5" src={corazonrojo} alt='add to wishlist' />
-                  }
+                     !isFavorite ?  <img className="opacity-40 w-4" src={corazon} alt='remove to wishlist' />  : <img className=" w-5" src={corazonrojo} alt='add to wishlist' /> 
+                  }   
                 </button>
               </ButtonIcon>
               <ButtonIcon>
@@ -59,6 +73,31 @@ const Card = ({ product, isFavorite }: ProductProps) => {
                   <img className="opacity-50 w-4" src={ojo} alt='add to wishlist' />
                 </button>
               </ButtonIcon>
+                </>
+                ) :
+                <>
+                <div>
+                 <ButtonStyle>
+                    <button className="font-mono text-xl" onClick={()=>decreaseCartQuantity(product.id)}>-</button>
+                 </ButtonStyle>
+                </div> 
+                <div>
+                  <span className="font-mono text-xl">{quantity}</span> 
+                </div>
+                <div>
+                  <ButtonStyle>
+                    <button className="font-mono text-xl" onClick={()=>increaseCartQuantity(product.id)}>+</button>
+                  </ButtonStyle>
+                </div> 
+                <div>
+                  <ButtonRemove>
+                    <button onClick={()=>removeFromCart(product.id)}>Remove</button>
+                  </ButtonRemove>
+                </div>
+                </>
+               
+                 }
+           
             </div>
           </div>
         </Image>
