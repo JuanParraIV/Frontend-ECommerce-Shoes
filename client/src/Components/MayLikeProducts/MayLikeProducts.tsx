@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Marquee, MayLikeProductWrapper, MayLikeProductsContainer, ProductsHeading } from './style';
 import Product from '../Product/Product';
 import { useFetchAllSneaker } from '@/App/hooks/useSneakers';
-import { useStore, SneakerStoreState } from '@/App/store/useSneakerStore';
+import { useSneakerStore, SneakerStoreState } from '@/App/store/useSneakerStore';
 
 const MayLikeProducts = () => {
-  const { sneakers, fetchSneakers } = useStore() as SneakerStoreState;
-
-  const { data, isLoading } = useFetchAllSneaker();
+  const sneakers = useSneakerStore(state => state.sneakers);
   return (
     <MayLikeProductWrapper>
       <ProductsHeading>
