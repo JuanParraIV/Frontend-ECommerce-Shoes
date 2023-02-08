@@ -2,32 +2,28 @@ import React from "react";
 import { CardStyle, Image, ProductTitle, ButtonStyle, ButtonIcon } from './style';
 import corazon from '../../assets/icons-card/corazon.png';
 import ojo from '../../assets/icons-card/ojo.png';
-import corazonrojo from '../../assets/icons-card/corazonrojo.png'
+import corazonrojo from '../../assets/icons-card/corazonrojo.png';
 import { SneakersType } from '@/Typing/Sneakers.type';
-import {FavoriteSneakerStore} from '@/App/store/useFavoriteSneakerStore';
+import { FavoriteSneakerStore } from '@/App/store/useFavoriteSneakerStore';
 
 import { stat } from "fs";
 import { remove } from "@antfu/utils";
 
 type ProductProps = {
   product: SneakersType;
-  isFavorite: boolean
+  isFavorite: boolean;
 };
 
-const Card = ({ product, isFavorite}: ProductProps) => {
+const Card = ({ product, isFavorite }: ProductProps) => {
 
-  const addFavoriteSneaker = FavoriteSneakerStore(state => state.addFavoriteSneaker);
-  const removeFavoriteSneaker = FavoriteSneakerStore(state => state.removeFavoriteSneaker);
-
+  const { addFavoriteSneaker, removeFavoriteSneaker } = FavoriteSneakerStore(state => state);
   const handleFavorite = () => {
-    if(isFavorite) {
-      removeFavoriteSneaker(product.id)
-      return
+    if (isFavorite) {
+      removeFavoriteSneaker(product.id);
+      return;
     }
-    addFavoriteSneaker(product.id)
-  }
- 
-
+    addFavoriteSneaker(product.id);
+  };
   return (
     <>
       <CardStyle>
@@ -54,8 +50,8 @@ const Card = ({ product, isFavorite}: ProductProps) => {
               <ButtonIcon>
                 <button onClick={handleFavorite}>
                   {
-                     isFavorite ?  <img className="opacity-40 w-4" src={corazon} alt='remove to wishlist' />  : <img className=" w-5" src={corazonrojo} alt='add to wishlist' /> 
-                  }   
+                    isFavorite ? <img className="opacity-40 w-4" src={corazon} alt='remove to wishlist' /> : <img className=" w-5" src={corazonrojo} alt='add to wishlist' />
+                  }
                 </button>
               </ButtonIcon>
               <ButtonIcon>
