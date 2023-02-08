@@ -2,10 +2,10 @@ import tw from 'twin.macro';
 import styled from 'styled-components';
 
 export const CardStyle = styled.div`
-${tw`relative flex flex-col m-5 bg-white z-30`}`;
+${tw`relative flex flex-col m-5 bg-white z-30 cursor-pointer`}`;
 
 export const Image = styled.div`
-${tw`w-full h-full object-cover rounded-md shadow-xl  transition ease-in-out delay-150 bg-gray-200 hover:-translate-y-1 hover:scale-110 hover:bg-white duration-300  `}`;
+${tw`w-full h-full object-cover rounded-md shadow-xl  transition ease-in-out delay-150 bg-gray-200 hover:-translate-y-1 hover:scale-105 hover:bg-white duration-300  `}`;
 
 export const ProductTitle = styled.div`
 ${tw`overflow-ellipsis overflow-hidden whitespace-nowrap`}`;
