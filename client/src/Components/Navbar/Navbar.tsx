@@ -4,8 +4,13 @@ import { Bars3Icon, XMarkIcon, StarIcon, ShoppingCartIcon } from "@heroicons/rea
 import { Link } from 'react-router-dom';
 import { ImageLogoContainer, NavBarContainer, NavBarHeader } from './style';
 import SearchBar from '../SearchBar/SearchBar';
+import { useShoppingCart } from '@/Context/ShoppingCartContainer';
 
 export default function Navbar() {
+
+  const {openCart, cartQuantity} = useShoppingCart();
+
+
   return (
     <NavBarHeader>
       <NavBarContainer>
@@ -36,18 +41,21 @@ export default function Navbar() {
             <p>Returns</p>
             <p className="font-extrabold md: text-sm">& Orders</p>
           </div>
+          
+          <button onClick={openCart}>
 
-          <div
-            className=" relative link flex items-center"
+          <div className=" relative link flex items-center"
           >
             <span className="absolute top-0 right-0 md:right-10 h-4 w-4 bg-yellow-400 text-center rounded-full text-black">
-              {0}
+              {cartQuantity}
             </span>
             <ShoppingCartIcon className="h-10" />
             <p className="hidden md:inline font-extrabold md: text-sm mt-2">
               Basket
             </p>
           </div>
+          </button>
+
         </div>
       </NavBarContainer>
       {/* Botton Nav */}
