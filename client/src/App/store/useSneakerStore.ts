@@ -8,9 +8,11 @@ import { persist } from 'zustand/middleware'
 export interface SneakerStoreState {
   sneakers: SneakersType[]
   sneakersByName: SneakersType[]
-  singleSneaker: Object
+  singleSneaker: SneakersType[]
   fetchSneakers: () => void
   fetchSneakersByName: (query: string) => void
+  fetchingSingleSneaker: (query: number) => void
+  clearSingleSneaker: () => void
 }
 export const fetchAllSneaker = async () => {}
 export const useSneakerStore = create(
@@ -18,7 +20,8 @@ export const useSneakerStore = create(
     (set, get) => ({
       sneakers: [],
       sneakersByName: [],
-      singleSneaker: {},
+      singleSneaker: [],
+
       fetchSneakersByName: async (name: string) => {
         const { data } = await api.get<SneakersType[]>(`sneakers?name=${name}`)
         set(state => ({ ...state, sneakersByName: data }))
@@ -32,6 +35,9 @@ export const useSneakerStore = create(
         const { data } = await api.get<SneakersType[]>(`sneakers/${id}`)
         set(state => ({ ...state, singleSneaker: data }))
       },
+      clearSingleSneaker: ()=>{
+        set(state => ({  ...state, singleSneaker: [] }))
+      }
     }),
     {
       name: 'store-sneaker',
