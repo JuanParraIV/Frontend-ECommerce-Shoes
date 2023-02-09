@@ -10,7 +10,7 @@ import { AddCart, Bottom, ButtonContainer, BuyNow, Minus, Num, Plus, Price, Prod
 import { ShoppingCartStore } from "@/App/store/useShoppingCart";
 
 export const Details = () => {
-  const singleSneaker = useSneakerStore(state => state.singleSneaker);
+  const singleSneaker= useSneakerStore(state => state.singleSneaker);
 
   console.log(singleSneaker);
   const {
@@ -29,11 +29,7 @@ export const Details = () => {
     brandId,
     categoryId } = singleSneaker;
   //const { decQty, incQty, qty, onAdd,setShowCart} = useStateContext();
-
-  const handleBuyNow = () => {
-  };
-    id, brand_name, category_name, name, color, retail_price_cents, size_range, grid_picture_url, original_picture_url, main_picture_url, details, has_stock, status, brandId, categoryId } = singleSneaker;
-    const {addProduct} = ShoppingCartStore()
+  const {addProduct} = ShoppingCartStore()
   const [quantity, setQuantity]= useState(1)
   const handleQuantity = (type:string) => {
     if (type === "dec") {
@@ -49,6 +45,9 @@ export const Details = () => {
       quantity
       )
 };
+
+  const handleBuyNow = () => {
+  };
 
   return (
     <>
@@ -77,15 +76,16 @@ export const Details = () => {
               </Plus>
             </QuantityDesc>
           </Quantity>
-          <ButtonContainer >
+          <ButtonContainer>
             <AddCart
+              onClick={handleClick}
               type="button"
             >
-              <button onClick={handleClick}>
-
               Add to Cart
-              </button>
             </AddCart>
+            <BuyNow type="button" onClick={handleBuyNow}>
+              Buy Now
+            </BuyNow>
           </ButtonContainer>
         </ProductDetailDesc>
       </ProductDetailContainer>
