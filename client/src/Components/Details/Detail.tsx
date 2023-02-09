@@ -8,10 +8,25 @@ import { useParams } from "react-router-dom";
 import { useSneakerStore } from "@/App/store/useSneakerStore";
 import { AddCart, Bottom, ButtonContainer, BuyNow, Minus, Num, Plus, Price, ProductDetailContainer, ProductDetailDesc, Quantity, QuantityDesc } from "./style";
 
-export const Details = ({ singleSneaker }) => {
+export const Details = () => {
+  const singleSneaker = useSneakerStore(state => state.singleSneaker);
+
   console.log(singleSneaker);
   const {
-    id, brand_name, category_name, name, color, retail_price_cents, size_range, grid_picture_url, original_picture_url, main_picture_url, details, has_stock, status, brandId, categoryId } = singleSneaker;
+    id,
+    brand_name,
+    category_name,
+    name, color,
+    retail_price_cents,
+    size_range,
+    grid_picture_url,
+    original_picture_url,
+    main_picture_url,
+    details,
+    has_stock,
+    status,
+    brandId,
+    categoryId } = singleSneaker;
   //const { decQty, incQty, qty, onAdd,setShowCart} = useStateContext();
 
   const handleBuyNow = () => {
