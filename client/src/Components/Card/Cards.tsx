@@ -22,7 +22,7 @@ type ProductProps = {
 
 const Card = ({ product, isFavorite }: ProductProps) => {
   const navigate = useNavigate();
-  const { addFavoriteSneaker, removeFavoriteSneaker } = FavoriteSneakerStore(state => state);
+  const { addFavoriteSneaker, removeFavoriteSneaker} = FavoriteSneakerStore(state => state);
   const { sneakers, fetchSneakers } = useSneakerStore(state => state);
   // console.log("product",product)
  
@@ -39,13 +39,6 @@ const Card = ({ product, isFavorite }: ProductProps) => {
   return (
     <>
         <CardStyle >
-                    <ButtonIcon>
-                      <button onClick={handleFavorite}>
-                        {
-                          !isFavorite ? <img className="opacity-40 w-4" src={corazon} alt='remove to wishlist' /> : <img className=" w-5" src={corazonrojo} alt='add to wishlist' />
-                        }
-                      </button>
-                    </ButtonIcon>
           <Image>
             <img src={product.grid_picture_url} alt='image not found' width={300} height={250} />
             <div className="p-5 flex flex-col  gap-3">
@@ -72,6 +65,13 @@ const Card = ({ product, isFavorite }: ProductProps) => {
                 </Link>
 
               </div>
+                    <ButtonIcon>
+                      <button onClick={handleFavorite}>
+                        {
+                          !isFavorite ? <img className="opacity-40 w-4" src={corazon} alt='remove to wishlist' /> : <img className=" w-5" src={corazonrojo} alt='add to wishlist' />
+                        }
+                      </button>
+                    </ButtonIcon>
             </div>
           </Image>
         </CardStyle>

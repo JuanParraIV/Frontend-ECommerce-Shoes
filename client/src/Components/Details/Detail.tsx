@@ -9,25 +9,42 @@ import { useSneakerStore } from "@/App/store/useSneakerStore";
 import { AddCart, Bottom, ButtonContainer, BuyNow, Minus, Num, Plus, Price, ProductDetailContainer, ProductDetailDesc, Quantity, QuantityDesc } from "./style";
 import { ShoppingCartStore } from "@/App/store/useShoppingCart";
 
-export const Details = ({ singleSneaker }) => {
-  console.log( "single", singleSneaker);
+type Props = {
+  singleSneaker: any
+}
+export const Details = ({ singleSneaker }: Props) => {
+
   const {
     id, brand_name, category_name, name, color, retail_price_cents, size_range, grid_picture_url, original_picture_url, main_picture_url, details, has_stock, status, brandId, categoryId } = singleSneaker;
-    const {addProduct} = ShoppingCartStore()
+  
+  
+  const {addProduct, products1} = ShoppingCartStore()
+    console.log( "products", products1);
+
+
   const [quantity, setQuantity]= useState(1)
+
   const handleQuantity = (type:string) => {
     if (type === "dec") {
-      quantity > 1 && setQuantity(quantity - 1);
+      quantity!==1 && setQuantity(quantity - 1);
     }
     if (type === "asc") {
-       singleSneaker.has_stock && setQuantity(quantity + 1)
+       setQuantity(quantity + 1)
     }
   };
+  const obj= { 
+    ...singleSneaker,
+    quantity,
+    price:retail_price_cents*quantity,
+    price2: retail_price_cents
+
+  }
+
+  // const arr= [...singleSneaker]
+  console.log("objeto",obj)
+
   const handleClick = () => {
-    addProduct(
-      // ...product,
-      quantity
-      )
+      addProduct(obj)   
 }; 
 
   return (
@@ -52,15 +69,19 @@ export const Details = ({ singleSneaker }) => {
                 <MinusSmallIcon />
               </Minus>
               <Num>{quantity}</Num>
+
               <Plus onClick={()=>handleQuantity("asc")}>
+              
                 <PlusSmallIcon />
               </Plus>
             </QuantityDesc>
           </Quantity>
+          <Price>Total = ${retail_price_cents*quantity}</Price>
           <ButtonContainer >
             <AddCart
               type="button"
             >
+
               <button onClick={handleClick}>
 
               Add to Cart

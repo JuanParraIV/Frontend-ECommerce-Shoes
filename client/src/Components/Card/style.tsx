@@ -11,12 +11,12 @@ export const ProductTitle = styled.div`
 ${tw`overflow-ellipsis overflow-hidden whitespace-nowrap`}`;
 
 export const ButtonStyle = styled.div`
-${tw`bg-yellow-500/80 hover:bg-yellow-500/90 px-6 py-2 rounded-md
+${tw`bg-yellow-500/80 hover:bg-yellow-500/90 px-10 py-2 rounded-md
 text-white font-medium tracking-wider transition `}`;
 
 
 export const ButtonIcon = styled.div`
-${tw`flex-grow flex justify-center items-center bg-gray-300/60 hover:bg-gray-300/80 transition rounded-md`}`;
+${tw`flex-grow flex justify-center px-5 py-3 items-center bg-gray-300/60 hover:bg-gray-300/80 transition rounded-md`}`;
 
 export const ButtonRemove = styled.div`
 ${tw`bg-red-500/80 hover:bg-red-500/90 px-3 py-2 rounded-md
