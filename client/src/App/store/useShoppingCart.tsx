@@ -1,4 +1,4 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useState } from 'react';
 import { createListenerMiddleware } from '@reduxjs/toolkit';
@@ -63,9 +63,10 @@ export interface ShoppingSneakerStoreState {
       })) 
       
     }}),
-    {
-        name: 'shopping-cart',
-    },
-    ),
 
-    )
+    {
+      name: 'shopping-cart',
+    },
+  ),
+
+);

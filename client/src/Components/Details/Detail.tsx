@@ -9,6 +9,7 @@ import { useSneakerStore } from "@/App/store/useSneakerStore";
 import { AddCart, Bottom, ButtonContainer, BuyNow, Minus, Num, Plus, Price, ProductDetailContainer, ProductDetailDesc, Quantity, QuantityDesc } from "./style";
 import { ShoppingCartStore } from "@/App/store/useShoppingCart";
 
+
 type Props = {
   singleSneaker: any
 }
@@ -20,6 +21,7 @@ export const Details = ({ singleSneaker }: Props) => {
   
   const {addProduct, products1} = ShoppingCartStore()
     console.log( "products", products1);
+
 
 
   const [quantity, setQuantity]= useState(1)
@@ -46,6 +48,7 @@ export const Details = ({ singleSneaker }: Props) => {
   const handleClick = () => {
       addProduct(obj)   
 }; 
+
 
   return (
     <>
@@ -76,17 +79,24 @@ export const Details = ({ singleSneaker }: Props) => {
               </Plus>
             </QuantityDesc>
           </Quantity>
+
           <Price>Total = ${retail_price_cents*quantity}</Price>
           <ButtonContainer >
+
             <AddCart
+              onClick={handleClick}
               type="button"
             >
 
+
               <button onClick={handleClick}>
 
+
               Add to Cart
-              </button>
             </AddCart>
+            <BuyNow type="button" onClick={handleBuyNow}>
+              Buy Now
+            </BuyNow>
           </ButtonContainer>
         </ProductDetailDesc>
       </ProductDetailContainer>
