@@ -71,9 +71,6 @@ const Card = ({ product, isFavorite }: ProductProps) => {
                         }
                       </button>
                     </ButtonIcon>
-
-            </div>
-          </div>
         </Image>
       </CardStyle>
     </>

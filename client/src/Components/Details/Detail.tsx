@@ -8,12 +8,15 @@ import { useParams } from "react-router-dom";
 import { useSneakerStore } from "@/App/store/useSneakerStore";
 import { AddCart, Bottom, ButtonContainer, BuyNow, Minus, Num, Plus, Price, ProductDetailContainer, ProductDetailDesc, Quantity, QuantityDesc } from "./style";
 import { ShoppingCartStore } from "@/App/store/useShoppingCart";
+import { SneakersType } from "@/Typing/Sneakers.type";
 
 
 type Props = {
   singleSneaker: any
 }
-export const Details = ({ singleSneaker }: Props) => {
+export const Details = () => {
+
+  const singleSneaker= useSneakerStore(state => state.singleSneaker);
 
   const {
     id, brand_name, category_name, name, color, retail_price_cents, size_range, grid_picture_url, original_picture_url, main_picture_url, details, has_stock, status, brandId, categoryId } = singleSneaker;
@@ -34,8 +37,17 @@ export const Details = ({ singleSneaker }: Props) => {
        setQuantity(quantity + 1)
     }
   };
-  const obj= { 
-    ...singleSneaker,
+
+  
+  type ProductProps = {
+    product: SneakersType;
+    quantity: number;
+    price:number;
+    price2: number
+  };
+
+  const obj:ProductProps= { 
+    product:{...singleSneaker},
     quantity,
     price:retail_price_cents*quantity,
     price2: retail_price_cents
@@ -89,14 +101,12 @@ export const Details = ({ singleSneaker }: Props) => {
             >
 
 
-              <button onClick={handleClick}>
+              <button onClick={handleClick}/>
 
 
               Add to Cart
             </AddCart>
-            <BuyNow type="button" onClick={handleBuyNow}>
-              Buy Now
-            </BuyNow>
+           
           </ButtonContainer>
         </ProductDetailDesc>
       </ProductDetailContainer>
