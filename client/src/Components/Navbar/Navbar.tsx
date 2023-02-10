@@ -1,4 +1,4 @@
-import icons from '../../assets/icons-navbar/icons-navbar';
+import icons from '@/assets/icons-navbar/icons-navbar';
 
 import { Bars3Icon, XMarkIcon, StarIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
 import { Link } from 'react-router-dom';
@@ -41,7 +41,7 @@ export default function Navbar() {
             <p>Returns</p>
             <p className="font-extrabold md: text-sm">& Orders</p>
           </div>
-          
+
           <button >
 
           <div className=" relative link flex items-center"
