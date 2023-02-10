@@ -16,8 +16,6 @@ import { useSneakerStore } from "@/App/store/useSneakerStore";
 type ProductProps = {
   product: SneakersType;
   isFavorite: boolean;
-  quantity: {};
-  id:any
 };
 
 const Card = ({ product, isFavorite }: ProductProps) => { 
@@ -25,7 +23,7 @@ const Card = ({ product, isFavorite }: ProductProps) => {
   const { addFavoriteSneaker, removeFavoriteSneaker} = FavoriteSneakerStore(state => state);
   const { sneakers, fetchSneakers } = useSneakerStore(state => state);
   // console.log("product",product)
- 
+
 
 
 
@@ -38,6 +36,7 @@ const Card = ({ product, isFavorite }: ProductProps) => {
   };
   return (
     <>
+
         <CardStyle >
           <Image>
             <img src={product.grid_picture_url} alt='image not found' width={300} height={250} />
@@ -55,14 +54,14 @@ const Card = ({ product, isFavorite }: ProductProps) => {
                 </span>
               </div>
 
-              <div className="mt-5 flex gap-2">
-               
+
 
               <Link to={`/product/${product.id}`}>
                 <ButtonStyle>
                   <button>Detail</button>
                 </ButtonStyle>
-                </Link>
+              </Link>
+
 
               </div>
                     <ButtonIcon>
@@ -72,9 +71,11 @@ const Card = ({ product, isFavorite }: ProductProps) => {
                         }
                       </button>
                     </ButtonIcon>
+
             </div>
-          </Image>
-        </CardStyle>
+          </div>
+        </Image>
+      </CardStyle>
     </>
   );
 };
