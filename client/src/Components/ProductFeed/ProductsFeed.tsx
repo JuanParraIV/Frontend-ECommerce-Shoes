@@ -33,7 +33,7 @@ const ProductsFeed = () => {
       <CardsContainer>
         {currentElements?.map(p => (
           <Card key={p.id} product={p}
-            isFavorite={favoriteSneakerIds.includes(p.id)} />
+          isFavorite={favoriteSneakerIds.includes(p.id)} quantity={undefined} id={undefined} />
         ))}
       </CardsContainer>
       <Paginated
