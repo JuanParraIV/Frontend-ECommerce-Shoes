@@ -11,17 +11,15 @@ import { ShoppingCartStore } from "@/App/store/useShoppingCart";
 import { SneakersType } from "@/Typing/Sneakers.type";
 
 
-type Props = {
-  singleSneaker: any
-}
 export const Details = () => {
 
   const singleSneaker= useSneakerStore(state => state.singleSneaker);
+  console.log(singleSneaker)
 
   const {
     id, brand_name, category_name, name, color, retail_price_cents, size_range, grid_picture_url, original_picture_url, main_picture_url, details, has_stock, status, brandId, categoryId } = singleSneaker;
-  
-  
+
+
   const {addProduct, products1} = ShoppingCartStore()
     console.log( "products", products1);
 
@@ -38,7 +36,7 @@ export const Details = () => {
     }
   };
 
-  
+
   type ProductProps = {
     product: SneakersType;
     quantity: number;
@@ -46,7 +44,7 @@ export const Details = () => {
     price2: number
   };
 
-  const obj:ProductProps= { 
+  const obj:ProductProps= {
     product:{...singleSneaker},
     quantity,
     price:retail_price_cents*quantity,
@@ -58,8 +56,8 @@ export const Details = () => {
   console.log("objeto",obj)
 
   const handleClick = () => {
-      addProduct(obj)   
-}; 
+      //addProduct(obj)
+};
 
 
   return (
@@ -86,7 +84,7 @@ export const Details = () => {
               <Num>{quantity}</Num>
 
               <Plus onClick={()=>handleQuantity("asc")}>
-              
+
                 <PlusSmallIcon />
               </Plus>
             </QuantityDesc>
@@ -106,7 +104,7 @@ export const Details = () => {
 
               Add to Cart
             </AddCart>
-           
+
           </ButtonContainer>
         </ProductDetailDesc>
       </ProductDetailContainer>
