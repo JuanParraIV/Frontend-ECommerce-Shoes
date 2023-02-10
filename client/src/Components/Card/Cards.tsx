@@ -20,7 +20,7 @@ type ProductProps = {
   id:any
 };
 
-const Card = ({ product, isFavorite }: ProductProps) => {
+const Card = ({ product, isFavorite }: ProductProps) => { 
   const navigate = useNavigate();
   const { addFavoriteSneaker, removeFavoriteSneaker} = FavoriteSneakerStore(state => state);
   const { sneakers, fetchSneakers } = useSneakerStore(state => state);
