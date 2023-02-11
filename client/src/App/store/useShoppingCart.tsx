@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import { SneakersType } from '@/Typing/Sneakers.type';
 import { pid } from 'process'; 
+import { Quantity } from '@/Components/Details/style';
 
 
 
@@ -11,11 +12,13 @@ import { pid } from 'process';
 
 export interface ShoppingSneakerStoreState {
     products1:number[]
+    quantity: number
     addProduct: (id: number) => void
-    // decreaseCartQuantity: (id: number) => void
+    // clearCart: (id: number) => void
     removeFromCart: (id: number) => void
     cartQuantity: number
     total:number
+  
    
   }
 
@@ -27,6 +30,7 @@ export interface ShoppingSneakerStoreState {
       products1:[],
       cartQuantity: 0,
       total:0,
+      quantity: 0,
       addProduct: 
       (obj) =>{
       const checkRepeat = get().products1.some(
@@ -37,16 +41,19 @@ export interface ShoppingSneakerStoreState {
         set(state =>({
           cartQuantity: state.cartQuantity+=1,
           products:  state.products1.push(obj),
-          total: state.total += obj.price
+          total: state.total += obj.price,
+          quantity: state.quantity += obj.quantity
+
                  
         }))
       }else{
-        alert("The product is already in the shopping cart")
+        alert("This product is already in the shopping cart")
       }
      },
-      // decreaseCartQuantity: (id: number) => set(state => ({
-      //   cartQuantity: state.cartQuantity - 1
-      // })),
+      // clearCart: (id: number) => 
+      // set(state => ({
+      //   products1: state.products1.filter(sneakerId => sneakerId === id)
+      // })),   
       
       removeFromCart: ({
         remove,
@@ -60,7 +67,12 @@ export interface ShoppingSneakerStoreState {
         total:state.total = state.products1.reduce(
           (acumulador, actual) => acumulador + actual.price,
           0
+        ),
+        quantity: state.quantity = state.products1.reduce(
+          (acumulador, actual) => acumulador + actual.quantity, 
+          0
         )
+        
       })) 
       
     }}),

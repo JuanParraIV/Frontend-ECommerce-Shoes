@@ -1,10 +1,11 @@
 import { ShoppingCartStore } from '@/App/store/useShoppingCart';
 import { SneakersType } from '@/Typing/Sneakers.type';
 import React from 'react'
-import { Details } from '../Details/Detail';
 import { formatCurrency } from '../../Utilities/formatCurrency';
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
+import {CardStyle, Image, Card, Text, Continue, Delete, ProductDetail, ProductContainer, Buy} from './style'
+import carritoVacio from '../../assets/icons-cart/carritovacio.png'
 
 
 type ProductProps = {
@@ -18,11 +19,11 @@ type ProductProps = {
 
 
 
-const Cart = ({brand_name, quantity,details, grid_picture_url, id}: ProductProps) => {
+const Cart = ({brand_name,details, grid_picture_url, id}: ProductProps) => {
 
   
 
-  const { products1, removeFromCart, total, cartQuantity} = ShoppingCartStore(state => state);
+  const { products1, removeFromCart, total, cartQuantity, quantity} = ShoppingCartStore(state => state);
   console.log('product', products1)
   console.log('total', total )
   console.log('quantity', cartQuantity )
@@ -36,30 +37,43 @@ const Cart = ({brand_name, quantity,details, grid_picture_url, id}: ProductProps
   
   return (
  
-    
+    <>
+    <Navbar/>
 
-    <div className=" flex flex-col justify-between">
-      <Navbar/>
+        <div >
+            <Continue>
               <Link to='/'>
                <button>Continue Shopping</button>
               </Link>
+            </Continue>
+      
+      <ProductContainer>
       {products1.length < 1 && (
-        <div>
+        <Text>
+        <div > 
           <h3>Your shopping cart is Empty</h3>
+          <img src={carritoVacio} alt='empty shopping cart' width='100px' height='100px' />
         </div>
+        </Text>
       )}
      
       {
         products1.length > 0 &&
         products1.map((item,index) => (
-
+          
           <div>
+            <CardStyle>
             <img src={item.main_picture_url} width='350px' height='350px'/>
-            <h1>Details: {item.details}</h1>
-            <h1>Brand: {item.brand_name}</h1>
+            <ProductDetail>
+
+            <h5>Details:</h5>
+            <p>{item.details}</p>
+            <h5>Brand: </h5>
+            <p>{item.brand_name}</p>
             <div>
+              <h5>Size</h5> 
               <select> 
-              <option>Size</option> 
+
               <option value='10'>10</option>
               <option value='10.5'>10.5</option>
               <option value='11'>11</option>
@@ -92,22 +106,46 @@ const Cart = ({brand_name, quantity,details, grid_picture_url, id}: ProductProps
               </select>
 
             </div>
-            <h5>Price: {item.price2}</h5>
-            <h5>Quiantity: {item.quantity}</h5>
-            <h5>Total Price: {item.price}</h5>
-           
+            <h5>Price</h5>
+            <p>${item.price2}</p>
+            <h5>Quantity:</h5>
+            <p>{item.quantity}</p>
+            <h5>Total Price:</h5>
+            <p>${item.price}</p>
+            </ProductDetail>
+
+           <Delete>
             <button onClick={()=>handleClick(index)}>Delete</button> 
+           </Delete>
+      </CardStyle>
+
           </div>
+
         ))
       }
+       
       <br />
-<hr />
-<hr />
-      <h1>Quantity:</h1>
-      <h1>Total: ${total}</h1>
+       <hr />
+       <hr />
+        </ProductContainer>    
+      <Text>
+      <h5>Quantity: 
+      <p> {quantity}</p>
+      </h5>
+      <h5>Total:</h5>
+      <p> ${total}</p>
+      </Text>
+
+      {quantity>0 && 
+      <div>
+        <Buy>
+          <button>Buy Now</button>
+        </Buy>
+        </div>}
+        </div>
+      
              
-     
-    </div>
+    </>
   )
 };
 
