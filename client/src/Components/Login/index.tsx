@@ -4,7 +4,7 @@ import PasswordInput from '../Shared/Form/passwordInput';
 import SubmitButton from '../Shared/Form/submitButton';
 import TextInput from '../Shared/Form/textInput';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuthStore } from '@/App/store/useAuthStore';
 
 export interface LoginData {
@@ -12,25 +12,17 @@ export interface LoginData {
   password: string;
 }
 const LoginForm = () => {
-  const {token, authLogin}= useAuthStore(state => state);
-  console.log(token)
+  const { token, profile, authLogin, getProfile } = useAuthStore(state => state);
+  console.log(token);
+  console.log(profile);
   const [form, setForm] = useState<LoginData>({
     userName: "",
     password: "",
   });
-  console.log(form)
-
- /*  const LoginUsers = async (data: LoginData) => {
-    const response = await api.post("/auth/login", JSON.stringify(data), {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    return response
-  } */
+  console.log(form);
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const { name, value } = event.target  as HTMLInputElement
+    const { name, value } = event.target as HTMLInputElement;
 
     setForm(() => ({
       ...form,
@@ -40,8 +32,9 @@ const LoginForm = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const resLogin=await authLogin(form);
-      console.log(resLogin)
+      const resLogin = await authLogin(form);
+      const resProfile = await getProfile();
+      console.log(resLogin);
       setForm({
         userName: "",
         password: "",
@@ -50,6 +43,8 @@ const LoginForm = () => {
       console.log(error);
     }
   };
+
+
   return (
     <form onSubmit={handleSubmit} className='flex flex-col w-full items-center justify-center gap-5 py-12'>
       <Logo />
