@@ -4,9 +4,9 @@ import {
 } from "@heroicons/react/24/outline";
 //import { useStateContext } from "../../context/StateContext";
 import MayLikeProducts from "../MayLikeProducts/MayLikeProducts";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSneakerStore } from "@/App/store/useSneakerStore";
-import { AddCart, Bottom, ButtonContainer, BuyNow, Minus, Num, Plus, Price, ProductDetailContainer, ProductDetailDesc, Quantity, QuantityDesc } from "./style";
+import { AddCart, Continue,  Bottom, ButtonContainer, BuyNow, Minus, Num, Plus, Price, ProductDetailContainer, ProductDetailDesc, Quantity, QuantityDesc } from "./style";
 import { ShoppingCartStore } from "@/App/store/useShoppingCart";
 import { SneakersType } from "@/Typing/Sneakers.type";
 
@@ -97,13 +97,14 @@ export const Details = () => {
               onClick={handleClick}
               type="button"
             >
-
-
               <button onClick={handleClick}/>
-
-
               Add to Cart
             </AddCart>
+            <Continue>
+              <Link to='/'>
+               <button>Continue Shopping</button>
+              </Link>
+            </Continue>
 
           </ButtonContainer>
         </ProductDetailDesc>

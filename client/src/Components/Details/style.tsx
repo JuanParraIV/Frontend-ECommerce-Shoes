@@ -58,9 +58,19 @@ export const ButtonContainer = styled.div`
 export const AddCart = styled.button`
   transform: scale(1, 1);
   transition: transform 0.5s ease;
-  ${tw`px-[10px] py-5 border border-solid border-black mt-10 text-lg font-medium bg-yellow-400 cursor-pointer w-[200px]`}
+  ${tw`px-[10px] py-5 border border-solid border-black mt-10 text-lg font-medium bg-yellow-500 cursor-pointer w-[200px] hover:bg-yellow-400/90 px-10 py-2 rounded-md
+  text-white font-medium tracking-wider transition`}
+ 
+  `;
+
+  export const Continue = styled.button`
+  transform: scale(1, 1);
+  transition: transform 0.5s ease;
+  ${tw`px-[10px] py-5 border border-solid border-black mt-10 text-lg font-medium bg-red-500/90 cursor-pointer w-[200px] hover:bg-red-400/90 px-10 py-2 rounded-md
+  text-white font-medium tracking-wider transition`}
   &hover:transform: scale(1.1, 1.1);
   `;
+
 export const BuyNow = styled.button`
 transform: scale(1, 1);
 transition: transform 0.5s ease;
