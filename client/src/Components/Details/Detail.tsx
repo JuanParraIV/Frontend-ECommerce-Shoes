@@ -37,15 +37,15 @@ export const Details = () => {
   };
 
 
-  type ProductProps = {
-    product: SneakersType;
-    quantity: number;
-    price:number;
-    price2: number
-  };
+  // type ProductProps = {
+  //   product: SneakersType;
+  //   quantity: number;
+  //   price:number;
+  //   price2: number
+  // };
 
-  const obj:ProductProps= {
-    product:{...singleSneaker},
+  const obj= {
+    ...singleSneaker,
     quantity,
     price:retail_price_cents*quantity,
     price2: retail_price_cents
@@ -56,7 +56,7 @@ export const Details = () => {
   console.log("objeto",obj)
 
   const handleClick = () => {
-      //addProduct(obj)
+      addProduct(obj)
 };
 
 
