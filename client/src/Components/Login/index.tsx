@@ -6,6 +6,7 @@ import TextInput from '../Shared/Form/textInput';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuthStore } from '@/App/store/useAuthStore';
+import { useNavigate } from 'react-router-dom';
 
 export interface LoginData {
   userName: string;
@@ -13,6 +14,7 @@ export interface LoginData {
 }
 const LoginForm = () => {
   const { token, profile, authLogin, getProfile } = useAuthStore(state => state);
+  const navigate = useNavigate();
   console.log(token);
   console.log(profile);
   const [form, setForm] = useState<LoginData>({
@@ -39,6 +41,8 @@ const LoginForm = () => {
         userName: "",
         password: "",
       });
+      navigate('/')
+
     } catch (error) {
       console.log(error);
     }
