@@ -3,7 +3,6 @@ import { SneakersType } from '@/Typing/Sneakers.type';
 import React from 'react'
 import { formatCurrency } from '../../Utilities/formatCurrency';
 import { Link } from 'react-router-dom';
-import Navbar from '../Navbar/Navbar';
 import {CardStyle, Image, Card, Text, Continue, Delete, ProductDetail, ProductContainer, Buy} from './style'
 import carritoVacio from '../../assets/icons-cart/carritovacio.png'
 
@@ -38,7 +37,7 @@ const Cart = ({brand_name,details, grid_picture_url, id}: ProductProps) => {
   return (
  
     <>
-    <Navbar/>
+   
 
         <div >
             <Continue>
