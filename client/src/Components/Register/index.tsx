@@ -37,7 +37,7 @@ const RegisterForm = () => {
   const addUsers = async (data: FormData) => {
     const request = {
       ...data
-    }
+  }
     const response = await api.post("/users", request)
   }
 
@@ -52,7 +52,6 @@ const RegisterForm = () => {
       ...form,
       [name]: value,
     }));
-
   }
 
   const handleSubmit = async (data: FormData) => {

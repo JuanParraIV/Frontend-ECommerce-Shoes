@@ -2,7 +2,10 @@ import React from 'react'
 import EyeIcon from '../../Icons/eyeIcon'
 
 interface Props {
+  name:string
   placeholder?: string
+  value: string
+  onChange: (event: React.FormEvent<HTMLInputElement>) => void
 }
 
 // About types here: https://www.carlrippon.com/react-forwardref-typescript/
