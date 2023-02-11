@@ -27,12 +27,6 @@ const Cart = ({brand_name, quantity,details, grid_picture_url, id}: ProductProps
   console.log('total', total )
   console.log('quantity', cartQuantity )
  
-  // const obj= { 
-  //   quantity,
-  //   price:retail_price_cents*quantity,
-  //   price2: retail_price_cents
-
-  // }
 
   const handleClick = (id) => {
     removeFromCart({
@@ -46,7 +40,7 @@ const Cart = ({brand_name, quantity,details, grid_picture_url, id}: ProductProps
 
     <div className=" flex flex-col justify-between">
       <Navbar/>
-      <Link to='/'>
+              <Link to='/'>
                <button>Continue Shopping</button>
               </Link>
       {products1.length < 1 && (
@@ -64,14 +58,39 @@ const Cart = ({brand_name, quantity,details, grid_picture_url, id}: ProductProps
             <h1>Details: {item.details}</h1>
             <h1>Brand: {item.brand_name}</h1>
             <div>
-              <select >
-
-                {/* {item.size_range.map(
-                  size=> (
-                    <option >Size: {size}</option>
-                  )
-                )} */}
+              <select> 
+              <option>Size</option> 
+              <option value='10'>10</option>
+              <option value='10.5'>10.5</option>
+              <option value='11'>11</option>
+              <option value='11.5'>11.5</option>
+              <option value='12'>12</option>
+              <option value='12.5'>12.5</option>
+              <option value='13'>13</option>
+              <option value='13.5'>13.5</option>
+              <option value='14'>14</option>
+              <option value='14.5'>14.5</option>
+              <option value='15'>15</option>
+              <option value='16'>16</option>
+              <option value='16.5'>16.5</option>
+              <option value='17'>17</option>
+              <option value='17.5'>17.5</option>
+              <option value='18'>18</option>
+              <option value='3.5'>3.5</option>
+              <option value='4'>4</option>
+              <option value='4.5'>4.5</option>
+              <option value='5'>5</option>
+              <option value='5.5'>5.5</option>
+              <option value='6'>6</option>
+              <option value='6.5'>6.5</option>
+              <option value='7'>7</option>
+              <option value='7.5'>7.5</option>
+              <option value='8'>8</option>
+              <option value='8.5'>8.5</option>
+              <option value='9'>9</option>
+              <option value='9.5'>9.5</option>
               </select>
+
             </div>
             <h5>Price: {item.price2}</h5>
             <h5>Quiantity: {item.quantity}</h5>

@@ -30,17 +30,18 @@ export interface ShoppingSneakerStoreState {
       addProduct: 
       (obj) =>{
       const checkRepeat = get().products1.some(
-        (e) => e.id === obj.id
+        (e) => e.id === obj.id,
+        alert('Added to shopping cart')
       )
       if(checkRepeat===false){
         set(state =>({
           cartQuantity: state.cartQuantity+=1,
           products:  state.products1.push(obj),
           total: state.total += obj.price
-          
+                 
         }))
       }else{
-        alert("ya esta")
+        alert("The product is already in the shopping cart")
       }
      },
       // decreaseCartQuantity: (id: number) => set(state => ({
