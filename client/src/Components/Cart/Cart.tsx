@@ -66,11 +66,11 @@ const Cart = ({brand_name, quantity,details, grid_picture_url, id}: ProductProps
             <div>
               <select >
 
-                {item.size_range.map(
+                {/* {item.size_range.map(
                   size=> (
                     <option >Size: {size}</option>
                   )
-                )}
+                )} */}
               </select>
             </div>
             <h5>Price: {item.price2}</h5>
