@@ -107,8 +107,9 @@ function handleClick(){
         <div
           className="cursor-pointer link"
         >
-        
+          <Link to='/profile'>
           <button className="font-extrabold md: text-sm">My Acount</button>
+          </Link>
           <br/>
           <button className="font-extrabold md: text-sm" onClick={()=>handleClick()}>Log Out</button>
         </div>

@@ -7,6 +7,7 @@ import SneakerPage from './Pages/Sneaker/SneakerPage';
 import LoginPage from './Pages/Login/LoginPage';
 import RegisterPage from './Pages/Register/RegisterPage';
 import CartContainer from './Containers/Cart/CartConteiner';
+import Profile from './Components/Profile/Profile';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path='/product/:id' element={<SneakerPage />} />
         <Route path='/formCreateProduct' element={<CreateFormPage />} />
         <Route path='/shoppingCart' element={<CartContainer/>}/>
+        <Route path='/profile' element={<Profile/>}/>
       </Routes>
     </BrowserRouter>
 
