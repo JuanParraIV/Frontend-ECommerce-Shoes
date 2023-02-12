@@ -12,7 +12,7 @@ export default function Navbar() {
 
   const {cartQuantity} = ShoppingCartStore();
   const {token, clearToken} = useAuthStore();
-  console.log('token',token.length)
+  console.log('token',token)
 
 function handleClick(){
   return clearToken()
