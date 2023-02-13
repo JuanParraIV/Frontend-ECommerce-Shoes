@@ -1,5 +1,5 @@
 import React from 'react';
-import FormCreateProduct from '../../Components/Form/FormCreateProduct';
+import FormCreateProduct from '../../Components/FormCreateProduct/FormCreateProduct';
 import Navbar from '../../Components/Navbar/Navbar';
 import Footer from '@/Components/Footer/Footer';
 
