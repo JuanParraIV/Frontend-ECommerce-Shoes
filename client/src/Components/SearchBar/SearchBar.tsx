@@ -6,6 +6,7 @@ type FormEvent = React.FormEvent<HTMLFormElement>;
 type InputEvent = React.ChangeEvent<HTMLInputElement>;
 const SearchBar = () => {
   const [search, setSearch] = useState('');
+  console.log("search", search)
   const { fetchSneakersByName } = useSneakerStore(state => state);
   const handleOnSearch = (event: InputEvent) => {
     const { value } = event.target;

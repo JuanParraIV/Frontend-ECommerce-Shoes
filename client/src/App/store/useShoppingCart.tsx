@@ -7,7 +7,12 @@ import { pid } from 'process';
 import { Quantity } from '@/Components/Details/style';
 
 
-
+type State = {
+  id: number
+  price: any
+  quantity: any
+  remove: any
+}
 
 
 export interface ShoppingSneakerStoreState {
@@ -35,7 +40,6 @@ export interface ShoppingSneakerStoreState {
       (obj) =>{
       const checkRepeat = get().products1.some(
         (e) => e.id === obj.id,
-        alert('Added to shopping cart')
       )
       if(checkRepeat===false){
         set(state =>({

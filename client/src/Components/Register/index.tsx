@@ -8,11 +8,15 @@ import SearchIcon from '../Icons/searchIcon';
 import CheckInput from '../Shared/Form/inputCheck';
 import SubmitButton from '../Shared/Form/submitButton';
 import { Link } from 'react-router-dom';
+import validateRegisterForm from './validation';
+import { useNavigate } from 'react-router-dom';
 
 
 interface FormData {
-  email: string;
+  userName: string;
+  email:string;
   password: string;
+  password2: string;
   country: string;
   lang: string;
   retype?: string;
@@ -23,22 +27,27 @@ interface FormData {
 const RegisterForm = () => {
   //const router = useRouter();
   const [users, setUsers] = useState([]);
+  const [errors, setErrors] = useState({userName:"", email: "", password: "", password2: ""})
+  const navigate = useNavigate();
+  
   const [form, setForm] = useState<FormData>({
-    email: "",
+    userName: "",
+    email:"",
     password: "",
+    password2: "",
     country: "",
     lang: ""
   });
 
   const retrieveContacts = async () => {
-    const response = await api.get('/users');
+    const response = await api.get('/user');
     return response.data
   }
   const addUsers = async (data: FormData) => {
     const request = {
       ...data
   }
-    const response = await api.post("/users", request)
+    const response = await api.post("/user", request)
   }
 
   const refreshPage = () => {
@@ -52,17 +61,24 @@ const RegisterForm = () => {
       ...form,
       [name]: value,
     }));
+    setErrors(validateRegisterForm({
+      ...form,
+      [name]:value
+    }))
   }
 
   const handleSubmit = async (data: FormData) => {
     try {
       addUsers(data);
       setForm({
-        email: "",
+        userName: "",
+        email:"",
         password: "",
+        password2: "",
         country: "",
         lang: ""
       });
+      navigate('/login')
       refreshPage();
     } catch (error) {
       console.log(error);
@@ -80,6 +96,9 @@ const RegisterForm = () => {
   console.log(users)
 
 
+ 
+
+
   return (
     <div className='bg-bg_primary w-50'>
       <form className='flex flex-col w-full items-center justify-center gap-5 py-12' onSubmit={(event) => {
@@ -89,6 +108,20 @@ const RegisterForm = () => {
         <Logo />
         <h1 className='text-center text-2xl text-[#F53F00] mt-10'>Create your Account</h1>
         <div className='flex relative flex-col  items-center justify-center gap-5'>
+        <div className='flex justify-end items-center relative'>
+            <input
+              type="text"
+              name='userName'
+              value={form.userName}
+              onChange={handleChange}
+              placeholder='userName'
+              className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400' />
+           
+              <br/>
+               {errors.userName ?
+                             <p className='bg-red;'>{errors.userName}</p> : null 
+                         }
+          </div>
           <div className='flex justify-end items-center relative'>
             <input
               type="text"
@@ -97,7 +130,10 @@ const RegisterForm = () => {
               onChange={handleChange}
               placeholder='Email'
               className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400' />
-            <LockIcon />
+              {errors.email?
+                             <p className='bg-red;'>{errors.email}</p> : null 
+                         }
+        
           </div>
 
           <div className='flex justify-end items-center relative'>
@@ -110,47 +146,33 @@ const RegisterForm = () => {
               onChange={handleChange}
               className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400'
             />
-            <EyeIcon />
+             {errors.password?
+                             <p className='bg-red;'>{errors.password}</p> : null 
+                         }
+
           </div>
 
           <div className='flex justify-end items-center relative'>
             <input
               type="password"
               required
+              name='password2'
+              value={form.password2}
               placeholder='Retype Password'
+              onChange={handleChange}
               className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400'
             />
-            <EyeIcon />
+            {errors.password2?
+                             <p className='bg-red;'>{errors.password2}</p> : null 
+                         }
           </div>
 
-          <div className='flex w-[280px] justify-start items-center relative'>
-            <SearchIcon />
-            <select
-              name='country'
-              onChange={handleChange}
-              className='rounded-3xl w-full text-primary bg-white p-3 border border-gray-200 px-10'>
-              <option value="" selected>Country of Residence</option>
-              <option value="Colombia">Colombia</option>
-              <option value="USA">USA</option>
-              <option value="CANADA">CANADA</option>
-            </select>
-          </div>
 
-          <div className='flex w-[280px] justify-start items-center relative'>
-            <select
-              name='lang'
-              onChange={handleChange}
-              className='rounded-3xl w-full text-primary bg-white p-3 border border-gray-200 px-10'>
-              <option value="" selected>Select your language</option>
-              <option value="English">English</option>
-              <option value="Spanish">Spanish</option>
-              <option value="French">French</option>
-            </select>
-          </div>
-
+    
 
           <div className='p-2 w-[250px]'>
             <CheckInput name='' value='void' />
+            <br/>
             <h1 className='text-xs text-justify'>By continuing I agree to the <Link to={'/'}><a className=' text-primary underline cursor-pointer'>Terms of Services</a></Link> and <Link to={'/'}><a className=' text-primary underline cursor-pointer'>Privacy Policy</a></Link></h1>
           </div>
           <SubmitButton text='Sign up' />

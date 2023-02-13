@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import validateProductForm from './validation';
 import { FormContainer, LabelContainer, Button, Error } from './style';
+import { useSneakerStore } from '@/App/store/useSneakerStore';
+import api from '@/Api/backend_sneakers';
+import { request } from 'http';
 // import dates from '../../../sneaker.json'
 // import {useDispatch} from 'react-redux';
 
@@ -13,11 +16,30 @@ interface Props {
   brand: string;
   description: string;
   status: string;
+  category_name: string
+  color: string
+  size_range: string
 }
 
-const FormCreateProduct = ({ name, brand, price, image, description, stock, status }: Props) => {
+const FormCreateProduct = ({ name, brand, price, image, description, stock, status, category_name, color, size_range }: Props) => {
 
   const [formSend, setFormSend] = useState(false);
+  const [products, setProducts] = useState([]);
+  
+  const routePostProduct = async () => {
+    const response = await api.get('/sneakers');
+    return response.data
+  };
+
+  const addProduct = async (data: Props) => {
+    const request = {
+      ...data
+    }
+    const response = await api.post("/sneakers", request)
+  };
+
+
+
   return (
     <div>
       <FormContainer>
@@ -29,27 +51,34 @@ const FormCreateProduct = ({ name, brand, price, image, description, stock, stat
             image,
             description,
             stock,
-            status
+            status,
+            category_name,
+            color,
+            size_range
           }}
 
             onSubmit={(valores, { resetForm }) => {
               resetForm();
+              addProduct(valores);
               console.log(valores);
               console.log('Formulario Enviado');
               setFormSend(true);
               setTimeout(() => setFormSend(false), 5000);
+
             }}
+              
             validate={(values) => validateProductForm(values)}
           >
 
-            {({ errors }) => (
+            {({ errors, values, handleChange }) => (
               <Form >
                 <h1 className='text-gray-900 font-bold text-xl mb-2'>Create Product</h1>
+                {console.log(values)}
 
                 <LabelContainer>
 
                   <div >
-                    <label htmlFor='name' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>Name</label>
+                    <label htmlFor='name' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>Product Name</label>
 
                     <Field
                       className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
@@ -57,6 +86,8 @@ const FormCreateProduct = ({ name, brand, price, image, description, stock, stat
                       id='name'
                       name='name'
                       placeholder='Name'
+                      value={values.name}
+                      onChange={handleChange}
                     />
                     <Error>
                       <ErrorMessage name='name' component={() => (
@@ -73,6 +104,8 @@ const FormCreateProduct = ({ name, brand, price, image, description, stock, stat
                       id='price'
                       name='price'
                       placeholder='price'
+                      value={values.price}
+                      onChange={handleChange}
                     />
                     <Error>
                       <ErrorMessage name='price' component={() => (
@@ -90,6 +123,8 @@ const FormCreateProduct = ({ name, brand, price, image, description, stock, stat
                       id='stock'
                       name='stock'
                       placeholder='stock'
+                      value={values.stock}
+                      onChange={handleChange}
                     />
                     <Error>
                       <ErrorMessage name='stock' component={() => (
@@ -110,6 +145,8 @@ const FormCreateProduct = ({ name, brand, price, image, description, stock, stat
                       <option value='Nike'>Nike</option>
                       <option value='Vans'>Vans</option>
                       <option value='adidas'>adidas</option>
+                      value={values.brand}
+                      onChange={handleChange}
                     </Field>
                     <Error>
                       <ErrorMessage name='brand' component={() => (
@@ -117,6 +154,64 @@ const FormCreateProduct = ({ name, brand, price, image, description, stock, stat
                       )} />
                     </Error>
                   </div>
+
+                  <div >
+                    <label htmlFor='category_name' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>Category</label>
+                    <Field className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe' name='category' as='select'>
+                      <option>Select Category</option>
+                      <option value='lifestyle'>Lifestyle</option>
+                      <option value='basketball'>Basketball</option>
+                      <option value='running'>Running</option>
+                      <option value='skateboarding'>Skateboarding</option>
+                      <option value='other'>Other</option>
+                      value={values.category_name}
+                      onChange={handleChange}
+                    </Field>
+                    <Error>
+                      <ErrorMessage name='category' component={() => (
+                        <div>{errors.category_name}</div>
+                      )} />
+                    </Error>
+                  </div>
+
+                  <div >
+                    <label htmlFor='color' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>Color</label>
+
+                    <Field
+                      className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
+                      type='text'
+                      id='color'
+                      name='color'
+                      placeholder='Color'
+                      value={values.color}
+                      onChange={handleChange}
+                    />
+                    <Error>
+                      <ErrorMessage name='color' component={() => (
+                        <div >{errors.color}</div>
+                      )} />
+                    </Error>
+                  </div>
+
+                  <div >
+                    <label htmlFor='size_range' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>Size</label>
+
+                    <Field
+                      className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
+                      type='number'
+                      id='size_range'
+                      name='size_range'
+                      placeholder='Size'
+                      value={values.size_range}
+                      onChange={handleChange}
+                    />
+                    <Error>
+                      <ErrorMessage name='size_range' component={() => (
+                        <div >{errors.size_range}</div>
+                      )} />
+                    </Error>
+                  </div>
+
 
                   <div className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'> Status
                     <hr />
@@ -136,7 +231,13 @@ const FormCreateProduct = ({ name, brand, price, image, description, stock, stat
                     Description
                     <hr />
                     <label className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>
-                      <Field className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe' name='description' as='textarea' placeholder='Description' />
+                      <Field className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe' 
+                      name='description' 
+                      as='textarea' 
+                      placeholder='Description' 
+                      value={values.description}
+                      onChange={handleChange}
+                      />
                     </label>
                     <Error>
                       <ErrorMessage name='description' component={() => (
@@ -152,6 +253,8 @@ const FormCreateProduct = ({ name, brand, price, image, description, stock, stat
                       type='text'
                       id='image'
                       name='image'
+                      value={values.image}
+                      onChange={handleChange}
                     />
                     <Error>
                       <ErrorMessage name='image' component={() => (

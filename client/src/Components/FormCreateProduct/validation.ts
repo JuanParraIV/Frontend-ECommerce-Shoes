@@ -7,6 +7,9 @@ interface FormData {
   brand: string;
   description: string;
   status: string;
+  category_name: string;
+  color: string
+  size_range: string
 }
 
 interface Errors {
@@ -17,6 +20,9 @@ interface Errors {
   brand: string;
   description: string;
   status: string;
+  category_name: string;
+  color: string
+  size_range: string
 }
 
 const NAME_REGEX = /^[a-zA-ZÀ-ÿ\s]{1,40}$/;
@@ -36,6 +42,12 @@ const validateStock = (stock: number): string =>
 
 const validateBrand = (brand: string): string => !brand ? 'Brand is required' : '';
 
+const validateColor = (color: string): string => !color ? 'Color is required' : '';
+
+const validateSize = (size_range: string): string => !size_range ? 'Size is required' : '';
+
+const validateCategory = (category_name: string): string => !category_name ? 'Category is required' : '';
+
 const validateDescription = (description: string): string =>
   !description ? 'Please introduce a description' : '';
 
@@ -48,7 +60,10 @@ export default function validateProductForm(formData: FormData): Errors {
     image: validateImage(formData.image),
     stock: validateStock(formData.stock),
     brand: validateBrand(formData.brand),
+    category_name: validateCategory(formData.category_name), 
     description: validateDescription(formData.description),
     status: validateStatus(formData.status),
+    color: validateColor (formData.color),
+    size_range: validateSize(formData.size_range)
   };
 }
