@@ -17,8 +17,6 @@ interface FormData {
   email:string;
   password: string;
   password2: string;
-  country: string;
-  lang: string;
   retype?: string;
   id?: string;
 }
@@ -29,14 +27,12 @@ const RegisterForm = () => {
   const [users, setUsers] = useState([]);
   const [errors, setErrors] = useState({userName:"", email: "", password: "", password2: ""})
   const navigate = useNavigate();
-  
+
   const [form, setForm] = useState<FormData>({
     userName: "",
     email:"",
     password: "",
     password2: "",
-    country: "",
-    lang: ""
   });
 
   const retrieveContacts = async () => {
@@ -75,8 +71,6 @@ const RegisterForm = () => {
         email:"",
         password: "",
         password2: "",
-        country: "",
-        lang: ""
       });
       navigate('/login')
       refreshPage();
@@ -96,11 +90,11 @@ const RegisterForm = () => {
   console.log(users)
 
 
- 
+
 
 
   return (
-    <div className='bg-bg_primary w-50'>
+    <div className='w-50'>
       <form className='flex flex-col w-full items-center justify-center gap-5 py-12' onSubmit={(event) => {
         event.preventDefault();
         handleSubmit(form);
@@ -116,10 +110,10 @@ const RegisterForm = () => {
               onChange={handleChange}
               placeholder='userName'
               className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400' />
-           
+
               <br/>
                {errors.userName ?
-                             <p className='bg-red;'>{errors.userName}</p> : null 
+                             <p className='bg-red;'>{errors.userName}</p> : null
                          }
           </div>
           <div className='flex justify-end items-center relative'>
@@ -131,9 +125,9 @@ const RegisterForm = () => {
               placeholder='Email'
               className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400' />
               {errors.email?
-                             <p className='bg-red;'>{errors.email}</p> : null 
+                             <p className='bg-red;'>{errors.email}</p> : null
                          }
-        
+
           </div>
 
           <div className='flex justify-end items-center relative'>
@@ -147,7 +141,7 @@ const RegisterForm = () => {
               className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400'
             />
              {errors.password?
-                             <p className='bg-red;'>{errors.password}</p> : null 
+                             <p className='bg-red;'>{errors.password}</p> : null
                          }
 
           </div>
@@ -163,12 +157,12 @@ const RegisterForm = () => {
               className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400'
             />
             {errors.password2?
-                             <p className='bg-red;'>{errors.password2}</p> : null 
+                             <p className='bg-red;'>{errors.password2}</p> : null
                          }
           </div>
 
 
-    
+
 
           <div className='p-2 w-[250px]'>
             <CheckInput name='' value='void' />

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { useAuthStore } from '@/App/store/useAuthStore'
 
 const api = axios.create({
   baseURL: 'https://backend-sneakers.up.railway.app/',
