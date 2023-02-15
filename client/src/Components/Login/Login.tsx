@@ -9,13 +9,14 @@ import { useAuthStore } from '@/App/store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 import LoginAuth0Button from '../Shared/Form/LoginThirdParty';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useGoogleAuthStore } from '@/App/store/useAuthGoogleStore';
 
 export interface LoginData {
   userName: string;
   password: string;
 }
 const LoginForm = () => {
-  const { loginWithRedirect } = useAuth0();
+  const { loginWithRedirect} = useAuth0();
   const { token, profile, authLogin, getProfile } = useAuthStore(state => state);
   const navigate = useNavigate();
   const [form, setForm] = useState<LoginData>({
@@ -48,6 +49,14 @@ const LoginForm = () => {
       console.log(error);
     }
   };
+  const handleGoogleAuth0 = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      loginWithRedirect();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 
   return (
@@ -71,14 +80,14 @@ const LoginForm = () => {
         <div>
           <a href="" className='absolute text-red-600 underline text-xs right-0'>Forgot Password</a>
         </div>
-        
+
         <SubmitButton text='Log In' />
 
       </div>
     </form>
     <div className='flex flex-col w-full items-center justify-center gap-5 '>
       <div className='flex relative flex-col  items-center justify-center gap-5'>
-      <LoginAuth0Button text='Log with Auth0' onClick={loginWithRedirect}/>
+      <LoginAuth0Button text='Log with Auth0' onClick={handleGoogleAuth0}/>
 
       </div>
       <span className=" rounded-lg w-[600px] h-0.5 bg-gray-200"></span>
