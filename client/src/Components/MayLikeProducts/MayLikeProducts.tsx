@@ -3,7 +3,7 @@ import Product from '../Product/Product';
 import { useSneakerStore } from '@/App/store/useSneakerStore';
 
 const MayLikeProducts = () => {
-  const {sneakers} = useSneakerStore(state=>state);
+  const { sneakers } = useSneakerStore(state => state);
   return (
     <MayLikeProductWrapper>
       <ProductsHeading>
