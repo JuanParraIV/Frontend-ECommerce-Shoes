@@ -162,11 +162,13 @@ function Checkout() {
       return;
     }
 
+
     const cardElement = elements.getElement(CardElement);
     if (!cardElement) {
       // Handle error
       return;
     }
+
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
@@ -175,11 +177,13 @@ function Checkout() {
 
     let booleanCardelement: boolean = error ? false : true;
 
+
     setUserInfo((prevUserInfo: UserInfo) => ({
       ...prevUserInfo,
       cus_cardelement: booleanCardelement,
     }));
   };
+
 
   return (
     <StyledCheckout>
@@ -285,6 +289,7 @@ function Checkout() {
               <p className="text-xs text-red-600">{errors.cus_city}</p>
             )}
           </div>
+
 
           <div className="inline-block mt-2 w-1/2 pr-1">
             <label className="block text-sm text-gray-600" htmlFor="cus_email">
@@ -412,3 +417,4 @@ export function CheckoutWithStripe(): JSX.Element {
     </Elements>
   );
 }
+

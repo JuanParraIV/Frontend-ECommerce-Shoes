@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import swat from 'sweetalert'
+import swal from 'sweetalert'
 import api from '@/Api/backend_sneakers'
 import Logo from '../Shared/Logo';
 import SubmitButton from '../Shared/Form/submitButton';

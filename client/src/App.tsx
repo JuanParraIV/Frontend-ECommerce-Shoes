@@ -7,9 +7,10 @@ import SneakerPage from './Pages/Sneaker/SneakerPage';
 import LoginPage from './Pages/Login/LoginPage';
 import RegisterPage from './Pages/Register/RegisterPage';
 import CartContainer from './Containers/Cart/CartConteiner';
-import ProfileUser from './Components/ProfileForm/ProfileForm';
+import FormEditUserPage from './Pages/FormEditUser/FormEditUserPage'
 import Profile from './Components/Profile/Profile'
 import { CheckoutWithStripe } from './Components/Checkout/Checkout';
+
 
 function App() {
 
@@ -24,7 +25,7 @@ function App() {
         <Route path='/formCreateProduct' element={<CreateFormPage />} />
         <Route path='/shoppingCart' element={<CartContainer/>}/>
         <Route path='profile' element={<Profile/>}/>
-        <Route path='/editprofile' element={<ProfileUser name={''} userName={''} firstName={''} lastName={''} buyerAddress={''} email={''} password={''} contactNumber={''} dni={''} />}/>
+        <Route path='/editprofile' element={<FormEditUserPage/>}/>
         <Route path='/checkout' element={<CheckoutWithStripe/>}/>
       </Routes>
     </BrowserRouter>
