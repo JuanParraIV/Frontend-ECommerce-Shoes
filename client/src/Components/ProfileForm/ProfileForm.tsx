@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import swal from 'sweetalert'
+import api from '@/Api/backend_sneakers'
+import Logo from '../Shared/Logo';
+import SubmitButton from '../Shared/Form/submitButton';
+import { Link } from 'react-router-dom';
 import validateProductForm from './validation';
-import { FormContainer, LabelContainer, Button, Error } from './styles';
-import { useAuthStore } from '@/App/store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
+import { stat } from 'fs';
+import { useSneakerStore } from '@/App/store/useSneakerStore';
+import { useAuthStore } from '@/App/store/useAuthStore';
 
-// import dates from '../../../sneaker.json'
-// import {useDispatch} from 'react-redux';
 
-interface Props {
-  name: string;
+
+interface FormData {
   userName: string;
   firstName: string;
   lastName: string;
@@ -20,191 +24,258 @@ interface Props {
   dni: string
 }
 
-const EditProfileUser = ({ name, userName, firstName, lastName, contactNumber, buyerAddress, email, 
-    password, dni}: Props) => {
 
-      const navigate = useNavigate();
+const  EditProfileUser = () => {
+  //const router = useRouter();
+  const navigate = useNavigate();
+  const [user, setUser] = useState([]);
+  const [errors, setErrors] = useState({
+    userName: '',
+    firstName: '',
+    lastName: '',
+    contactNumber: '',
+    buyerAddress: '',
+    email: '',
+    password: '', 
+    dni: ''})
+  
+  const [form, setForm] = useState<FormData>({
+    userName: '',
+    firstName: '',
+    lastName: '',
+    contactNumber: '',
+    buyerAddress: '',
+    email: '',
+    password: '', 
+    dni: ''
+  });
 
-        const {setProfile} = useAuthStore();
-        console.log('setProfile', setProfile)
+
+  const {token} = useAuthStore(state => state);
+
+  const handleSubmit = async (data: FormData) => {
+console.log(data)
+     try {
+      await api.put('/user', 
+      data
+      ,{
+        headers:{
+          'Content-Type': 'application/json',
+          Authorization:`Bearer ${token}`
+        }   
+      }
+       );
+       setForm({
+        userName: '',
+        firstName: '',
+        lastName: '',
+        contactNumber: '',
+        buyerAddress: '',
+        email: '',
+        password: '', 
+         dni: ''
+             });
+       try {
+         swal({
+          title: "Excellent",
+          text: "Profile edited successfuly!",
+          icon: "success",
+          button: "Ok",
+        });       
+       } catch (error) {
+       console.log(error)
+       }      
+       navigate('/profile')
+      
+     } catch (error) {
+       console.log(error);
+     }
+   };
+  
+
+  const routePutUsers = async () => {
+    const response = await api.get('/user');
+    return response.data
+  }
 
 
-  const [formSend, setFormSend] = useState(false);
+  
+
+  const handleChange = (event: React.FormEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = event.target as HTMLInputElement | HTMLSelectElement;
+
+    setForm(() => ({
+      ...form,
+      [name]: value,
+    }));
+   
+  }
+
+
+  useEffect(() => {
+    const getAllUsers = async () => {
+      const allUsers = await  routePutUsers();
+      if (allUsers) setUser(allUsers);
+    }
+    getAllUsers();
+  }, [])
+  console.log(form)
+  console.log(user)
+
+
+ 
+
+
   return (
-    <div>
-      <FormContainer>
-        <div >
-          <Formik initialValues={{
-            name,
-            userName, 
-            firstName, 
-            lastName, 
-            contactNumber, 
-            buyerAddress, 
-            email, 
-            password, 
-            dni
-          }}
+    <div className='bg-neutral-300 w-50'>
+      <form className='flex flex-col w-full items-center justify-center gap-5 py-12' onSubmit={(event) => {
+        event.preventDefault();
+        handleSubmit(form);
+      }} >
+        <Logo />
+        <h1 className='text-center text-2xl text-[#F53F00] mt-10'>Edit Your Profile</h1>
+        <div className='flex relative flex-col  items-center justify-center gap-6 grid grid-cols-2 gap-4'>
+          <div className='flex justify-end items-center relative'>User Name
+              <input
+              className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
+              type='text'
+              name='userName'
+              placeholder='User Name'
+              value={form.userName}
+              onChange={handleChange} />
+            
+            <div className="text-red-700 underline decoration-pink-500">
+                {errors.userName ?
+                              <p className='bg-red;'>{errors.userName}</p> : null 
+                          }
 
-            onSubmit={(valores, { resetForm }) => {
-              resetForm();
-              console.log(valores);
-              console.log('Formulario Enviado');
-              setFormSend(true);
-              setTimeout(() => setFormSend(false), 5000);
-            }}
-            validate={(values) => validateProductForm(values)}
-          >
+            </div>
+          </div>
+          <div className='flex justify-end items-center relative'>First Name
+              <input
+              className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
+              type='text'
+              name='firstName'
+              placeholder='First Name'
+              value={form.firstName}
+              onChange={handleChange} 
+              />
+            
+            <div className="text-red-700 underline decoration-pink-500">
+                {errors.firstName?
+                              <p className='bg-red;'>{errors.firstName}</p> : null 
+                          }
 
-            {({ errors }) => (
-              <Form >
-                <h1 className='text-gray-900 font-bold text-xl mb-2'>Edit Your Profile</h1>
+            </div>
+            </div>
 
-                <LabelContainer>
+            <div className='flex justify-end items-center relative'>Last Name
+              <input
+              className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
+              type='text'
+              name='lastName'
+              placeholder='Last Name'
+              value={form.lastName}
+              onChange={handleChange} />
+            
+            <div className="text-red-700 underline decoration-pink-500">
+                {errors.lastName?
+                              <p className='bg-red;'>{errors.lastName}</p> : null 
+                          }
+            </div>
+            </div>
 
+            
+            <div className='flex justify-end items-center relative'>Contact Number
+              <input
+              className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
+              type='text'
+              name='contactNumber'
+              placeholder='Contact Number'
+              value={form.contactNumber}
+              onChange={handleChange} />
+            
+            <div className="text-red-700 underline decoration-pink-500">
+                {errors.contactNumber?
+                              <p className='bg-red;'>{errors.contactNumber}</p> : null 
+                          }
+            </div>
+            </div>
 
-                  <div >
-                    <label htmlFor='firstName' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>First Name</label>
-                    <Field
-                      className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
-                      type='string'
-                      id=' firstName'
-                      name=' firstName'
-                      placeholder='First Name'
-                    />
-                    {/* <Error>
-                      <ErrorMessage name='firstName' component={() => (
-                        <div>{errors.firstName}</div>
-                      )} />
-                    </Error> */}
-                  </div>
+            <div className='flex justify-end items-center relative'>Address
+              <input
+              className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
+              type='text'
+              name='buyerAddress'
+              placeholder='Address'
+              value={form.buyerAddress}
+              onChange={handleChange} />
+            
+            <div className="text-red-700 underline decoration-pink-500">
+                {errors.buyerAddress?
+                              <p className='bg-red;'>{errors.buyerAddress}</p> : null 
+                          }
+            </div>
+            </div>
 
-                  <div >
-                    <label htmlFor='lastName' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>Last Name</label>
-                    <Field
-                      className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
-                      type='string'
-                      id='lastName'
-                      name='lastName'
-                      placeholder='Last Name'
-                    />
-                    <Error>
-                      <ErrorMessage name='lastName' component={() => (
-                        <div>{errors.lastName}</div>
-                      )} />
-                    </Error>
-                  </div>
-                  <div >
-                    <label htmlFor='userName' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>User Name</label>
-                    <Field
-                      className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
-                      type='text'
-                      id='userName'
-                      name='userName'
-                      placeholder='User Name'
-                    />
-                    <Error>
-                      <ErrorMessage name='userName' component={() => (
-                        <div>{errors.userName}</div>
-                      )} />
+            <div className='flex justify-end items-center relative'>Email
+              <input
+              className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
+              type='text'
+              name='email'
+              placeholder='Email'
+              value={form.email}
+              onChange={handleChange} />
+            
+            <div className="text-red-700 underline decoration-pink-500">
+                {errors.email?
+                              <p className='bg-red;'>{errors.email}</p> : null 
+                          }
+            </div>
+            </div>
 
-                    </Error>
-                  </div>
-                  <div >
-                    <label htmlFor='dni' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>Identity Number</label>
-                    <Field
-                      className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
-                      type= 'dni'
-                      id='dni'
-                      name='dni'
-                      placeholder='Identity Number'
-                    />
-                    <Error>
-                      <ErrorMessage name='dni' component={() => (
-                        <div>{errors.dni}</div>
-                      )} />
-                    </Error>
-                  </div>
+            <div className='flex justify-end items-center relative'>Password
+              <input
+              className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
+              type='password'
+              name='password'
+              placeholder='Password'
+              value={form.password}
+              onChange={handleChange} />
+            
+            <div className="text-red-700 underline decoration-pink-500">
+                {errors.password?
+                              <p className='bg-red;'>{errors.password}</p> : null 
+                          }
+            </div>
+            </div>
 
+            <div className='flex justify-end items-center relative'>Identity Document
+              <input
+              className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
+              type='text'
+              name='dni'
+              placeholder='Identity Document'
+              value={form.dni}
+              onChange={handleChange} />
+            
+            <div className="text-red-700 underline decoration-pink-500">
+                {errors.dni?
+                              <p className='bg-red;'>{errors.dni}</p> : null 
+                          }
+            </div>
+            </div>
 
-
-                  <div >
-                    <label htmlFor='contactNumber' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>Contact Number</label>
-                    <Field
-                      className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
-                      type='number'
-                      id='contactNumber'
-                      name='contactNumber'
-                      placeholder='Contact Number'
-                    />
-                    <Error>
-                      <ErrorMessage name='contactNumber' component={() => (
-                        <div>{errors.contactNumber}</div>
-                      )} />
-                    </Error>
-                  </div>
-
-                  <div >
-                    <label htmlFor='buyerAddress' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>Address</label>
-                    <Field
-                      className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
-                      type='text'
-                      id='buyerAddress'
-                      name='buyerAddress'
-                      placeholder='Adrress'
-                    />
-                    <Error>
-                      <ErrorMessage name='buyerAddress' component={() => (
-                        <div>{errors.buyerAddress}</div>
-                      )} />
-                    </Error>
-                  </div>
-                  <div >
-                    <label htmlFor='email' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>Email</label>
-                    <Field
-                      className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
-                      type= 'text'
-                      id='email'
-                      name='email'
-                      placeholder='Email'
-                    />
-                    <Error>
-                      <ErrorMessage name='email' component={() => (
-                        <div>{errors.email}</div>
-                      )} />
-                    </Error>
-                  </div>
-                  <div >
-                    <label htmlFor='password' className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'>Password</label>
-                    <Field
-                      className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
-                      type= 'password'
-                      id='password'
-                      name='password'
-                      placeholder='Password'
-                    />
-                    <Error>
-                      <ErrorMessage name='password' component={() => (
-                        <div>{errors.password}</div>
-                      )} />
-                    </Error>
-                  </div>
-
-                </LabelContainer>
-                <Button>
-                  <button type='submit'>Send</button>
-                </Button>
-                {formSend && <p className='exito'>Form successfully submitted</p>}
-
-              </Form>
-            )}
-          </Formik>
-
+    
+          <div className='p-2 w-[250px]'>    
+          </div >
+          <div className='justify-self-center'>
+          <SubmitButton text='Edit Profile' />
+          </div>
         </div>
-      </FormContainer>
+        <span className=" rounded-lg w-[600px] h-0.5 bg-gray-200"></span>
+      </form>
     </div>
-  );
-};
-
-
-export default EditProfileUser;
+  )
+}
+export default  EditProfileUser; 
