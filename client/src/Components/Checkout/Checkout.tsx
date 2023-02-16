@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import swal from 'sweetalert';
@@ -12,10 +12,10 @@ import Footer from '../Footer/Footer';
 import { CartStore } from '@/App/store/useCartStore';
 import { useGoogleAuthStore } from '@/App/store/useAuthGoogleStore';
 import { StyledCheckout, StyledResume } from './style';
-import secure from '../../assets/secure.png'
-import stripe_secure from '../../assets/stripe_secure.webp'
+import secure from '../../assets/secure.png';
+import stripe_secure from '../../assets/stripe_secure.webp';
 
-const stripePromise = loadStripe('pk_test_51MbTIzJhcFAZvo867sTSmXA8sbtVQj5xILw6joZiLAfNvTYKgKlqP4VeNLUiy5H0QMF5KSGdhWjhzBfTEvZe4uZp00XxU2qf34')
+const stripePromise = loadStripe('pk_test_51MbTIzJhcFAZvo867sTSmXA8sbtVQj5xILw6joZiLAfNvTYKgKlqP4VeNLUiy5H0QMF5KSGdhWjhzBfTEvZe4uZp00XxU2qf34');
 
 interface UserInfo {
   cus_name: string;
@@ -67,12 +67,12 @@ function validate(userInfo: UserInfo): Errors {
   return errors;
 }
 
-function Checkout(){
+function Checkout() {
   const stripe = useStripe();
   const elements = useElements();
   const [processing, setProcessing] = useState(false);
   const { cartItems, totalPrice, totalQty } = CartStore(state => state);
-  const {token} = useGoogleAuthStore(state => state);
+  const { token } = useGoogleAuthStore(state => state);
   const [userInfo, setUserInfo] = useState<UserInfo>({
     cus_name: "",
     cus_email: "",
@@ -136,7 +136,10 @@ function Checkout(){
           token,
           userInfo,
         });
-        elements.getElement(CardElement).clear();
+        const cardElement = elements.getElement(CardElement);
+        if (cardElement) {
+          cardElement.clear();
+        }
         setUserInfo({
           cus_name: "",
           cus_email: "",
@@ -147,244 +150,258 @@ function Checkout(){
           cus_zip: "",
         });
 
-    } catch (err) {
+      } catch (err) {
 
-      setProcessing(false);
+        setProcessing(false);
+      }
+
+    }
+  };
+  const onChangeCardElement = async (): Promise<void> => {
+    if (!stripe || !elements) {
+      return;
     }
 
-  }
-}
-const onChangeCardElement = async (): Promise<void> => {
-  const { error, paymentMethod } = await stripe.createPaymentMethod({
-    type: "card",
-    card: elements.getElement(CardElement),
-  });
+    const cardElement = elements.getElement(CardElement);
+    if (!cardElement) {
+      // Handle error
+      return;
+    }
 
-  let booleanCardelement: boolean = error ? false : true;
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: 'card',
+      card: cardElement,
+    });
 
-  setUserInfo((prevUserInfo: UserInfo) => ({
-    ...prevUserInfo,
-    cus_cardelement: booleanCardelement,
-  }));
-};
+    let booleanCardelement: boolean = error ? false : true;
+
+    setUserInfo((prevUserInfo: UserInfo) => ({
+      ...prevUserInfo,
+      cus_cardelement: booleanCardelement,
+    }));
+  };
 
   return (
     <StyledCheckout>
-    <div className="leading-loose ">
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-xl m-2 pt-5 px-10 bg-white rounded shadow-xl">
-        <h1 className="text-center font-bold text-4xl border-b-2 pb-4">
-          Checkout
-        </h1>
-        <br></br>
-        <div className="">
-          <label className="block text-sm text-gray-00" htmlFor="cus_name">
-            Name
-          </label>
-          <input
-            className="w-full px-5 py-0 text-gray-700 bg-gray-200 rounded"
-            id="cus_name"
-            name="cus_name"
-            type="text"
-            value={userInfo.cus_name}
-            placeholder="Your Name"
-            aria-label="Name"
-            onChange={(e) => onChange(e)}
-          />
-          {errors.cus_name && (
-            <p className="text-xs text-red-600">{errors.cus_name}</p>
-          )}
-        </div>
+      <div className="leading-loose ">
+        <form
+          onSubmit={handleSubmit}
+          className="max-w-xl m-2 pt-5 px-10 bg-white rounded shadow-xl">
+          <h1 className="text-center font-bold text-4xl border-b-2 pb-4">
+            Checkout
+          </h1>
+          <br></br>
+          <div className="">
+            <label className="block text-sm text-gray-00" htmlFor="cus_name">
+              Name
+            </label>
+            <input
+              className="w-full px-5 py-0 text-gray-700 bg-gray-200 rounded"
+              id="cus_name"
+              name="cus_name"
+              type="text"
+              value={userInfo.cus_name}
+              placeholder="Your Name"
+              aria-label="Name"
+              onChange={(e) => onChange(e)}
+            />
+            {errors.cus_name && (
+              <p className="text-xs text-red-600">{errors.cus_name}</p>
+            )}
+          </div>
 
-        <div className="mt-2">
-          <label className="block text-sm text-gray-600" htmlFor="cus_email">
-            Email
-          </label>
-          <input
-            className="w-full px-5  py-0 text-gray-700 bg-gray-200 rounded"
-            id="cus_email"
-            name="cus_email"
-            type="text"
-            value={userInfo.cus_email}
-            placeholder="Your Email"
-            onChange={(e) => onChange(e)}
-            aria-label="Email"
-          />
-          {errors.cus_email && (
-            <p className="text-xs text-red-600">{errors.cus_email}</p>
-          )}
-        </div>
+          <div className="mt-2">
+            <label className="block text-sm text-gray-600" htmlFor="cus_email">
+              Email
+            </label>
+            <input
+              className="w-full px-5  py-0 text-gray-700 bg-gray-200 rounded"
+              id="cus_email"
+              name="cus_email"
+              type="text"
+              value={userInfo.cus_email}
+              placeholder="Your Email"
+              onChange={(e) => onChange(e)}
+              aria-label="Email"
+            />
+            {errors.cus_email && (
+              <p className="text-xs text-red-600">{errors.cus_email}</p>
+            )}
+          </div>
 
-        <div className="mt-2">
-          <label className=" block text-sm text-gray-600" htmlFor="cus_email">
-            Phone
-          </label>
-          <input
-            className="w-full px-2 py-0 text-gray-700 bg-gray-200 rounded"
-            id="cus_phone"
-            name="cus_phone"
-            type="number"
-            value={userInfo.cus_phone}
-            placeholder="number phone"
-            onChange={(e) => onChange(e)}
-            aria-label="Email"
-          />
-          {errors.cus_phone && (
-            <p className="text-xs text-red-600">{errors.cus_phone}</p>
-          )}
-        </div>
+          <div className="mt-2">
+            <label className=" block text-sm text-gray-600" htmlFor="cus_email">
+              Phone
+            </label>
+            <input
+              className="w-full px-2 py-0 text-gray-700 bg-gray-200 rounded"
+              id="cus_phone"
+              name="cus_phone"
+              type="number"
+              value={userInfo.cus_phone}
+              placeholder="number phone"
+              onChange={(e) => onChange(e)}
+              aria-label="Email"
+            />
+            {errors.cus_phone && (
+              <p className="text-xs text-red-600">{errors.cus_phone}</p>
+            )}
+          </div>
 
-        <div className="mt-2">
-          <label className=" block text-sm text-gray-600" htmlFor="cus_email">
-            Address
-          </label>
-          <input
-            className="w-full px-2 py-0 text-gray-700 bg-gray-200 rounded"
-            id="cus_email"
-            name="cus_address"
-            type="text"
-            value={userInfo.cus_address}
-            placeholder="Street"
-            onChange={(e) => onChange(e)}
-            aria-label="Email"
-          />
-          {errors.cus_address && (
-            <p className="text-xs text-red-600">{errors.cus_address}</p>
-          )}
-        </div>
+          <div className="mt-2">
+            <label className=" block text-sm text-gray-600" htmlFor="cus_email">
+              Address
+            </label>
+            <input
+              className="w-full px-2 py-0 text-gray-700 bg-gray-200 rounded"
+              id="cus_email"
+              name="cus_address"
+              type="text"
+              value={userInfo.cus_address}
+              placeholder="Street"
+              onChange={(e) => onChange(e)}
+              aria-label="Email"
+            />
+            {errors.cus_address && (
+              <p className="text-xs text-red-600">{errors.cus_address}</p>
+            )}
+          </div>
 
-        <div className="mt-2">
-          <label className=" text-sm block text-gray-600" htmlFor="cus_email">
-            City
-          </label>
-          <input
-            className="w-full px-2 py-0 text-gray-700 bg-gray-200 rounded"
-            id="cus_email"
-            name="cus_city"
-            type="text"
-            value={userInfo.cus_city}
-            placeholder="City"
-            onChange={(e) => onChange(e)}
-            aria-label="Email"
-          />
-          {errors.cus_city && (
-            <p className="text-xs text-red-600">{errors.cus_city}</p>
-          )}
-        </div>
+          <div className="mt-2">
+            <label className=" text-sm block text-gray-600" htmlFor="cus_email">
+              City
+            </label>
+            <input
+              className="w-full px-2 py-0 text-gray-700 bg-gray-200 rounded"
+              id="cus_email"
+              name="cus_city"
+              type="text"
+              value={userInfo.cus_city}
+              placeholder="City"
+              onChange={(e) => onChange(e)}
+              aria-label="Email"
+            />
+            {errors.cus_city && (
+              <p className="text-xs text-red-600">{errors.cus_city}</p>
+            )}
+          </div>
 
-        <div className="inline-block mt-2 w-1/2 pr-1">
-          <label className="block text-sm text-gray-600" htmlFor="cus_email">
-            Country
-          </label>
-          <input
-            className="w-full px-2 py-0 text-gray-700 bg-gray-200 rounded"
-            id="cus_email"
-            name="cus_country"
-            type="text"
-            value={userInfo.cus_country}
-            placeholder="Country"
-            onChange={(e) => onChange(e)}
-            aria-label="Email"
-          />
-          {errors.cus_country && (
-            <p className="text-xs text-red-600">{errors.cus_country}</p>
-          )}
-        </div>
+          <div className="inline-block mt-2 w-1/2 pr-1">
+            <label className="block text-sm text-gray-600" htmlFor="cus_email">
+              Country
+            </label>
+            <input
+              className="w-full px-2 py-0 text-gray-700 bg-gray-200 rounded"
+              id="cus_email"
+              name="cus_country"
+              type="text"
+              value={userInfo.cus_country}
+              placeholder="Country"
+              onChange={(e) => onChange(e)}
+              aria-label="Email"
+            />
+            {errors.cus_country && (
+              <p className="text-xs text-red-600">{errors.cus_country}</p>
+            )}
+          </div>
 
-        <div className="inline-block mt-2 -mx-1 pl-1 w-1/2">
-          <label className="block text-sm text-gray-600" htmlFor="cus_email">
-            Zip
-          </label>
-          <input
-            className="w-full px-2 py-0 text-gray-700 bg-gray-200 rounded"
-            id="cus_email"
-            name="cus_zip"
-            type="number"
-            value={userInfo.cus_zip}
-            placeholder="Zip"
-            onChange={(e) => onChange(e)}
-            aria-label="Email"
-          />
-          {errors.cus_zip && (
-            <p className="text-xs text-red-600">{errors.cus_zip}</p>
-          )}
-        </div>
+          <div className="inline-block mt-2 -mx-1 pl-1 w-1/2">
+            <label className="block text-sm text-gray-600" htmlFor="cus_email">
+              Zip
+            </label>
+            <input
+              className="w-full px-2 py-0 text-gray-700 bg-gray-200 rounded"
+              id="cus_email"
+              name="cus_zip"
+              type="number"
+              value={userInfo.cus_zip}
+              placeholder="Zip"
+              onChange={(e) => onChange(e)}
+              aria-label="Email"
+            />
+            {errors.cus_zip && (
+              <p className="text-xs text-red-600">{errors.cus_zip}</p>
+            )}
+          </div>
 
-        <div className="mt-2">
-          <label className="block text-sm text-gray-600">
-            Payment information
-          </label>
-          <CardElement
-            className="w-full px-5  py-0 text-gray-700 bg-gray-200 rounded"
-            onChange={() => {
-              onChangeCardElement();
-            }}
-          />
-        </div>
-
-        <div className="mt-4">
-          {userInfo.cus_name &&
-          userInfo.cus_email &&
-          userInfo.cus_phone &&
-          userInfo.cus_address &&
-          userInfo.cus_city &&
-          userInfo.cus_country &&
-          userInfo.cus_zip != "" &&
-          elements.getElement(CardElement).length != 0 &&
-          userInfo.cus_cardelement === true &&
-          Object.keys(errors).length === 0 ? (
-            <div className="flex items-center justify-center">
-              {processing ? (
-                <p>...Loading</p>
-              ) : (
-                <button
-                  className="px-4  text-white font-light tracking-wider bg-primary  min-w-full rounded-md"
-                  type="submit"
-                  disabled={!stripe}>
-                  <span className="font-semibold">
-                    Pay with Stripe{" $"}
-                    {totalPrice}
-                  </span>
-                </button>
-              )}
-            </div>
-          ) : (
-            <span className="font-bold text-xl">
-              Total: ${totalPrice}
-            </span>
-          )}
-          <div className="flex flex-wrap">
-            <img className="w-80" src={stripe_secure} alt="Stripe_security" />
-            <img
-              className="w-10 h-10 mt-4 mr-1"
-              src={secure}
-              alt="Stripe_security"
+          <div className="mt-2">
+            <label className="block text-sm text-gray-600">
+              Payment information
+            </label>
+            <CardElement
+              className="w-full px-5  py-0 text-gray-700 bg-gray-200 rounded"
+              onChange={() => {
+                onChangeCardElement();
+              }}
             />
           </div>
-        </div>
-      </form>
-    </div>
-    <div className="leading-loose max-w-md max-h-screen overflow-auto m-4 p-10 bg-white rounded shadow-xl">
-      <h2 className="text font-bold text-2xl">Resume items:</h2>
-      {cartItems.map((item, index) => {
-        return (
-          <StyledResume>
-            <img src={item.grid_picture_url} alt={item.name} />
-            <p key={index}>{item.brand_name}</p>
-            <h2>{item.name}</h2>
-            <p>{`$${item.retail_price_cents}`}</p>
-            <b>{`Status:`}</b> <span>{`${item.status}`}</span>
-            <span className="bg-black text-justify !important rounded-sm absolute top-2 left-0 text-xl text-white font-semibold">
-              {`X ${item.quantity}`}
-              {/* <BsBoxSeam className="object-none" /> */}
-            </span>
-          </StyledResume>
-        );
-      })}
-      <p></p>
-    </div>
-  </StyledCheckout>
+
+          <div className="mt-4">
+            {Object.keys(errors).length === 0 && (
+              <>
+                {userInfo.cus_name &&
+                  userInfo.cus_email &&
+                  userInfo.cus_phone &&
+                  userInfo.cus_address &&
+                  userInfo.cus_city &&
+                  userInfo.cus_country &&
+                  userInfo.cus_zip !== "" &&
+                  elements?.getElement(CardElement) &&
+                  userInfo.cus_cardelement === true ? (
+                  <div className="flex items-center justify-center">
+                    {processing ? (
+                      <p>...Loading</p>
+                    ) : (
+                      <button
+                        className="px-4  text-white font-light tracking-wider bg-primary  min-w-full rounded-md"
+                        type="submit"
+                        disabled={!stripe}
+                      >
+                        <span className="font-semibold">
+                          Pay with Stripe{" $"}
+                          {totalPrice}
+                        </span>
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <span className="font-bold text-xl">
+                    Total: ${totalPrice}
+                  </span>
+                )}
+              </>
+            )}
+            <div className="flex flex-wrap">
+              <img className="w-80" src={stripe_secure} alt="Stripe_security" />
+              <img
+                className="w-10 h-10 mt-4 mr-1"
+                src={secure}
+                alt="Stripe_security"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div className="leading-loose max-w-md max-h-screen overflow-auto m-4 p-10 bg-white rounded shadow-xl">
+        <h2 className="text font-bold text-2xl">Resume items:</h2>
+        {cartItems.map((item, index) => {
+          return (
+            <StyledResume key={index}>
+              <img src={item.grid_picture_url} alt={item.name} />
+              <p key={index}>{item.brand_name}</p>
+              <h2>{item.name}</h2>
+              <p>{`$${item.retail_price_cents}`}</p>
+              <b>{`Status:`}</b> <span>{`${item.status}`}</span>
+              <span className="bg-black text-justify !important rounded-sm absolute top-2 left-0 text-xl text-white font-semibold">
+                {`X ${item.quantity}`}
+                {/* <BsBoxSeam className="object-none" /> */}
+              </span>
+            </StyledResume>
+          );
+        })}
+        <p></p>
+      </div>
+    </StyledCheckout>
   );
 }
 
