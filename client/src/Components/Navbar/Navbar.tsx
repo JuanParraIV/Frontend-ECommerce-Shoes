@@ -1,26 +1,24 @@
 import icons from '@/assets/icons-navbar/icons-navbar';
 import { Bars3Icon, XMarkIcon, StarIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
-import { Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ImageLogoContainer, NavBarContainer, NavBarHeader } from './style';
 import SearchBar from '../SearchBar/SearchBar';
 import { ShoppingCartStore } from '@/App/store/useShoppingCart';
 import { useAuthStore } from '@/App/store/useAuthStore';
 import { useAuth0 } from '@auth0/auth0-react';
 import SubmitButton from '../Shared/Form/submitButton';
+import { CartStore } from '@/App/store/useCartStore';
 
-
-
-export const  Navbar:React.FC=()=> {
-  const { loginWithRedirect, isAuthenticated, logout} = useAuth0();
+export const Navbar: React.FC = () => {
+  const { totalQty } = CartStore(state => state);
+  const { isAuthenticated, logout } = useAuth0();
   const navigate = useNavigate();
-  const { cartQuantity } = ShoppingCartStore();
   const { token, clearToken } = useAuthStore();
   console.log('token', token);
 
   function handleClick() {
     return clearToken();
   }
-
 
   return (
     <>
@@ -44,10 +42,10 @@ export const  Navbar:React.FC=()=> {
             <div className="flex items-center text-white  text-xs space-x-6 mx-6 whitespace-nowrap">
               <div className="cursor-pointer link">
                 {isAuthenticated ? (
-                  <SubmitButton text='Log out' onClick={logout}/>
+                  <SubmitButton text='Log out' onClick={logout} />
                 ) : (
                   <Link to={'/login'}>
-                  <SubmitButton text='Log in'/>
+                    <SubmitButton text='Log in' />
                   </Link>
 
                 )}
@@ -57,7 +55,7 @@ export const  Navbar:React.FC=()=> {
                 <div className=" relative link flex items-center"
                 >
                   <span className="absolute top-0 right-0 md:right-10 h-4 w-4 bg-yellow-400 text-center rounded-full text-black">
-                    {cartQuantity}
+                    {totalQty}
                   </span>
                   <Link to={'/shoppingCart'}>
                     <ShoppingCartIcon className="h-10" />
@@ -116,7 +114,7 @@ export const  Navbar:React.FC=()=> {
                 <div className=" relative link flex items-center"
                 >
                   <span className="absolute top-0 right-0 md:right-10 h-4 w-4 bg-yellow-400 text-center rounded-full text-black">
-                    {cartQuantity}
+                    {totalQty}
                   </span>
                   <Link to={'/shoppingCart'}>
                     <ShoppingCartIcon className="h-10" />
@@ -148,7 +146,7 @@ export const  Navbar:React.FC=()=> {
       }
     </>
   );
-}
+};
 
 export default Navbar;
 

@@ -1,11 +1,5 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { useState } from 'react';
-import { createListenerMiddleware } from '@reduxjs/toolkit';
-import { SneakersType } from '@/Typing/Sneakers.type';
-import { pid } from 'process'; 
-import { Quantity } from '@/Components/Details/style';
-
 
 type State = {
   id: number
@@ -13,7 +7,6 @@ type State = {
   quantity: any
   remove: any
 }
-
 
 export interface ShoppingSneakerStoreState {
     products1:number[]
@@ -23,20 +16,17 @@ export interface ShoppingSneakerStoreState {
     removeFromCart: (id: number) => void
     cartQuantity: number
     total:number
-  
-   
   }
-
 
   export const ShoppingCartStore = create(
     persist<ShoppingSneakerStoreState>((set,get)=>
-    
+
     ({
       products1:[],
       cartQuantity: 0,
       total:0,
       quantity: 0,
-      addProduct: 
+      addProduct:
       (obj) =>{
       const checkRepeat = get().products1.some(
         (e) => e.id === obj.id,
@@ -48,17 +38,17 @@ export interface ShoppingSneakerStoreState {
           total: state.total += obj.price,
           quantity: state.quantity += obj.quantity
 
-                 
+
         }))
       }else{
         alert("This product is already in the shopping cart")
       }
      },
-      // clearCart: (id: number) => 
+      // clearCart: (id: number) =>
       // set(state => ({
       //   products1: state.products1.filter(sneakerId => sneakerId === id)
-      // })),   
-      
+      // })),
+
       removeFromCart: ({
         remove,
       })=>{
@@ -73,12 +63,12 @@ export interface ShoppingSneakerStoreState {
           0
         ),
         quantity: state.quantity = state.products1.reduce(
-          (acumulador, actual) => acumulador + actual.quantity, 
+          (acumulador, actual) => acumulador + actual.quantity,
           0
         )
-        
-      })) 
-      
+
+      }))
+
     }}),
 
     {
