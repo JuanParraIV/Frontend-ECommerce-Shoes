@@ -25,7 +25,7 @@ function App() {
         <Route path='/shoppingCart' element={<CartContainer/>}/>
         <Route path='profile' element={<Profile/>}/>
         <Route path='/editprofile' element={<ProfileUser name={''} userName={''} firstName={''} lastName={''} buyerAddress={''} email={''} password={''} contactNumber={''} dni={''} />}/>
-        <Route path='/payment' element={<CheckoutWithStripe/>}/>
+        <Route path='/checkout' element={<CheckoutWithStripe/>}/>
       </Routes>
     </BrowserRouter>
 

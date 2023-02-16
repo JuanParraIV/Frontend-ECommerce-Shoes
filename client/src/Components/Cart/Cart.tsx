@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CardStyle, Image, Card, Text, Continue, Delete, ProductDetail, ProductContainer, Buy } from './style';
 import carritoVacio from '../../assets/icons-cart/carritovacio.png';
 import { CartStore } from '@/App/store/useCartStore';
@@ -10,6 +10,7 @@ import { SneakersType } from '@/Typing/Sneakers.type';
 
 const Cart = () => {
 
+  const navigate = useNavigate();
   const { removeFromCart, cartItems, totalPrice, totalQty } = CartStore(state => state);
   console.log(cartItems);
 
@@ -17,6 +18,10 @@ const Cart = () => {
 
     removeFromCart(product);
   };
+
+  function handleCheckout(): void {
+    navigate('/checkout');
+  }
 
   return (
 
@@ -121,7 +126,7 @@ const Cart = () => {
 
         {totalQty > 0 &&
           <div>
-            <Buy>
+            <Buy onClick={handleCheckout}>
               <button>Buy Now</button>
             </Buy>
           </div>}
