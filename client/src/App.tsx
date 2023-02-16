@@ -9,7 +9,8 @@ import RegisterPage from './Pages/Register/RegisterPage';
 import CartContainer from './Containers/Cart/CartConteiner';
 import FormEditUserPage from './Pages/FormEditUser/FormEditUserPage'
 import Profile from './Components/Profile/Profile'
-// import CheckoutForm from './Components/Checkout/Checkout';
+import { CheckoutWithStripe } from './Components/Checkout/Checkout';
+
 
 function App() {
 
@@ -25,7 +26,7 @@ function App() {
         <Route path='/shoppingCart' element={<CartContainer/>}/>
         <Route path='profile' element={<Profile/>}/>
         <Route path='/editprofile' element={<FormEditUserPage/>}/>
-        {/* <Route path='payment' element={<CheckoutForm/>}/> */}
+        <Route path='/checkout' element={<CheckoutWithStripe/>}/>
       </Routes>
     </BrowserRouter>
 
