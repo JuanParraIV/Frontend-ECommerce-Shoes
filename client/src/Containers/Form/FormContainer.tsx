@@ -10,7 +10,7 @@ const FormContainer = (props: Props) => {
     <>
       <Navbar />
       <main className="max-w-screen-2xl mx-auto">
-        <FormCreateProduct name={""} price={0} image={""} stock={0} brand={""} description={""} status={""} />
+        <FormCreateProduct />
       </main>
       <Footer />
     </>

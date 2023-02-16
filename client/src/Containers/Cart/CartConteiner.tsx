@@ -4,17 +4,17 @@ import Footer from '@/Components/Footer/Footer';
 
 
 
-type Props  = {};
+type Props = {};
 
-const CartContainer = (props:Props) => {
-    return (
-        <>
-        <Navbar/>
-        <Cart brand_name={''} quantity={0} id={undefined} details={''} grid_picture_url={''} />
-        <Footer/>
+const CartContainer = (props: Props) => {
+  return (
+    <>
+      <Navbar />
+      <Cart />
+      <Footer />
 
-        </>
-    )
+    </>
+  );
 };
 
-export default CartContainer; 
+export default CartContainer;

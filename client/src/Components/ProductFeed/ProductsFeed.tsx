@@ -13,8 +13,8 @@ import { BrandSneakerStore } from "@/App/store/useBrandStore";
 
 const ProductsFeed = () => {
   const { Filtered, fetchAll } = useFilterSneakerStore(state => state);
-  const {fetchCategories} = CategorySneakerStore();
-  const {fetchBrands} = BrandSneakerStore();
+  const { fetchCategories } = CategorySneakerStore();
+  const { fetchBrands } = BrandSneakerStore();
 
 
   const { favoriteSneakerIds } = FavoriteSneakerStore();
@@ -26,7 +26,7 @@ const ProductsFeed = () => {
   const indexOfFirst = productsPerPage * currentPage - productsPerPage;
   const indexOfLast = productsPerPage * currentPage - 1;
   const currentElements =
-  Filtered && Filtered.slice(indexOfFirst, indexOfLast + 1);
+    Filtered && Filtered.slice(indexOfFirst, indexOfLast + 1);
 
   const paginated = (number: number) => {
     setCurrentPage(number);
@@ -44,7 +44,7 @@ const ProductsFeed = () => {
       <CardsContainer>
         {currentElements?.map(p => (
           <Card key={p.id} product={p}
-            isFavorite={favoriteSneakerIds.includes(p.id)} quantity={undefined} id={undefined} />
+            isFavorite={favoriteSneakerIds.includes(p.id)} />
         ))}
       </CardsContainer>
       <Paginated
