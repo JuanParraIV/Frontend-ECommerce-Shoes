@@ -1,4 +1,3 @@
-import { ShoppingCartStore } from '@/App/store/useShoppingCart';
 import { Link } from 'react-router-dom';
 import { CardStyle, Image, Card, Text, Continue, Delete, ProductDetail, ProductContainer, Buy } from './style';
 import carritoVacio from '../../assets/icons-cart/carritovacio.png';
@@ -11,7 +10,7 @@ import { SneakersType } from '@/Typing/Sneakers.type';
 
 const Cart = () => {
 
-  const { removeFromCart, cartItems, totalPrice, totalQty} = CartStore(state => state);
+  const { removeFromCart, cartItems, totalPrice, totalQty } = CartStore(state => state);
   console.log(cartItems);
 
   const handleClick = (product: SneakersType) => {
