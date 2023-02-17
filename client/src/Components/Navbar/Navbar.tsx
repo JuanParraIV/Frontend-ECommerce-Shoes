@@ -14,11 +14,13 @@ export const Navbar: React.FC = () => {
   const { isAuthenticated, logout } = useAuth0();
   const { token, logoutStore, clearToken} = useAuthStore();
   const { tokenGoogle, isGoogleAuthenticated, logoutGoogleStore  } = useGoogleAuthStore(state => state);
+  const{clearCart} = CartStore(state=>state) 
 
   const navigate = useNavigate();
 
   function handleLogOut() {
     logoutStore();
+    clearCart()
   }
   const handleAuth0LogOut=()=>{
     logoutGoogleStore();

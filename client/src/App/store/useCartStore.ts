@@ -12,10 +12,12 @@ interface CartStoreState {
   totalQty: number
   alert: boolean
   item: SneakersType
+  clearCart: () => void
 }
 interface CartStoreActions {
   addToCart: (product: SneakersType, qty: number) => void
   removeFromCart: (product: SneakersType) => void
+ 
 }
 type CartStore = CartStoreState & CartStoreActions
 export const CartStore = create(
@@ -67,6 +69,15 @@ export const CartStore = create(
             totalQty: state.totalQty - (foundProduct?.quantity ?? 0),
           }
         }),
+        clearCart: () => {
+          set(state => ({
+            ...state,
+            totalPrice: 0,
+            totalQty: 0,
+            cartItems:[]
+          }))
+        },
+
     }),
     {
       name: 'Cart-Store',
