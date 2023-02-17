@@ -84,9 +84,6 @@ export const Navbar: React.FC = () => {
             <p className="link">Most</p>
             <p className="link">Products</p>
             <p className="link">Customer Service</p>
-            <Link to='/formCreateProduct'>
-              <p className="link hidden lg:inline-flex hover:underline">Registry</p>
-            </Link>
           </div>
         </NavBarHeader>
       ) :
@@ -143,9 +140,6 @@ export const Navbar: React.FC = () => {
             <p className="link">Most</p>
             <p className="link">Products</p>
             <p className="link">Customer Service</p>
-            <Link to='/formCreateProduct'>
-              <p className="link hidden lg:inline-flex hover:underline">Registry</p>
-            </Link>
           </div>
         </NavBarHeader>
 
