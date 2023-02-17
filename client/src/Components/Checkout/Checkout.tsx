@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import swal from 'sweetalert';
@@ -10,7 +10,7 @@ import { useAuthStore } from '@/App/store/useAuthStore';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import { CartStore } from '@/App/store/useCartStore';
-import { useGoogleAuthStore } from '@/App/store/useAuthGoogleStore';
+import { useGoogleAuthStore, userGoogleType } from '@/App/store/useAuthGoogleStore';
 import { StyledCheckout, StyledResume } from './style';
 import secure from '../../assets/secure.png';
 import stripe_secure from '../../assets/stripe_secure.webp';
@@ -37,6 +37,17 @@ interface Errors {
   cus_country?: string;
   cus_zip?: string;
   cus_cardelement?: boolean;
+}
+interface FormData {
+  id?: number,
+  userName: string;
+  firstName: string;
+  lastName: string;
+  contactNumber: string;
+  buyerAddress: string;
+  email: string;
+  password: string;
+  dni: string;
 }
 
 function validate(userInfo: UserInfo): Errors {
@@ -72,7 +83,11 @@ function Checkout() {
   const elements = useElements();
   const [processing, setProcessing] = useState(false);
   const { cartItems, totalPrice, totalQty } = CartStore(state => state);
-  const { token } = useGoogleAuthStore(state => state);
+  const { token, profile, isAuthenticated } = useAuthStore(state => state);
+  const { tokenGoogle, profileGoogle, isGoogleAuthenticated } = useGoogleAuthStore(state => state);
+
+  const [user, setUser] = useState<FormData>();
+  const [userGoogle, setUserGoogle] = useState<userGoogleType>();
   const [userInfo, setUserInfo] = useState<UserInfo>({
     cus_name: "",
     cus_email: "",
@@ -109,7 +124,6 @@ function Checkout() {
     }));
   }
 
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
     setErrors(validate(userInfo));
@@ -117,7 +131,6 @@ function Checkout() {
     if (!stripe || !elements) {
       return;
     }
-
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
@@ -127,13 +140,14 @@ function Checkout() {
     if (!error) {
       setProcessing(true);
       console.log("paymentMethod---------", paymentMethod);
-      const { id } = paymentMethod;
       try {
+        const { id } = paymentMethod;
+        const userType = isAuthenticated ? 'user' : isGoogleAuthenticated ? 'googleUser' : undefined;
         const { data } = await api.post(`/payment`, {
           id,
-          cartItems,
-          totalPrice,
-          token,
+          items:cartItems,
+          amount:totalPrice,
+          token: { token: isAuthenticated ? token : isGoogleAuthenticated ? tokenGoogle : undefined, userType },
           userInfo,
         });
         const cardElement = elements.getElement(CardElement);
@@ -183,7 +197,44 @@ function Checkout() {
       cus_cardelement: booleanCardelement,
     }));
   };
+  console.log('isAuthenticated', isAuthenticated);
+  console.log('isGoogleAuthenticated', isGoogleAuthenticated);
+  console.log('UserInfo', userInfo);
+  useEffect(() => {
+    if (isGoogleAuthenticated && profileGoogle) {
+      const { given_name, family_name, email } = profileGoogle;
+      setUserGoogle(profileGoogle);
+      setUserInfo({
+        cus_name: `${given_name} ${family_name}`,
+        cus_email: email,
+        cus_phone: '',
+        cus_address: '',
+        cus_city: '',
+        cus_country: '',
+        cus_zip: '',
+        cus_cardelement: false,
+      });
+    }
+  }, [isGoogleAuthenticated, profileGoogle]);
 
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const { firstName, lastName, email, contactNumber, buyerAddress } = profile || {};
+      const fullName = `${firstName || ''} ${lastName || ''}`.trim();
+      setUser(fullName || email);
+      setUserInfo({
+        cus_name: fullName,
+        cus_email: email,
+        cus_phone: contactNumber || '',
+        cus_address: buyerAddress || '',
+        cus_city: '',
+        cus_country: '',
+        cus_zip: '',
+        cus_cardelement: false,
+      });
+    }
+  }, [isAuthenticated, profile, setUser, setUserInfo]);
 
   return (
     <StyledCheckout>
@@ -334,7 +385,7 @@ function Checkout() {
               Payment information
             </label>
             <CardElement
-              className="w-full px-5  py-0 text-gray-700 bg-gray-200 rounded"
+              className="w-full px-5  py-2 text-gray-700 bg-gray-200 rounded"
               onChange={() => {
                 onChangeCardElement();
               }}
@@ -358,7 +409,7 @@ function Checkout() {
                       <p>...Loading</p>
                     ) : (
                       <button
-                        className="px-4  text-white font-light tracking-wider bg-primary  min-w-full rounded-md"
+                        className="px-4  text-black font-light tracking-wider bg-yellow-400  min-w-full rounded-md"
                         type="submit"
                         disabled={!stripe}
                       >
@@ -399,7 +450,6 @@ function Checkout() {
               <b>{`Status:`}</b> <span>{`${item.status}`}</span>
               <span className="bg-black text-justify !important rounded-sm absolute top-2 left-0 text-xl text-white font-semibold">
                 {`X ${item.quantity}`}
-                {/* <BsBoxSeam className="object-none" /> */}
               </span>
             </StyledResume>
           );

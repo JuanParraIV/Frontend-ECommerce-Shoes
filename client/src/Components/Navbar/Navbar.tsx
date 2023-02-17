@@ -3,21 +3,27 @@ import { Bars3Icon, XMarkIcon, StarIcon, ShoppingCartIcon } from "@heroicons/rea
 import { Link, useNavigate } from 'react-router-dom';
 import { ImageLogoContainer, NavBarContainer, NavBarHeader } from './style';
 import SearchBar from '../SearchBar/SearchBar';
-import { ShoppingCartStore } from '@/App/store/useShoppingCart';
 import { useAuthStore } from '@/App/store/useAuthStore';
 import { useAuth0 } from '@auth0/auth0-react';
 import SubmitButton from '../Shared/Form/submitButton';
 import { CartStore } from '@/App/store/useCartStore';
+import { useGoogleAuthStore } from '@/App/store/useAuthGoogleStore';
 
 export const Navbar: React.FC = () => {
   const { totalQty } = CartStore(state => state);
   const { isAuthenticated, logout } = useAuth0();
-  const navigate = useNavigate();
-  const { token, clearToken } = useAuthStore();
-  console.log('token', token);
+  const { token, logoutStore, clearToken} = useAuthStore();
+  const { tokenGoogle, isGoogleAuthenticated, logoutGoogleStore  } = useGoogleAuthStore(state => state);
 
-  function handleClick() {
-    return clearToken();
+  const navigate = useNavigate();
+
+  function handleLogOut() {
+    logoutStore();
+  }
+  const handleAuth0LogOut=()=>{
+    logoutGoogleStore();
+    logout();
+
   }
 
   return (
@@ -42,7 +48,7 @@ export const Navbar: React.FC = () => {
             <div className="flex items-center text-white  text-xs space-x-6 mx-6 whitespace-nowrap">
               <div className="cursor-pointer link">
                 {isAuthenticated ? (
-                  <SubmitButton text='Log out' onClick={logout} />
+                  <SubmitButton text='Log out' onClick={handleAuth0LogOut} />
                 ) : (
                   <Link to={'/login'}>
                     <SubmitButton text='Log in' />
@@ -108,7 +114,7 @@ export const Navbar: React.FC = () => {
                   <button className="font-extrabold md: text-sm">My Acount</button>
                 </Link>
                 <br />
-                <button className="font-extrabold md: text-sm" onClick={() => handleClick()}>Log Out</button>
+                <button className="font-extrabold md: text-sm" onClick={handleLogOut}>Log Out</button>
               </div>
               <button >
                 <div className=" relative link flex items-center"

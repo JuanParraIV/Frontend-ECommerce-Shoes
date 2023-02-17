@@ -5,6 +5,7 @@ import { persist } from 'zustand/middleware'
 import { SneakersType } from '@/Typing/Sneakers.type'
 type State = {
   token: string
+  isAuthenticated: boolean
   profile: any
 }
 export interface Actions {
@@ -13,10 +14,12 @@ export interface Actions {
   authLogin: (a: LoginData) => Promise<void>
   getProfile: () => Promise<void>
   clearToken: () => void
+  logoutStore: () => void
 }
 export const useAuthStore = create(
   persist<State & Actions>(
     (set, get) => ({
+      isAuthenticated: false,
       token: '',
       profile: null,
       setToken: (token: string) => set(state => ({ token })),
@@ -27,7 +30,7 @@ export const useAuthStore = create(
             'Content-Type': 'application/json',
           },
         })
-        set(state => ({ ...state, token: data.token }))
+        set(state => ({ ...state, token: data.token, isAuthenticated: true }))
       },
       getProfile: async () => {
         const { data } = await api.get('/user/profile', {
@@ -39,6 +42,14 @@ export const useAuthStore = create(
       },
       clearToken: () => {
         set(state => ({ ...state, token: '' }))
+      },
+      logoutStore: () => {
+        set(state => ({
+          ...state,
+          isAuthenticated: false,
+          token: '',
+          profile: null,
+        }))
       },
     }),
     {

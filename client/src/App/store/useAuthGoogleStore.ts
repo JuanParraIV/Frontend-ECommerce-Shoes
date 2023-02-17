@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import api from '@/Api/backend_sneakers'
 import { persist } from 'zustand/middleware'
 
-interface userGoogleType {
+export interface userGoogleType {
   locale: string
   sub: string
   updated_at: string
@@ -21,28 +21,29 @@ interface LoginData {
 }
 
 type State = {
-  isAuthenticated: boolean
-  token: string
-  profile: userGoogleType
+  isGoogleAuthenticated: boolean
+  tokenGoogle: string
+  profileGoogle: userGoogleType
 }
 export interface Actions {
-  setToken: (token: string) => void
-  setProfile: (profile: any) => void
+  setToken: (tokenGoogle: string) => void
+  setProfile: (profileGoogle: any) => void
   authLogin: () => Promise<void>
   postUserGoogle: () => Promise<void>
   getProfile: () => Promise<void>
   clearToken: () => void
+  logoutGoogleStore: () => void
 }
 export const useGoogleAuthStore = create(
   persist<State & Actions>(
     (set, get) => ({
-      isAuthenticated: false,
-      token: '',
-      profile: {} as userGoogleType,
-      setToken: (token: string) => set(state => ({ token })),
-      setProfile: (profile: userGoogleType) => set(state => ({ ...state, isAuthenticated: true, profile })),
+      isGoogleAuthenticated: false,
+      tokenGoogle: '',
+      profileGoogle: {} as userGoogleType,
+      setToken: (tokenGoogle: string) => set(state => ({ tokenGoogle })),
+      setProfile: (profileGoogle: userGoogleType) => set(state => ({ ...state, isGoogleAuthenticated: true, profileGoogle })),
       authLogin: async () => {
-        const { email, nickname } = get().profile;
+        const { email, nickname } = get().profileGoogle;
         const { data } = await api.post('/auth/login/google', {
           email,
           nickname,
@@ -51,18 +52,18 @@ export const useGoogleAuthStore = create(
             'Content-Type': 'application/json',
           },
         })
-        set(state => ({ ...state, token: data.token }))
+        set(state => ({ ...state, tokenGoogle: data.token }))
       },
       getProfile: async () => {
         const { data } = await api.get('/user/profile', {
           headers: {
-            Authorization: `Bearer ${get().token}`,
+            Authorization: `Bearer ${get().tokenGoogle}`,
           },
         })
-        set(state => ({ ...state, profile: data }))
+        set(state => ({ ...state, profileGoogle: data }))
       },
       postUserGoogle: async () => {
-        const { email, family_name, given_name, name, nickname, picture } = get().profile;
+        const { email, family_name, given_name, name, nickname, picture } = get().profileGoogle;
         await api.post('/userGoogle', {
           email,
           family_name,
@@ -77,7 +78,15 @@ export const useGoogleAuthStore = create(
         })
       },
       clearToken: () => {
-        set(state => ({ ...state, token: '' }))
+        set(state => ({ ...state, tokenGoogle: '' }))
+      },
+      logoutGoogleStore: () => {
+        set(state => ({
+          ...state,
+          isGoogleAuthenticated: false,
+          tokenGoogle: '',
+          profileGoogle: {} as userGoogleType,
+        }))
       },
     }),
     {
