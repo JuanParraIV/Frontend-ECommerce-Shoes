@@ -132,43 +132,51 @@ function Checkout() {
       return;
     }
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: 'card',
-      card: elements.getElement(CardElement)!
-    });
+    try {
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: 'card',
+        card: elements.getElement(CardElement)!
+      });
 
-    if (!error) {
-      setProcessing(true);
-      console.log("paymentMethod---------", paymentMethod);
-      try {
-        const { id } = paymentMethod;
-        const userType = isAuthenticated ? 'user' : isGoogleAuthenticated ? 'googleUser' : undefined;
-        const { data } = await api.post(`/payment`, {
-          id,
-          items:cartItems,
-          amount:totalPrice,
-          token: { token: isAuthenticated ? token : isGoogleAuthenticated ? tokenGoogle : undefined, userType },
-          userInfo,
-        });
-        const cardElement = elements.getElement(CardElement);
-        if (cardElement) {
-          cardElement.clear();
-        }
-        setUserInfo({
-          cus_name: "",
-          cus_email: "",
-          cus_phone: "",
-          cus_address: "",
-          cus_city: "",
-          cus_country: "",
-          cus_zip: "",
-        });
-
-      } catch (err) {
-
-        setProcessing(false);
+      if (error) {
+        throw new Error('Failed to create payment method');
       }
 
+      const userType = isAuthenticated ? 'user' : isGoogleAuthenticated ? 'googleUser' : undefined;
+      const paymentData = {
+        id: paymentMethod.id,
+        items: cartItems,
+        amount: totalPrice,
+        token: { token: isAuthenticated ? token : isGoogleAuthenticated ? tokenGoogle : undefined, userType },
+        userInfo,
+      }
+      const JPD=JSON.stringify(paymentData)
+      console.log(JPD)
+
+      const response = await api.post('/payment', JPD, {
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${paymentData.token.token}`, },
+
+      });
+
+      console.log(response.data);
+
+      const cardElement = elements.getElement(CardElement);
+      if (cardElement) {
+        cardElement.clear();
+      }
+
+      setUserInfo({
+        cus_name: '',
+        cus_email: '',
+        cus_phone: '',
+        cus_address: '',
+        cus_city: '',
+        cus_country: '',
+        cus_zip: '',
+      });
+    } catch (error) {
+      console.log(error);
+      setProcessing(false);
     }
   };
   const onChangeCardElement = async (): Promise<void> => {
