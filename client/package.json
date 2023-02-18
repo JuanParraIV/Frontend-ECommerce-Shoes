@@ -10,8 +10,12 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.0.0",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@heroicons/react": "^2.0.14",
     "@hookform/resolvers": "^2.9.10",
+    "@mui/icons-material": "^5.11.9",
+    "@mui/material": "^5.11.9",
     "@reduxjs/toolkit": "^1.9.2",
     "@stripe/react-stripe-js": "^1.16.4",
     "@stripe/stripe-js": "^1.46.0",
