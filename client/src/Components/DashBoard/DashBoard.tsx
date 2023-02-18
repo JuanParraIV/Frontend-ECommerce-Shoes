@@ -1,24 +1,14 @@
-import { useAuthStore } from '@/App/store/useAuthStore';
-import { CartStore } from '@/App/store/useCartStore';
 import React, {useState} from 'react'
 import { RiDashboardLine, RiBarChartGroupedLine, RiContactsLine, RiShoppingBag3Line, RiLogoutBoxLine, 
-    RiMenu3Line, RiCloseLine, RiNotificationLine, RiArrowDropDownLine, RiSearchLine, RiFilter3Line, RiAccountPinCircleFill } from "react-icons/ri";
+    RiMenu3Line, RiCloseLine, RiNotificationLine, RiArrowDropDownLine, RiSearchLine, RiFilter3Line } from "react-icons/ri";
 import { Link } from 'react-router-dom';
 import dibujo from '../../assets/icons-DashBoard/dibujo.svg'
-import CardsDashboard from '../CardsDashBoard/CardsDashboard';
 import { Button } from '../FormCreateProduct/style';
-
 
 const DashBoard = () => {
 
   const [sidebar, setSidebar] = useState(false)
-  const { logoutStore} = useAuthStore();
-  const{clearCart} = CartStore(state=>state) 
 
-  function handleLogOut() {
-    logoutStore();
-    clearCart()
-  }
 
   const handleSidebar = () => {
     setSidebar(!sidebar)
@@ -71,13 +61,11 @@ const DashBoard = () => {
                     <h3 className='text-xl text-center'>Sneakers</h3>
                     <p className='text-gray-500 text-center'>Admin your Page</p>
                 </div>
-                <Link to='/'>
-                <button onClick={handleLogOut}
+                <Link to='/'
                  className='flex items-center gap-4 hover:bg-orange-500 p-4 text-gray-400  hover:text-white rounded-lg 
                  transition-colors font-semibold'>
                 <RiLogoutBoxLine/>
                 Logout
-                </button>
                 </Link>
             </div>
             </div>
@@ -112,10 +100,9 @@ const DashBoard = () => {
                         </Link>
                     </li>
                     <li>
-                        <button  className='flex items-center gap-1'>
+                        <Link to='#' className='flex items-center gap-1'>
                             Daniela Gomez <RiArrowDropDownLine/>
-                        </button>  
-           
+                        </Link>
                     </li>
                 </ul>
             </nav>
@@ -126,21 +113,18 @@ const DashBoard = () => {
             <div>
                 <h1 className='text-3xl font-semibold'>Admin Board</h1>
             </div>
-            <div>
-       
-            </div>
             <div className='grid grid-cols-1 md:grid-cols4 gap-4 items-center mb-6'>
-                {/* <form className='col-span-2 '>
+                <form className='col-span-2 '>
                     <div className='relative'>
-                        <RiSearchLine className='absolute left-2 top-3 text-orange-600 '/>
+                        <RiSearchLine className='absolute left-2 top-3 text-orange-600'/>
                         <input
                         type='text'
                         className='bg-white py-2 pl-8 pr-4 outline-none w-full'
                         placeholder='Search'/>
                     </div>
-                </form> */}
+                </form>
             
-            {/* <form className='col-span-1'> 
+            <form className='col-span-1'> 
                 <div className='relative'>
                     <RiFilter3Line className='absolute left-2 top-3 text-orange-600'/>
                     <input
@@ -148,16 +132,37 @@ const DashBoard = () => {
                     className='bg-white py-2 pl-8 pr-4 outline-none w-full'
                     placeholder='Filters'/>           
                 </div>
-            </form> */}
+            </form>
             <Link to='/formCreateProduct'>
-            <button className='relative text-m  flex items-center gap-4 hover:bg-orange-500 p-4 text-gray-400  hover:text-white rounded-lg 
+            <button className='relative text-m pl-8 pr-4 flex items-center gap-4 hover:bg-orange-500 p-4 text-gray-400  hover:text-white rounded-lg 
                       transition-colors font-semibold'>
                 Add Product
             </button>
             </Link>
             </div>
             {/* cards */}
-            <CardsDashboard/> 
+            <div className='bg-white rounded-3xl p-8 flex flex-col md:flex-row gap-8 w-full shadow-lg border-2 
+            border-transparent hover:border-orange-300 transition-all mb-4'>
+                <div className='w-full md:w-[10%] flex items-center justify-center'>
+                    <div className='text-xl bg-orange-100 p-4'>
+                    <img src={''} alt='imagen product or user'/>
+                    </div>
+                </div>
+                <div className='w-full md:w-[70%]'>
+                    <h1 className='text-2xl flex items-center gap-4 mb-4'>Name Product 
+                    <Link to='/dashBoard'>
+                    <button className='text-xl py-1 px-2 bg-green-100 text-green-600 font-bold'>Edit</button>
+                    </Link>
+                    <button className='text-xl py-1 px-2 bg-red-100 text-red-600 font-bold'>Delete</button>
+                    </h1>
+                    <p className='text-gray-500 text-xl'>Brand Name</p>
+                </div>
+                        <div className='w-full md:w-[20%] flex flex-col items-end'>
+                            <h3 className='text-3xl text-gray-500 font-medium mb-2'>Stock</h3>
+                            <p className=' text-xl text-gray-500 font-medium'>Price</p>
+                        </div>
+            </div>
+            
         </div>
         </div>
     </div>
