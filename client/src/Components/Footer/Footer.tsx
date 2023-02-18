@@ -21,7 +21,6 @@ export default function Footer() {
                         <a rel="noopener noreferrer" href="#">About us?</a>
                         <a rel="noopener noreferrer" href="#">Developers</a>
                         <a rel="noopener noreferrer" href="#">Terms and Conditions</a>
-                        <Link to='mainpaneladmin'>Admin Acount</Link>
                     </div>
                 </div>
       

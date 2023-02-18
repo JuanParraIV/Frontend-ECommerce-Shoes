@@ -1,13 +1,25 @@
+import { useAuthStore } from '@/App/store/useAuthStore';
+import { CartStore } from '@/App/store/useCartStore';
 import React, {useState} from 'react'
 import { RiDashboardLine, RiBarChartGroupedLine, RiContactsLine, RiShoppingBag3Line, RiLogoutBoxLine, 
     RiMenu3Line, RiCloseLine, RiNotificationLine, RiArrowDropDownLine, RiSearchLine, RiFilter3Line } from "react-icons/ri";
 import { Link } from 'react-router-dom';
 import dibujo from '../../assets/icons-DashBoard/dibujo.svg'
-import { Button } from '../FormCreateProduct/style';
+import CardsDashboard from '../CardsDashBoard/CardsDashBoard';
+import { useNavigate } from 'react-router-dom';
 
 const DashBoard = () => {
 
   const [sidebar, setSidebar] = useState(false)
+  const { token, logoutStore, clearToken} = useAuthStore();
+  const{clearCart} = CartStore(state=>state) 
+  const navigate = useNavigate()
+
+   function handleLogOut() {
+    logoutStore();
+    clearCart()
+    navigate('/')
+  }
 
 
   const handleSidebar = () => {
@@ -61,12 +73,12 @@ const DashBoard = () => {
                     <h3 className='text-xl text-center'>Sneakers</h3>
                     <p className='text-gray-500 text-center'>Admin your Page</p>
                 </div>
-                <Link to='/'
+                <button onClick={handleLogOut}
                  className='flex items-center gap-4 hover:bg-orange-500 p-4 text-gray-400  hover:text-white rounded-lg 
                  transition-colors font-semibold'>
                 <RiLogoutBoxLine/>
                 Logout
-                </Link>
+                </button>
             </div>
             </div>
         </div>
@@ -141,26 +153,8 @@ const DashBoard = () => {
             </Link>
             </div>
             {/* cards */}
-            <div className='bg-white rounded-3xl p-8 flex flex-col md:flex-row gap-8 w-full shadow-lg border-2 
-            border-transparent hover:border-orange-300 transition-all mb-4'>
-                <div className='w-full md:w-[10%] flex items-center justify-center'>
-                    <div className='text-xl bg-orange-100 p-4'>
-                    <img src={''} alt='imagen product or user'/>
-                    </div>
-                </div>
-                <div className='w-full md:w-[70%]'>
-                    <h1 className='text-2xl flex items-center gap-4 mb-4'>Name Product 
-                    <Link to='/dashBoard'>
-                    <button className='text-xl py-1 px-2 bg-green-100 text-green-600 font-bold'>Edit</button>
-                    </Link>
-                    <button className='text-xl py-1 px-2 bg-red-100 text-red-600 font-bold'>Delete</button>
-                    </h1>
-                    <p className='text-gray-500 text-xl'>Brand Name</p>
-                </div>
-                        <div className='w-full md:w-[20%] flex flex-col items-end'>
-                            <h3 className='text-3xl text-gray-500 font-medium mb-2'>Stock</h3>
-                            <p className=' text-xl text-gray-500 font-medium'>Price</p>
-                        </div>
+            <div>
+                <CardsDashboard />
             </div>
             
         </div>

@@ -11,7 +11,7 @@ import FormEditUserPage from './Pages/FormEditUser/FormEditUserPage'
 import Profile from './Components/Profile/Profile'
 import { CheckoutWithStripe } from './Components/Checkout/Checkout';
 import ModificateProduct from './Components/FormModificateProduct/ModificateProduct'
-import DashBoard from './Components/DashBoard/DashBoard'
+import DashBoard from './Components/DashBoard/DashBoardMain'
 
 
 function App() {

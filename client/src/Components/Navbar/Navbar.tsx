@@ -8,20 +8,18 @@ import { useAuth0 } from '@auth0/auth0-react';
 import SubmitButton from '../Shared/Form/submitButton';
 import { CartStore } from '@/App/store/useCartStore';
 import { useGoogleAuthStore } from '@/App/store/useAuthGoogleStore';
+import UserPanel from '../UserPanel/UserPanel';
 
 export const Navbar: React.FC = () => {
   const { totalQty } = CartStore(state => state);
   const { isAuthenticated, logout } = useAuth0();
   const { token, logoutStore, clearToken} = useAuthStore();
   const { tokenGoogle, isGoogleAuthenticated, logoutGoogleStore  } = useGoogleAuthStore(state => state);
-  const{clearCart} = CartStore(state=>state) 
+ 
 
   const navigate = useNavigate();
 
-  function handleLogOut() {
-    logoutStore();
-    clearCart()
-  }
+
   const handleAuth0LogOut=()=>{
     logoutGoogleStore();
     logout();
@@ -109,11 +107,9 @@ export const Navbar: React.FC = () => {
               <div
                 className="cursor-pointer link"
               >
-                <Link to='/profile'>
-                  <button className="font-extrabold md: text-sm">My Acount</button>
-                </Link>
-                <br />
-                <button className="font-extrabold md: text-sm" onClick={handleLogOut}>Log Out</button>
+
+                <UserPanel/>
+              
               </div>
               <button >
                 <div className=" relative link flex items-center"
