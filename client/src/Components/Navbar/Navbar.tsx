@@ -8,6 +8,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import SubmitButton from '../Shared/Form/submitButton';
 import { CartStore } from '@/App/store/useCartStore';
 import { useGoogleAuthStore } from '@/App/store/useAuthGoogleStore';
+import LoginComponent from '../LoginComponent/LoginComponent'
 
 export const Navbar: React.FC = () => {
   const { totalQty } = CartStore(state => state);
@@ -52,9 +53,18 @@ export const Navbar: React.FC = () => {
                 {isAuthenticated ? (
                   <SubmitButton text='Log out' onClick={handleAuth0LogOut} />
                 ) : (
+                  <div>
                   <Link to={'/login'}>
-                    <SubmitButton text='Log in' />
+                    <button className='text-yellow-600 text-sm font-bold hover:text-white '>
+                      Log in
+                    </button>
                   </Link>
+                  <br/>
+                   <Link to={'/register'}>
+                   <button className='text-yellow-600 text-sm font-bold  hover:text-white '>Register</button>
+                 </Link>
+                  </div>
+
 
                 )}
               </div>
@@ -109,11 +119,12 @@ export const Navbar: React.FC = () => {
               <div
                 className="cursor-pointer link"
               >
-                <Link to='/profile'>
+                {/* <Link to='/profile'>
                   <button className="font-extrabold md: text-sm">My Acount</button>
-                </Link>
+                </Link> */}
+                <LoginComponent />
                 <br />
-                <button className="font-extrabold md: text-sm" onClick={handleLogOut}>Log Out</button>
+                {/* <button className="font-extrabold md: text-sm" onClick={handleLogOut}>Log Out</button> */}
               </div>
               <button >
                 <div className=" relative link flex items-center"
