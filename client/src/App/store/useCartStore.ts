@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware'
 import api from '@/Api/backend_sneakers'
 import { SneakersType } from '@/Typing/Sneakers.type'
 
-type CartItem = SneakersType & { quantity: number }
+export type CartItem = SneakersType & { quantity: number }
 
 interface CartStoreState {
   showCart: boolean
@@ -17,7 +17,7 @@ interface CartStoreState {
 interface CartStoreActions {
   addToCart: (product: SneakersType, qty: number) => void
   removeFromCart: (product: SneakersType) => void
- 
+
 }
 type CartStore = CartStoreState & CartStoreActions
 export const CartStore = create(

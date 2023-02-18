@@ -7,14 +7,18 @@ import MayLikeProducts from "../MayLikeProducts/MayLikeProducts";
 import { Link, useParams } from "react-router-dom";
 import { useSneakerStore } from "@/App/store/useSneakerStore";
 import { AddCart, Continue, Bottom, ButtonContainer, BuyNow, Minus, Num, Plus, Price, ProductDetailContainer, ProductDetailDesc, Quantity, QuantityDesc } from "./style";
-import { CartStore } from "@/App/store/useCartStore";
+import { CartItem, CartStore } from "@/App/store/useCartStore";
+import { useGoogleAuthStore } from "@/App/store/useAuthGoogleStore";
+import { useAuthStore } from "@/App/store/useAuthStore";
+import api from "@/Api/backend_sneakers";
 
 
 export const Details = () => {
-
+  const { token, profile, isAuthenticated } = useAuthStore(state => state);
+  const { tokenGoogle, profileGoogle, isGoogleAuthenticated } = useGoogleAuthStore(state => state);
   const singleSneaker = useSneakerStore(state => state.singleSneaker);
   console.log(singleSneaker);
-  const { addToCart, cartItems } = CartStore(state => state);
+  const { addToCart, cartItems, totalPrice} = CartStore(state => state);
   console.log(cartItems);
 
   const {
@@ -31,8 +35,31 @@ export const Details = () => {
     }
   };
 
-  const handleClick = () => {
+  const postTrolley = async (cartItems:CartItem[], totalPrice:number) => {
+    try {
+
+
+    const userType = isAuthenticated ? 'user' : isGoogleAuthenticated ? 'googleUser' : undefined;
+    const trolleyData = {
+      items: cartItems,
+      amount: totalPrice,
+      token: { token: isAuthenticated ? token : isGoogleAuthenticated ? tokenGoogle : undefined, userType },
+    };
+    const JTD = JSON.stringify(trolleyData);
+    console.log(JTD)
+    const response = await api.post('/trolley', JTD, {
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${trolleyData.token.token}`, },
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.log(error)
+  }
+  };
+
+  const handleClick = async() => {
     addToCart(singleSneaker, quantity);
+    postTrolley(cartItems,totalPrice)
+
   };
 
 
