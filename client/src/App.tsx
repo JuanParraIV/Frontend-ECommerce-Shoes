@@ -11,7 +11,7 @@ import FormEditUserPage from './Pages/FormEditUser/FormEditUserPage'
 import Profile from './Components/Profile/Profile'
 import { CheckoutWithStripe } from './Components/Checkout/Checkout';
 import ModificateProduct from './Components/FormModificateProduct/ModificateProduct'
-import DashBoard from './Components/DashBoard/DashBoard'
+import DashBoard from './Components/DashBoard/DashBoardMain'
 
 
 function App() {
@@ -26,11 +26,14 @@ function App() {
         <Route path='/product/:id' element={<SneakerPage />} />
         <Route path='/formCreateProduct' element={<CreateFormPage />} />
         <Route path='/shoppingCart' element={<CartContainer/>}/>
-        <Route path='profile' element={<Profile/>}/>
+        <Route path='/profile' element={<Profile/>}/>
         <Route path='/editprofile' element={<FormEditUserPage/>}/>
         <Route path='/checkout' element={<CheckoutWithStripe/>}/>
         <Route path='/dashBoard' element={<ModificateProduct/>}/>
-        <Route path='mainpaneladmin' element={<DashBoard/>}/>
+        <Route path='/mainpaneladmin' element={<DashBoard/>}/>
+        
+       
+        
       </Routes>
     </BrowserRouter>
 
