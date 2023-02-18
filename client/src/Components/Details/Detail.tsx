@@ -18,11 +18,11 @@ export const Details = () => {
   const { tokenGoogle, profileGoogle, isGoogleAuthenticated } = useGoogleAuthStore(state => state);
   const singleSneaker = useSneakerStore(state => state.singleSneaker);
   console.log(singleSneaker);
-  const { addToCart, cartItems, totalPrice} = CartStore(state => state);
+  const { addToCart, cartItems, totalPrice } = CartStore(state => state);
   console.log(cartItems);
 
   const {
-    id, brand_name, category_name, name, color, retail_price_cents, size_range, grid_picture_url, original_picture_url, main_picture_url, details, has_stock, status, brandId, categoryId } = singleSneaker;
+    id, brand_name, category_name, name, color, retail_price_cents, size_range, grid_picture_url, original_picture_url, main_picture_url, details, status, brandId, categoryId } = singleSneaker;
 
   const [quantity, setQuantity] = useState(1);
 
@@ -35,32 +35,32 @@ export const Details = () => {
     }
   };
 
-  const postTrolley = async (cartItems:CartItem[], totalPrice:number) => {
+  const postTrolley = async (cartItems: CartItem[], totalPrice: number) => {
     try {
-
-
-    const userType = isAuthenticated ? 'user' : isGoogleAuthenticated ? 'googleUser' : undefined;
-    const trolleyData = {
-      items: cartItems,
-      amount: totalPrice,
-      token: { token: isAuthenticated ? token : isGoogleAuthenticated ? tokenGoogle : undefined, userType },
-    };
-    const JTD = JSON.stringify(trolleyData);
-    console.log(JTD)
-    const response = await api.post('/trolley', JTD, {
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${trolleyData.token.token}`, },
-    });
-    console.log(response.data);
-  } catch (error) {
-    console.log(error)
-  }
+      const userType = isAuthenticated ? 'user' : isGoogleAuthenticated ? 'googleUser' : undefined;
+      const trolleyData = {
+        items: cartItems,
+        amount: totalPrice,
+        token: { token: isAuthenticated ? token : isGoogleAuthenticated ? tokenGoogle : undefined, userType },
+      };
+      
+      const response = await api.post('/trolley', trolleyData, {
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${trolleyData.token.token}`, },
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleClick = async() => {
-    addToCart(singleSneaker, quantity);
-    postTrolley(cartItems,totalPrice)
-
+  const handleClick = async () => {
+    await addToCart(singleSneaker, quantity);
   };
+
+  useEffect(() => {
+
+    postTrolley(cartItems, totalPrice);
+  }, [cartItems])
 
 
   return (
