@@ -10,7 +10,7 @@ export interface SneakersType {
   original_picture_url: string
   main_picture_url: string
   details: string
-  stock: number
+  has_stock: boolean
   status: string
   brandId: number
   categoryId: number
