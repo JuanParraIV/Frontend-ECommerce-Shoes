@@ -12,16 +12,16 @@ ${tw`
 
 export const AboutUsList = styled.ul`
 ${tw`
-  pt-4
+  pt-0
   border-[10px]
   border-white
   inline-block
   relative
-  top-4
-  left-[20%]
+  top-0
+  left-[23%]
   translate-x-1/2
   translate-y-1/2
-  mb-8
+  mb-12
   text-[5rem]
 `}
 li {
@@ -32,7 +32,7 @@ li {
     rounded-[10rem]
     float-left
     transition duration-[0.9s]
-    mt-8
+    mt-0
   `}
 }
 &:hover li{
