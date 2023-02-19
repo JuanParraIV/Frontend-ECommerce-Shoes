@@ -2,18 +2,23 @@ import React from 'react'
 import {RiSearchLine, RiFilter3Line} from "react-icons/ri";
 import { Link } from 'react-router-dom';
 import { SneakersType } from '@/Typing/Sneakers.type';
+import { useSneakerStore } from '@/App/store/useSneakerStore';
+
 
 
 type ProductProps = {
-    name: string
-    grid_picture_url: string
-    retail_price_cents: number,
-    stock: number,
-    brand_name: string
+    product: SneakersType;
   };
 
 
-const CardDashboar = ({name, grid_picture_url, retail_price_cents, stock, brand_name}: ProductProps) => {
+const CardDashboar = ({product}: ProductProps) => {
+  
+const {deleteProduct} = useSneakerStore();
+
+const handleDelete = (id: number) => {
+  deleteProduct(id);
+};
+  
   return (
     <div>
         
@@ -22,21 +27,22 @@ const CardDashboar = ({name, grid_picture_url, retail_price_cents, stock, brand_
             border-transparent hover:border-orange-300 transition-all mb-4'>
                 <div className='w-full md:w-[10%] flex items-center justify-center'>
                     <div className='text-xl bg-orange-100 p-4'>
-                    <img src={grid_picture_url} alt='imagen product or user'/>
+                    <img src={product.grid_picture_url} alt='imagen product or user'/>
                     </div>
                 </div>
                 <div className='w-full md:w-[70%]'>
-                    <h1 className='text-2xl flex items-center gap-4 mb-4'>Product Name{name}
-                    <Link to='/dashBoard'>
+                    <h1 className='text-2xl flex items-center gap-4 mb-4'>{product.name}
+                    <Link to={`/modifproduct/${product.id}`}>
                     <button className='text-xl py-1 px-2 bg-green-100 text-green-600 font-bold'>Edit</button>
                     </Link>
-                    <button className='text-xl py-1 px-2 bg-red-100 text-red-600 font-bold'>Delete</button>
+                    <button className='text-xl py-1 px-2 bg-red-100 text-red-600 font-bold'
+                    onClick={()=>handleDelete(product.id)}>Delete</button>
                     </h1>
-                    <p className='text-gray-500 text-xl'>Brand{brand_name}</p>
+                    <p className='text-gray-500 text-xl'>{product.brand_name}</p>
                 </div>
                         <div className='w-full md:w-[20%] flex flex-col items-end'>
-                            <h3 className='text-3xl text-gray-500 font-medium mb-2'>Stock:{stock}</h3>
-                            <p className=' text-xl text-gray-500 font-medium'>Price:{retail_price_cents} </p>
+                            <h3 className='text-3xl text-gray-500 font-medium mb-2'>Stock:{product.stock}</h3>
+                            <p className=' text-xl text-gray-500 font-medium'>Price:{product.retail_price_cents} </p>
                         </div>
             </div>
     </div>

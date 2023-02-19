@@ -10,11 +10,12 @@ export interface SneakerStoreState {
   fetchSneakersByName: (query: string) => Promise<void>
   fetchingSingleSneaker: (id: number) => Promise<void>
   clearSingleSneaker: () => void
+  deleteProduct: (id:number) => any
 }
 export const fetchAllSneaker = async () => {}
 export const useSneakerStore = create(
   persist<SneakerStoreState>(
-    (set, get) => ({
+    (set, _get) => ({
       sneakers: [],
       sneakersByName: [],
       singleSneaker: {} as SneakersType,
@@ -35,6 +36,10 @@ export const useSneakerStore = create(
       clearSingleSneaker: () => {
         set(state => ({ ...state, singleSneaker: {} as SneakersType }))
       },
+      deleteProduct:(id: number)=>
+      set((state)=> ({
+        sneakers: state.sneakers.filter((item)=> item.id !== id)
+      }))
     }),
     {
       name: 'store-sneaker',
