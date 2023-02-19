@@ -19,7 +19,6 @@ module.exports = {
           '100%': { transform: 'translateX(0%)' },
         },
       },
-      backgroundColor: ["responsive", "hover", "focus", "active"],
       fontFamily: {
         raleway: ["Raleway", "sans-serif"],
       },
@@ -51,6 +50,11 @@ module.exports = {
       orange: colors.orange,
       yellow: "#FFE800",
     }, */
+  },
+  variants: {
+    extend: {
+      backgroundColor: ["responsive", "hover", "focus", "active"],
+    },
   },
   plugins: [],
 }
