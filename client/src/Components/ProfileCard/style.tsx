@@ -92,7 +92,7 @@ export const ProfileCardContainer = styled.div`
       /* sm:h-[150px] */
       rounded-[10px]
       h-[260px]
-      bg-gradient-to-r from-[ rgb(216,31,147)]to-[rgb(65,52,146)]
+      bg-yellow-400
       `}
   }
   box-shadow: 0 0 22px #3336;
