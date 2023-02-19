@@ -17,8 +17,8 @@ ${tw`
   border-white
   inline-block
   relative
-  top-8
-  left-[40%]
+  top-4
+  left-[20%]
   translate-x-1/2
   translate-y-1/2
   mb-8

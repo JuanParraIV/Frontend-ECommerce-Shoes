@@ -32,7 +32,6 @@ const AboutUS = () => {
             </p>
           </div>
         </div>
-
         <AboutUsList>
           <li>#</li>
           <li>T</li>
