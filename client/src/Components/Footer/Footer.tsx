@@ -19,7 +19,7 @@ export default function Footer() {
                   <div className="pt-6 flex flex-col space-y-4">
                       <h2 className="text-yellow-600 font-bold">INSTITUTIONAL</h2>
                       <div className="flex flex-col space-y-2 text-md text-gray-600">
-                        <a rel="noopener noreferrer" onClick={()=>navigate('/aboutUs')}>About us?</a>
+                        <a onClick={()=>navigate('/aboutUs')}>About us</a>
                         <a rel="noopener noreferrer" href="#">Developers</a>
                         <a rel="noopener noreferrer" href="#">Terms and Conditions</a>
                     </div>
