@@ -1,12 +1,13 @@
 import icons from '../../assets/icons-footer/icons-footer';
 import { useNavigate } from 'react-router-dom';
+import NewsLetter from '../Newsletter/Newsletter';
 
 export default function Footer() {
   const navigate = useNavigate();
         return (
           <footer className=" bg-gray-200 text-gray-100 mt-full">
 
-              <div className="container grid mx-3 gap-y-8 md:grid-cols-4 xl:grid-cols-4">
+              <div className="container grid mx-24 gap-y-8 md:grid-cols-4 xl:grid-cols-5">
 
                   <div className="flex flex-col mr-20 space-y-4">
                       <a rel="noopener noreferrer" href="#" className="flex justify-center md:justify-start">
@@ -49,6 +50,11 @@ export default function Footer() {
                       </div>
                   </div>
               </div>
+              <div className="pt-6 flex flex-col space-y-4">
+              <h2 className="text-yellow-600 font-bold">Subscribe for our Newsletter</h2>
+                  <NewsLetter/>
+              </div>
+
 
           </div>
           <div className="flex items-center justify-center px-6 pt-2 pb-4 text-sm">
