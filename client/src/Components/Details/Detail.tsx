@@ -17,7 +17,7 @@ export const Details = () => {
   const { token, profile, isAuthenticated } = useAuthStore(state => state);
   const { tokenGoogle, profileGoogle, isGoogleAuthenticated } = useGoogleAuthStore(state => state);
   const singleSneaker = useSneakerStore(state => state.singleSneaker);
-  console.log(singleSneaker);
+  console.log("un tennis",singleSneaker);
   const { addToCart, cartItems, totalPrice } = CartStore(state => state);
   console.log(cartItems);
 

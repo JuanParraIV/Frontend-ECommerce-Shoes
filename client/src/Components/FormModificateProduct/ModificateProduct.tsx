@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { stat } from 'fs';
 import { useSneakerStore } from '@/App/store/useSneakerStore';
 import { useAuthStore } from '@/App/store/useAuthStore';
+import { number } from 'yup';
 
 
 
@@ -50,10 +51,12 @@ const ModificateProduct = () => {
     status: '',
     rating: 0
   });
+  const {sneakers,   singleSneaker} = useSneakerStore(state => state); 
+ 
 
   const [form, setForm] = useState<FormData>({
     id: 0,
-    brand_name: '',
+    brand_name: "",
     category_name: [],
     name: '',
     retail_price_cents: 0,
@@ -70,11 +73,11 @@ const ModificateProduct = () => {
 
 
   const { token} = useAuthStore(state => state);
-  const {sneakers,  singleSneaker} = useSneakerStore(state => state); 
+  console.log('Unsneaker', singleSneaker)
 
 
   const handleSubmit = async (data: FormData) => {
-    console.log(data);
+    console.log('data', data);
     try {
       await api.put('/sneakers',
         data
@@ -101,11 +104,11 @@ const ModificateProduct = () => {
         status: '',
         rating: 0
       });
-    //   sneakers();
+
       try {
         swal({
           title: "Excellent",
-          text: "Profile edited successfuly!",
+          text: "Product edited successfuly!",
           icon: "success",
           buttons: {
             confirm: {
@@ -127,6 +130,11 @@ const ModificateProduct = () => {
     }
   };
 
+  const routePutSneaker = async ()=> {
+    const response = await api.get('/sneakers');
+    return response.data
+  }
+
   const handleChange = (event: React.FormEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target as HTMLInputElement | HTMLSelectElement;
 
@@ -137,30 +145,34 @@ const ModificateProduct = () => {
 
   };
 
+
+  console.log(form)
+  console.log(sneaker)
+
   useEffect(() => {
-    if (sneaker) setSneaker(sneaker);
+    if (sneakers) setSneaker(sneaker);
   }, [sneaker]);
 
   useEffect(() => {
     if (sneaker) setForm({
-        id: 0,
-        brand_name: '',
-        category_name: [],
-        name: '',
-        retail_price_cents: 0,
-        color: '',
-        size_range: [],
-        grid_picture_url: '',
-        original_picture_url: '',
-        main_picture_url: '',
-        details: '',
-        stock: 0,
-        status: '',
-        rating: 0
+        id: sneaker.id,
+        brand_name: sneaker.brand_name,
+        category_name: sneaker.category_name,
+        name: sneaker.name,
+        retail_price_cents: sneaker.retail_price_cents,
+        color: sneaker.color,
+        size_range: sneaker.size_range,
+        grid_picture_url: sneaker.grid_picture_url,
+        original_picture_url: sneaker.original_picture_url,
+        main_picture_url: sneaker.main_picture_url,
+        details: sneaker.details,
+        stock: sneaker.stock,
+        status: sneaker.status,
+        rating: sneaker.rating
     });
   }, [sneaker]);
-  console.log(form);
-  console.log(sneaker);
+  console.log('form',form);
+  console.log(singleSneaker);
 
   function handleDelete(el: string) {
     setForm({
@@ -207,6 +219,8 @@ function handleSelectCategory(e: { target: { value: any; }; }) {
         <Logo />
         <h1 className='text-center text-2xl text-[#F53F00] mt-10'>Edit Product</h1>
         <div className='flex relative flex-col  items-center justify-center gap-6 grid grid-cols-2 gap-4'>
+          
+      
           <div className='flex justify-end items-center relative'>Name Product
           <input
               type="text"

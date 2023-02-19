@@ -55,6 +55,7 @@ const EditProfileUser = () => {
 
 
   const { token, profile, getProfile } = useAuthStore(state => state);
+  console.log(getProfile)
 
 
   const handleSubmit = async (data: FormData) => {
