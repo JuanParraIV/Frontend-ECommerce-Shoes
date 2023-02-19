@@ -13,20 +13,20 @@ import { useAuthStore } from '@/App/store/useAuthStore';
 
 
 interface FormData {
-      id?: number,
-      brand_name: string,
-      category_name: string[]
-      name: string
-      retail_price_cents: number,
-      color: string,
-      size_range: string[],
-      grid_picture_url: string
-      original_picture_url: string
-      main_picture_url: string
-      details: string
-      stock: number
-      status: string
-      rating: number
+  id?: number,
+  brand_name: string,
+  category_name: string[];
+  name: string;
+  retail_price_cents: number,
+  color: string,
+  size_range: string[],
+  grid_picture_url: string;
+  original_picture_url: string;
+  main_picture_url: string;
+  details: string;
+  stock: number;
+  status: string;
+  rating: number;
 }
 
 
@@ -69,8 +69,8 @@ const ModificateProduct = () => {
   });
 
 
-  const { token} = useAuthStore(state => state);
-  const {sneakers,  singleSneaker} = useSneakerStore(state => state); 
+  const { token } = useAuthStore(state => state);
+  const { sneakers, singleSneaker } = useSneakerStore(state => state);
 
 
   const handleSubmit = async (data: FormData) => {
@@ -101,7 +101,7 @@ const ModificateProduct = () => {
         status: '',
         rating: 0
       });
-    //   sneakers();
+      //   sneakers();
       try {
         swal({
           title: "Excellent",
@@ -143,20 +143,20 @@ const ModificateProduct = () => {
 
   useEffect(() => {
     if (sneaker) setForm({
-        id: 0,
-        brand_name: '',
-        category_name: [],
-        name: '',
-        retail_price_cents: 0,
-        color: '',
-        size_range: [],
-        grid_picture_url: '',
-        original_picture_url: '',
-        main_picture_url: '',
-        details: '',
-        stock: 0,
-        status: '',
-        rating: 0
+      id: 0,
+      brand_name: '',
+      category_name: [],
+      name: '',
+      retail_price_cents: 0,
+      color: '',
+      size_range: [],
+      grid_picture_url: '',
+      original_picture_url: '',
+      main_picture_url: '',
+      details: '',
+      stock: 0,
+      status: '',
+      rating: 0
     });
   }, [sneaker]);
   console.log(form);
@@ -164,37 +164,37 @@ const ModificateProduct = () => {
 
   function handleDelete(el: string) {
     setForm({
-        ...form,
-        size_range: form.size_range.filter(t=> t !== el)
-    })
+      ...form,
+      size_range: form.size_range.filter(t => t !== el)
+    });
   }
 
   function handleSelectSize(e: { target: { value: any; }; }) {
     setForm({
-        ...form,
-        size_range:  [...new Set([...form.size_range, e.target.value])]
-    })
+      ...form,
+      size_range: [...new Set([...form.size_range, e.target.value])]
+    });
   };
 
   function handleSelectBrand(e: { target: { value: any; }; }) {
     setForm({
-        ...form,
-        brand_name: e.target.value
-    })
-};
+      ...form,
+      brand_name: e.target.value
+    });
+  };
 
-function handleSelectCategory(e: { target: { value: any; }; }) {
+  function handleSelectCategory(e: { target: { value: any; }; }) {
     setForm({
-        ...form,
-        category_name: [...new Set([...form.category_name, e.target.value])]
-    })
+      ...form,
+      category_name: [...new Set([...form.category_name, e.target.value])]
+    });
   };
 
   function handleDeleteCategory(el: string) {
     setForm({
-        ...form,
-        category_name: form.category_name.filter(t=> t !== el)
-    })
+      ...form,
+      category_name: form.category_name.filter(t => t !== el)
+    });
   }
 
 
@@ -208,7 +208,7 @@ function handleSelectCategory(e: { target: { value: any; }; }) {
         <h1 className='text-center text-2xl text-[#F53F00] mt-10'>Edit Product</h1>
         <div className='flex relative flex-col  items-center justify-center gap-6 grid grid-cols-2 gap-4'>
           <div className='flex justify-end items-center relative'>Name Product
-          <input
+            <input
               type="text"
               name='name'
               value={form.name}
@@ -224,7 +224,7 @@ function handleSelectCategory(e: { target: { value: any; }; }) {
             </div>
           </div>
           <div className='flex justify-end items-center relative'>Price
-          <input
+            <input
               type="number"
               name='retail_price_cents'
               value={form.retail_price_cents}
@@ -233,7 +233,7 @@ function handleSelectCategory(e: { target: { value: any; }; }) {
               className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400' />
 
             <div className="text-red-700 underline decoration-pink-500">
-              {errors.retail_price_cents?
+              {errors.retail_price_cents ?
                 <p className='bg-red;'>{errors.retail_price_cents}</p> : null
               }
 
@@ -241,7 +241,7 @@ function handleSelectCategory(e: { target: { value: any; }; }) {
           </div>
 
           <div className='flex justify-end items-center relative'>stock
-          <input
+            <input
               type="text"
               placeholder="Stock"
               name='stock'
@@ -251,7 +251,7 @@ function handleSelectCategory(e: { target: { value: any; }; }) {
             />
 
             <div className="text-red-700 underline decoration-pink-500">
-              {errors.stock?
+              {errors.stock ?
                 <p className='bg-red;'>{errors.stock}</p> : null
               }
             </div>
@@ -259,7 +259,7 @@ function handleSelectCategory(e: { target: { value: any; }; }) {
 
 
           <div className='flex justify-end items-center relative'>Color
-          <input
+            <input
               type="text"
               placeholder="color"
               name='color'
@@ -269,72 +269,73 @@ function handleSelectCategory(e: { target: { value: any; }; }) {
             />
 
             <div className="text-red-700 underline decoration-pink-500">
-              {errors.color?
+              {errors.color ?
                 <p className='bg-red;'>{errors.color}</p> : null
               }
             </div>
           </div>
 
-          <div className='flex justify-end items-center relative'> 
-        <div> size
-              <select  value={form.size_range} name='types'  onChange={handleSelectSize} >
-                      <option value='10'>10</option>
-                      <option value='10.5'>10.5</option>
-                      <option value='11'>11</option>
-                      <option value='11.5'>11.5</option>
-                      <option value='12'>12</option>
-                      <option value='12.5'>12.5</option>
-                      <option value='13'>13</option>
-                      <option value='13.5'>13.5</option>
-                      <option value='14'>14</option>
-                      <option value='14.5'>14.5</option>
-                      <option value='15'>15</option>
-                      <option value='16'>16</option>
-                      <option value='16.5'>16.5</option>
-                      <option value='17'>17</option>
-                      <option value='17.5'>17.5</option>
-                      <option value='18'>18</option>
-                      <option value='3.5'>3.5</option>
-                      <option value='4'>4</option>
-                      <option value='4.5'>4.5</option>
-                      <option value='5'>5</option>
-                      <option value='5.5'>5.5</option>
-                      <option value='6'>6</option>
-                      <option value='6.5'>6.5</option>
-                      <option value='7'>7</option>
-                      <option value='7.5'>7.5</option>
-                      <option value='8'>8</option>
-                      <option value='8.5'>8.5</option>
-                      <option value='9'>9</option>
-                      <option value='9.5'>9.5</option>
+          <div className='flex justify-end items-center relative'>
+            <div> size
+              <select value={form.size_range} name='types' onChange={handleSelectSize} >
+                <option value='10'>10</option>
+                <option value='10.5'>10.5</option>
+                <option value='11'>11</option>
+                <option value='11.5'>11.5</option>
+                <option value='12'>12</option>
+                <option value='12.5'>12.5</option>
+                <option value='13'>13</option>
+                <option value='13.5'>13.5</option>
+                <option value='14'>14</option>
+                <option value='14.5'>14.5</option>
+                <option value='15'>15</option>
+                <option value='16'>16</option>
+                <option value='16.5'>16.5</option>
+                <option value='17'>17</option>
+                <option value='17.5'>17.5</option>
+                <option value='18'>18</option>
+                <option value='3.5'>3.5</option>
+                <option value='4'>4</option>
+                <option value='4.5'>4.5</option>
+                <option value='5'>5</option>
+                <option value='5.5'>5.5</option>
+                <option value='6'>6</option>
+                <option value='6.5'>6.5</option>
+                <option value='7'>7</option>
+                <option value='7.5'>7.5</option>
+                <option value='8'>8</option>
+                <option value='8.5'>8.5</option>
+                <option value='9'>9</option>
+                <option value='9.5'>9.5</option>
               </select>
-              
-        {form.size_range.map(el=>
-         <div>
-            <p >{el}</p>
-                <button className="buttonX" onClick={()=>handleDelete(el)}>X</button>
-        </div>
-                 )}
-        </div>
-            
-            {errors.size_range?
-                             <p className='bg-red;'>{errors.size_range}</p> : null 
-                         }
+
+              {form.size_range.map(el =>
+                <div>
+                  <p >{el}</p>
+                  <button className="buttonX" onClick={() => handleDelete(el)}>X</button>
+                </div>
+              )}
+            </div>
+
+            {errors.size_range ?
+              <p className='bg-red;'>{errors.size_range}</p> : null
+            }
           </div>
 
-          <div onChange={handleChange} className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'  >Status
-          <hr />
-                    <label >
-                      <input type='radio' name='status' value='New' />New
-                    </label>
-                    <label>
-                      <input type='radio' name='status' value='Used' />Used
-                    </label>
+          <fieldset className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4'>
+            <legend>Status</legend>
+            <hr />
+            <label>
+              <input type='radio' name='status' value='New' onChange={handleChange} />New
+            </label>
+            <label>
+              <input type='radio' name='status' value='Used' onChange={handleChange} />Used
+            </label>
 
-                    {errors.status?
-                             <p className='bg-red;'>{errors.status}</p> : null 
-                         }
-          </div>
+            {errors.status &&
+              <p className='bg-red;'>{errors.status}</p>
+            }
+          </fieldset>
 
           <div className='flex justify-end items-center relative'>
             <input
@@ -345,9 +346,9 @@ function handleSelectCategory(e: { target: { value: any; }; }) {
               onChange={handleChange}
               className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400'
             />
-            {errors.details?
-                             <p className='bg-red;'>{errors.details}</p> : null 
-                         }
+            {errors.details ?
+              <p className='bg-red;'>{errors.details}</p> : null
+            }
           </div>
 
           <div className='flex justify-end items-center relative'>
@@ -359,9 +360,9 @@ function handleSelectCategory(e: { target: { value: any; }; }) {
               onChange={handleChange}
               className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400'
             />
-            {errors.grid_picture_url?
-                             <p className='bg-red;'>{errors.grid_picture_url}</p> : null 
-                         }
+            {errors.grid_picture_url ?
+              <p className='bg-red;'>{errors.grid_picture_url}</p> : null
+            }
           </div>
 
           <div className='flex justify-end items-center relative'>
@@ -373,9 +374,9 @@ function handleSelectCategory(e: { target: { value: any; }; }) {
               onChange={handleChange}
               className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400'
             />
-            {errors.original_picture_url?
-                             <p className='bg-red;'>{errors.original_picture_url}</p> : null 
-                         }
+            {errors.original_picture_url ?
+              <p className='bg-red;'>{errors.original_picture_url}</p> : null
+            }
           </div>
 
           <div className='flex justify-end items-center relative'>
@@ -387,55 +388,55 @@ function handleSelectCategory(e: { target: { value: any; }; }) {
               onChange={handleChange}
               className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400'
             />
-            {errors.main_picture_url?
-                             <p className='bg-red;'>{errors.main_picture_url}</p> : null 
-                         }
+            {errors.main_picture_url ?
+              <p className='bg-red;'>{errors.main_picture_url}</p> : null
+            }
           </div>
 
-          <div  className='flex justify-end items-center relative'>
+          <div className='flex justify-end items-center relative'>
 
             <label className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'></label>
-                <select  value={form.brand_name} onChange={handleSelectBrand} placeholder='Brand'>
-                <option>Select Brand</option>
-                <option value='Air Jordan'>Air Jordan</option>
-                <option value='Champion'>Champion</option>
-                <option value='Converse'>Converse</option>
-                <option value='Gucci'>Gucci</option>
-                <option value='Nike'>Nike</option>
-                <option value='Vans'>Vans</option>
-                <option value='adidas'>adidas</option>
-                </select>
-                
-                {errors.grid_picture_url?
-                             <p className='bg-red;'>{errors.brand_name}</p> : null 
-                         }
-             </div>
-<div>
+            <select value={form.brand_name} onChange={handleSelectBrand} placeholder='Brand'>
+              <option>Select Brand</option>
+              <option value='Air Jordan'>Air Jordan</option>
+              <option value='Champion'>Champion</option>
+              <option value='Converse'>Converse</option>
+              <option value='Gucci'>Gucci</option>
+              <option value='Nike'>Nike</option>
+              <option value='Vans'>Vans</option>
+              <option value='adidas'>adidas</option>
+            </select>
 
-             <div  className='flex justify-end items-center relative'>
+            {errors.grid_picture_url ?
+              <p className='bg-red;'>{errors.brand_name}</p> : null
+            }
+          </div>
+          <div>
 
-               <label className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'></label>
-                <select  value={form.category_name} onChange={handleSelectCategory}>
-                 <option>Select Category</option>
-                  <option value='lifestyle'>Lifestyle</option>
-                  <option value='basketball'>Basketball</option>
-                  <option value='running'>Running</option>
-                  <option value='skateboarding'>Skateboarding</option>
-                  <option value='other'>Other</option>
-               </select>
-              
-                  {form.category_name.map(el=>
-                                <div>
-                                    <p>{`${el},  `} </p>
-                                    <button className="buttonX" onClick={()=>handleDeleteCategory(el)}>X</button>
-                                </div>
-                            )}
-             </div>
-                            
-                  {errors.category_name?
-                     <p className='bg-red;'>{errors.category_name}</p> : null 
-                        }
-</div>
+            <div className='flex justify-end items-center relative'>
+
+              <label className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name'></label>
+              <select value={form.category_name} onChange={handleSelectCategory}>
+                <option>Select Category</option>
+                <option value='lifestyle'>Lifestyle</option>
+                <option value='basketball'>Basketball</option>
+                <option value='running'>Running</option>
+                <option value='skateboarding'>Skateboarding</option>
+                <option value='other'>Other</option>
+              </select>
+
+              {form.category_name.map(el =>
+                <div>
+                  <p>{`${el},  `} </p>
+                  <button className="buttonX" onClick={() => handleDeleteCategory(el)}>X</button>
+                </div>
+              )}
+            </div>
+
+            {errors.category_name ?
+              <p className='bg-red;'>{errors.category_name}</p> : null
+            }
+          </div>
 
 
           <div className='p-2 w-[250px]'>
