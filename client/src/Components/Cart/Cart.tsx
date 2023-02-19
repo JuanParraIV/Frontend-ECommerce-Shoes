@@ -3,20 +3,42 @@ import { CardStyle, Image, Card, Text, Continue, Delete, ProductDetail, ProductC
 import carritoVacio from '../../assets/icons-cart/carritovacio.png';
 import { CartStore } from '@/App/store/useCartStore';
 import { SneakersType } from '@/Typing/Sneakers.type';
+import { useAuthStore } from '@/App/store/useAuthStore';
+import { useGoogleAuthStore } from '@/App/store/useAuthGoogleStore';
+import api from '@/Api/backend_sneakers';
 
 
 
 
 
 const Cart = () => {
-
+  const { token, profile, isAuthenticated } = useAuthStore(state => state);
+  const { tokenGoogle, profileGoogle, isGoogleAuthenticated } = useGoogleAuthStore(state => state);
   const navigate = useNavigate();
   const { removeFromCart, cartItems, totalPrice, totalQty } = CartStore(state => state);
   console.log(cartItems);
 
-  const handleClick = (product: SneakersType) => {
-
+  const handleRemoveFromCart = async (product: SneakersType) => {
     removeFromCart(product);
+    try {
+      const userType = isAuthenticated ? 'user' : isGoogleAuthenticated ? 'googleUser' : undefined;
+      const trolleyData = {
+        id: product.id,
+        token: {
+          token: isAuthenticated ? token : isGoogleAuthenticated ? tokenGoogle : undefined, userType
+        },
+      };
+      const response = await api.delete('/trolley', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${isAuthenticated ? token : isGoogleAuthenticated ? tokenGoogle : undefined}`,
+        },
+        data: trolleyData,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   function handleCheckout(): void {
@@ -60,37 +82,11 @@ const Cart = () => {
                     <p>{item.brand_name}</p>
                     <div>
                       <h5>Size</h5>
-                      <select>
-
-                        <option value='10'>10</option>
-                        <option value='10.5'>10.5</option>
-                        <option value='11'>11</option>
-                        <option value='11.5'>11.5</option>
-                        <option value='12'>12</option>
-                        <option value='12.5'>12.5</option>
-                        <option value='13'>13</option>
-                        <option value='13.5'>13.5</option>
-                        <option value='14'>14</option>
-                        <option value='14.5'>14.5</option>
-                        <option value='15'>15</option>
-                        <option value='16'>16</option>
-                        <option value='16.5'>16.5</option>
-                        <option value='17'>17</option>
-                        <option value='17.5'>17.5</option>
-                        <option value='18'>18</option>
-                        <option value='3.5'>3.5</option>
-                        <option value='4'>4</option>
-                        <option value='4.5'>4.5</option>
-                        <option value='5'>5</option>
-                        <option value='5.5'>5.5</option>
-                        <option value='6'>6</option>
-                        <option value='6.5'>6.5</option>
-                        <option value='7'>7</option>
-                        <option value='7.5'>7.5</option>
-                        <option value='8'>8</option>
-                        <option value='8.5'>8.5</option>
-                        <option value='9'>9</option>
-                        <option value='9.5'>9.5</option>
+                      <select id="size" >
+                        <option value="">Select a Size</option>
+                        {item.size_range && item.size_range.map(size => (
+                          <option key={size} value={size}>{size}</option>
+                        ))}
                       </select>
 
                     </div>
@@ -103,7 +99,7 @@ const Cart = () => {
                   </ProductDetail>
 
                   <Delete>
-                    <button onClick={() => handleClick(item)}>Delete</button>
+                    <button onClick={() => handleRemoveFromCart(item)}>Delete</button>
                   </Delete>
                 </CardStyle>
 
