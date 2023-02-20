@@ -51,8 +51,6 @@ const ModificateProduct = () => {
     status: '',
     rating: 0
   });
-  const {sneakers,   singleSneaker} = useSneakerStore(state => state); 
- 
 
   const [form, setForm] = useState<FormData>({
     id: 0,
@@ -223,8 +221,8 @@ const ModificateProduct = () => {
         <Logo />
         <h1 className='text-center text-2xl text-[#F53F00] mt-10'>Edit Product</h1>
         <div className='flex relative flex-col  items-center justify-center gap-6 grid grid-cols-2 gap-4'>
-          
-      
+
+
           <div className='flex justify-end items-center relative'>Name Product
             <input
               type="text"
