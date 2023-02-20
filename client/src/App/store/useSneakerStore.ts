@@ -36,10 +36,18 @@ export const useSneakerStore = create(
       clearSingleSneaker: () => {
         set(state => ({ ...state, singleSneaker: {} as SneakersType }))
       },
-      deleteProduct:(id: number)=>
-      set((state)=> ({
-        sneakers: state.sneakers.filter((item)=> item.id !== id)
-      }))
+      deleteProduct: async(id: number)=>{
+        try {
+          await api.delete<SneakersType>(`sneakers/${id}`,{method: 'DELETE'})
+          const newCardSneakers = _get().sneakers.filter((p)=> p.id !== id)
+          set({sneakers: newCardSneakers})
+        } catch (error) {
+          console.log(error)
+        }
+      }
+      // set((state)=> ({
+      //   sneakers: state.sneakers.filter((item)=> item.id !== id)
+      // }))
     }),
     {
       name: 'store-sneaker',

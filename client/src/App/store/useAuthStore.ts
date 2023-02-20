@@ -7,6 +7,7 @@ type State = {
   token: string
   isAuthenticated: boolean
   profile: any
+
 }
 export interface Actions {
   setToken: (token: string) => void
@@ -15,6 +16,7 @@ export interface Actions {
   getProfile: () => Promise<void>
   clearToken: () => void
   logoutStore: () => void
+  getAdminProfile:()=> Promise<void>
 }
 export const useAuthStore = create(
   persist<State & Actions>(
@@ -39,6 +41,14 @@ export const useAuthStore = create(
           },
         })
         set(state => ({ ...state, profile: data }))
+      },
+      getAdminProfile: async () => {
+        const {data} = await api.get('/admin/id', {
+          headers: {
+            Authorization: `Bearer ${get().token}`
+          }
+        }) 
+        set(state=> ({...state, profile: data}))
       },
       clearToken: () => {
         set(state => ({ ...state, token: '' }))

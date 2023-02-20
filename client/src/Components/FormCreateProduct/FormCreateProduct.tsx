@@ -110,7 +110,6 @@ const FormCreateProduct = () => {
 
 
 
-
   const handleChange = (event: React.FormEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target as HTMLInputElement | HTMLSelectElement;
 
@@ -120,6 +119,16 @@ const FormCreateProduct = () => {
     }));
 
   };
+
+  useEffect(() => {
+    const getAllSneaker = async () => {
+      const allSneakers = await routePostSneakers();
+      if (allSneakers) setSneaker(allSneakers);
+    };
+    getAllSneaker();
+  }, []);
+  console.log(form);
+  console.log(sneaker);
 
 
   function handleSelectBrand(e: { target: { value: any; }; }) {
@@ -158,15 +167,6 @@ const FormCreateProduct = () => {
   }
 
 
-  useEffect(() => {
-    const getAllSneaker = async () => {
-      const allSneakers = await routePostSneakers();
-      if (allSneakers) setSneaker(allSneakers);
-    };
-    getAllSneaker();
-  }, []);
-  console.log(form);
-  console.log(sneaker);
 
 
 
