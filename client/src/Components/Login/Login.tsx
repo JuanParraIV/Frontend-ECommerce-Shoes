@@ -80,9 +80,7 @@ const LoginForm = () => {
         <div>
           <a href="" className='absolute text-red-600 underline text-xs right-0'>Forgot Password</a>
         </div>
-
         <SubmitButton text='Log In' />
-
       </div>
     </form>
     <div className='flex flex-col w-full items-center justify-center gap-5 '>
