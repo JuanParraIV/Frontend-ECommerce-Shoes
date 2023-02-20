@@ -19,7 +19,7 @@ export interface LoginData {
 
 interface DecodedToken {
   user_id: string;
-  rol: string;
+  user_rol: string;
   exp: number;
 }
 const LoginForm = () => {
@@ -31,6 +31,8 @@ const LoginForm = () => {
     password: "",
   });
   console.log(form);
+  console.log(token);
+
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     const { name, value } = event.target as HTMLInputElement;
@@ -43,11 +45,13 @@ const LoginForm = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const resLogin = await authLogin(form);
+      const token = await authLogin(form);
       const decodedToken = jwt_decode<DecodedToken>(token);
-      console.log(resLogin)
-      console.log(decodedToken)
-      if (decodedToken.rol === "admin") {
+      console.log(decodedToken.user_id);
+      console.log(decodedToken.user_rol);
+      console.log(token);
+      console.log(decodedToken);
+      if (decodedToken.user_rol === "admin") {
         const resAdminProfile = await getAdminProfile();
         console.log(resAdminProfile);
       } else {
@@ -59,7 +63,7 @@ const LoginForm = () => {
         password: "",
       });
       navigate('/');
-    } catch (error) {
+    }   catch (error) {
       console.log(error);
     }
   };

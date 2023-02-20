@@ -15,19 +15,22 @@ const schema = yup.object().shape({
 });
 
 const NewsLetter = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = async (data: FormData) => {
     try {
       let newMail = await api.post(`/mail/news`, data);
+
       swal({
         title: '¡Suscripción exitosa!',
         text: 'Gracias por suscribirte, tu email ha sido agregado a nuestra lista.',
         icon: 'success',
+        timer: 2000,
         buttons: ['Aceptar']
       });
+      reset();
     } catch (error) {
       throw error;
     }
@@ -49,10 +52,10 @@ const NewsLetter = () => {
         </button>
       </div>
       {errors?.email && (
-          <p className="text-red-500 text-xs italic">{errors.email.message}</p>
-        )}
+        <p className="text-red-500 text-xs italic">{errors.email.message}</p>
+      )}
     </form>
   );
-}
+};
 
 export default NewsLetter;

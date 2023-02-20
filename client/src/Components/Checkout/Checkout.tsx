@@ -158,7 +158,25 @@ function Checkout() {
 
       });
 
-      console.log(response.data);
+      let mailInfo = {
+        name: userInfo.cus_name,
+        email: userInfo.cus_email,
+        phone: userInfo.cus_phone,
+        address: userInfo.cus_address,
+        city: userInfo.cus_city,
+        country: userInfo.cus_country,
+        zip: userInfo.cus_zip,
+        total: totalPrice,
+        items: cartItems.map((item) => {
+          return {
+            name: item.name,
+            price: item.retail_price_cents,
+            count: item.quantity,
+            img: item.grid_picture_url,
+          };
+        }),
+      };
+      /* dispatch(mailPurchase(mailInfo)); */
 
       const cardElement = elements.getElement(CardElement);
       if (cardElement) {

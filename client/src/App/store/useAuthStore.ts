@@ -12,7 +12,7 @@ type State = {
 export interface Actions {
   setToken: (token: string) => void
   setProfile: (profile: any) => void
-  authLogin: (a: LoginData) => Promise<void>
+  authLogin: (a: LoginData) => Promise<string>
   getProfile: () => Promise<void>
   clearToken: () => void
   logoutStore: () => void
@@ -33,6 +33,7 @@ export const useAuthStore = create(
           },
         })
         set(state => ({ ...state, token: data.token, isAuthenticated: true }))
+        return data.token;
       },
       getProfile: async () => {
         const { data } = await api.get('/user/profile', {
@@ -47,7 +48,7 @@ export const useAuthStore = create(
           headers: {
             Authorization: `Bearer ${get().token}`
           }
-        }) 
+        })
         set(state=> ({...state, profile: data}))
       },
       clearToken: () => {
