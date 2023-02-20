@@ -33,6 +33,8 @@ interface FormData {
 
 const ModificateProduct = () => {
   //const router = useRouter();
+  const { token } = useAuthStore(state => state);
+  const { sneakers, singleSneaker } = useSneakerStore(state => state);
   const navigate = useNavigate();
   const [sneaker, setSneaker] = useState<FormData>();
   const [errors, setErrors] = useState({
@@ -51,7 +53,7 @@ const ModificateProduct = () => {
     status: '',
     rating: 0
   });
-  const {sneakers,   singleSneaker} = useSneakerStore(state => state); 
+
  
 
   const [form, setForm] = useState<FormData>({
@@ -72,8 +74,6 @@ const ModificateProduct = () => {
   });
 
 
-  const { token } = useAuthStore(state => state);
-  const { sneakers, singleSneaker } = useSneakerStore(state => state);
 
 
 
