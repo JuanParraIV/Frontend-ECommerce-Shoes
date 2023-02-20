@@ -23,6 +23,7 @@ interface FormData {
   email: string;
   password: string;
   dni: string;
+
 }
 
 
@@ -38,7 +39,8 @@ const EditProfileUser = () => {
     buyerAddress: '',
     email: '',
     password: '',
-    dni: ''
+    dni: '',
+
   });
 
   const [form, setForm] = useState<FormData>({
@@ -50,16 +52,18 @@ const EditProfileUser = () => {
     buyerAddress: '',
     email: '',
     password: '',
-    dni: ''
+    dni: '',
+ 
   });
 
 
-  const { token, profile, getProfile } = useAuthStore(state => state);
-  console.log(getProfile)
+  const { token, profile, getProfile} = useAuthStore(state => state);
+  console.log(profile)
+
 
 
   const handleSubmit = async (data: FormData) => {
-    console.log(data);
+    console.log('data', data);
     try {
       await api.put('/user',
         data
@@ -78,7 +82,8 @@ const EditProfileUser = () => {
         buyerAddress: '',
         email: '',
         password: '',
-        dni: ''
+        dni: '',
+     
       });
       getProfile();
       try {
@@ -130,7 +135,8 @@ const EditProfileUser = () => {
       buyerAddress: user.buyerAddress,
       email: user.email,
       password: user.password,
-      dni: user.dni
+      dni: user.dni,
+    
     });
   }, [user]);
   console.log(form);

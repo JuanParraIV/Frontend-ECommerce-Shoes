@@ -34,7 +34,7 @@ interface FormData {
 const ModificateProduct = () => {
   //const router = useRouter();
   const { token } = useAuthStore(state => state);
-  const { sneakers, singleSneaker } = useSneakerStore(state => state);
+  const { sneakers, singleSneaker,  fetchSneakers } = useSneakerStore(state => state);
   const navigate = useNavigate();
   const [sneaker, setSneaker] = useState<FormData>();
   const [errors, setErrors] = useState({
@@ -104,9 +104,7 @@ const ModificateProduct = () => {
         status: '',
         rating: 0
       });
-
-      //   sneakers();
-
+      fetchSneakers()
       try {
         swal({
           title: "Excellent",
@@ -146,7 +144,6 @@ const ModificateProduct = () => {
     }));
 
   };
-
 
   console.log(form)
   console.log(sneaker)
@@ -224,6 +221,23 @@ const ModificateProduct = () => {
         <div className='flex relative flex-col  items-center justify-center gap-6 grid grid-cols-2 gap-4'>
 
 
+
+        <div className='flex justify-end items-center relative'>Id
+            <input
+              type="text"
+              name='id'
+              value={form.id}
+              onChange={handleChange}
+              placeholder='userName'
+              className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400' />
+
+            <div className="text-red-700 underline decoration-pink-500">
+              {errors.name ?
+                <p className='bg-red;'>{errors.name}</p> : null
+              }
+
+            </div>
+          </div>
           <div className='flex justify-end items-center relative'>Name Product
             <input
               type="text"

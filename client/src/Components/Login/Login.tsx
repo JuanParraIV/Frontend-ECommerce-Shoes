@@ -10,14 +10,21 @@ import { useNavigate } from 'react-router-dom';
 import LoginAuth0Button from '../Shared/Form/LoginThirdParty';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useGoogleAuthStore } from '@/App/store/useAuthGoogleStore';
+import jwt_decode from "jwt-decode";
 
 export interface LoginData {
   userName: string;
   password: string;
 }
+
+interface DecodedToken {
+  user_id: string;
+  rol: string;
+  exp: number;
+}
 const LoginForm = () => {
   const { loginWithRedirect} = useAuth0();
-  const { token, profile, authLogin, getProfile } = useAuthStore(state => state);
+  const { token, profile, authLogin, getProfile, getAdminProfile } = useAuthStore(state => state);
   const navigate = useNavigate();
   const [form, setForm] = useState<LoginData>({
     userName: "",
@@ -37,18 +44,26 @@ const LoginForm = () => {
     event.preventDefault();
     try {
       const resLogin = await authLogin(form);
-      const resProfile = await getProfile();
-      console.log(resLogin);
+      const decodedToken = jwt_decode<DecodedToken>(token);
+      console.log(resLogin)
+      console.log(decodedToken)
+      if (decodedToken.rol === "admin") {
+        const resAdminProfile = await getAdminProfile();
+        console.log(resAdminProfile);
+      } else {
+        const resProfile = await getProfile();
+        console.log(resProfile);
+      }
       setForm({
         userName: "",
         password: "",
       });
-      navigate('/')
-
+      navigate('/');
     } catch (error) {
       console.log(error);
     }
   };
+
   const handleGoogleAuth0 = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {

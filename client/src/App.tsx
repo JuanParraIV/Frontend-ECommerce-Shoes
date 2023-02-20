@@ -14,6 +14,7 @@ import ModificateProduct from './Components/FormModificateProduct/ModificateProd
 import SneakersAdminContainer from './Containers/SneakersAdmin/SneakersAdminContainer';
 import DashBoard from './Components/DashBoard/DashBoardMain'
 import AboutUsContainer from './Containers/AboutUs/AboutUsContainer';
+import CardsUsers from './Components/CardsUsers/CardsUsers';
 
 
 
@@ -35,6 +36,7 @@ function App() {
         <Route path='/checkout' element={<CheckoutWithStripe/>}/>
         <Route path='/modifproduct/:id' element={<SneakersAdminContainer/>}/>
         <Route path='/mainpaneladmin' element={<DashBoard/>}/>
+        <Route path='carduser' element={<CardsUsers/>}/>
       </Routes>
     </BrowserRouter>
 
