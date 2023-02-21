@@ -1,12 +1,13 @@
 import { useAuthStore } from '@/App/store/useAuthStore';
 import { CartStore } from '@/App/store/useCartStore';
-import React, {useState} from 'react'
+import React, {useEffect, useLayoutEffect, useState} from 'react'
 import { RiDashboardLine, RiBarChartGroupedLine, RiContactsLine, RiShoppingBag3Line, RiLogoutBoxLine, 
     RiMenu3Line, RiCloseLine, RiNotificationLine, RiArrowDropDownLine, RiSearchLine, RiFilter3Line } from "react-icons/ri";
 import { Link } from 'react-router-dom';
 import dibujo from '../../assets/icons-DashBoard/dibujo.svg'
 import CardsDashboard from '../CardsDashBoard/CardsDashBoard';
 import { useNavigate } from 'react-router-dom';
+import { useSneakerStore } from '@/App/store/useSneakerStore';
 
 const DashBoard = () => {
 
@@ -14,6 +15,7 @@ const DashBoard = () => {
   const { token, logoutStore, clearToken} = useAuthStore();
   const{clearCart} = CartStore(state=>state) 
   const navigate = useNavigate()
+  const {fetchSneakers} = useSneakerStore()
 
    function handleLogOut() {
     logoutStore();
@@ -25,6 +27,10 @@ const DashBoard = () => {
   const handleSidebar = () => {
     setSidebar(!sidebar)
   }
+
+  useEffect(()=>{
+    fetchSneakers()
+  },[])
 
   return (
     <div className='min-h-screen grid grid-col-1 lg:grid-cols-6'>

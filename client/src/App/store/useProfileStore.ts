@@ -2,24 +2,13 @@ import { LoginData } from '@/Components/Login/Login'
 import { create } from 'zustand'
 import api from '@/Api/backend_sneakers'
 import { persist } from 'zustand/middleware'
-import { SneakersType } from '@/Typing/Sneakers.type'
+import { UserType  } from '@/Typing/Users.type'
+import { useAuthStore } from './useAuthStore'
 
-type ProfileType = {
-    id?: number,
-    userName: string;
-    firstName: string;
-    lastName: string;
-    contactNumber: string;
-    buyerAddress: string;
-    email: string;
-    password: string;
-    dni: string;
-    rol: string 
-  }
 
 export interface ProfileStoreState{
     
-    users: ProfileType[]
+    users: UserType[]
     getUsers: () => Promise<void>
   
 }
@@ -30,7 +19,12 @@ export const useUsersStore = create(
         (set, get) => ({
             users: [],
             getUsers: async () => {
-                const { data } = await api.get<ProfileType[]>('/user')
+              const {token}= useAuthStore(state=> state)
+              console.log("token en Profiles",token)
+                const { data } = await api.get<UserType[]>('/user',{ headers: {
+                  // 'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}`
+                }})
                 set(state => ({ ...state, users: data }))
               },
             }),

@@ -1,6 +1,6 @@
 import { useSneakerStore } from '@/App/store/useSneakerStore'
 import { SneakersType } from '@/Typing/Sneakers.type'
-import React from 'react'
+import React, { useEffect } from 'react'
 import CardDashboar from '../CardDashBoard/CardDashBoard'
 
 
@@ -8,12 +8,25 @@ import CardDashboar from '../CardDashBoard/CardDashBoard'
 
 const CardsDashboard = () => {
 
-  const { sneakers} = useSneakerStore(state => state)
+  const { sneakers, fetchSneakers} = useSneakerStore(state => state)
+  console.log(sneakers)
+
+
+  useEffect(()=>{
+    fetchSneakers()
+  },[])
  
   return (
     <div>
         {sneakers?.map((product: SneakersType)=> (
-          <CardDashboar key={product.id} product={product}  /> 
+          product.isBanned===false? (
+            <CardDashboar key={product.id} product={product}  /> 
+            
+          ):null
+
+          
+
+          
         ))}
     </div>
   )

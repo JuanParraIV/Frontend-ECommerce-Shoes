@@ -14,8 +14,9 @@ export const Navbar: React.FC = () => {
   const { totalQty } = CartStore(state => state);
   const { isAuthenticated, logout } = useAuth0();
   const { token, logoutStore, clearToken} = useAuthStore();
-  const { tokenGoogle, isGoogleAuthenticated, logoutGoogleStore  } = useGoogleAuthStore(state => state);
- 
+
+  const {  logoutGoogleStore  } = useGoogleAuthStore(state => state);
+
 
   const navigate = useNavigate();
 
@@ -23,11 +24,13 @@ export const Navbar: React.FC = () => {
   const handleAuth0LogOut=()=>{
     logoutGoogleStore();
     logout();
+    navigate('/')
 
   }
 
   return (
     <>
+    
       {token.length <= 0 ? (
 
         <NavBarHeader>
@@ -48,7 +51,9 @@ export const Navbar: React.FC = () => {
             <div className="flex items-center text-white  text-xs space-x-6 mx-6 whitespace-nowrap">
               <div className="cursor-pointer link">
                 {isAuthenticated ? (
+                
                   <SubmitButton text='Log out' onClick={handleAuth0LogOut} />
+                  
                 ) : (
                   <Link to={'/login'}>
                     <SubmitButton text='Log in' />
