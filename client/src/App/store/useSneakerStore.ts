@@ -45,9 +45,6 @@ export const useSneakerStore = create(
           console.log(error)
         }
       }
-      // set((state)=> ({
-      //   sneakers: state.sneakers.filter((item)=> item.id !== id)
-      // }))
     }),
     {
       name: 'store-sneaker',

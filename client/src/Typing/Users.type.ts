@@ -1,6 +1,6 @@
 export interface UserType {
   id: number;
-  dni: string;
+  dni: any;
   firstName: string;
   lastName: string;
   contactNumber: string;

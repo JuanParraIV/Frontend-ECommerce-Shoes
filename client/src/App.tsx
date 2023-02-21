@@ -15,6 +15,7 @@ import SneakersAdminContainer from './Containers/SneakersAdmin/SneakersAdminCont
 import DashBoard from './Components/DashBoard/DashBoardMain'
 import AboutUsContainer from './Containers/AboutUs/AboutUsContainer';
 import CardsUsers from './Components/CardsUsers/CardsUsers';
+import Orders from './Components/Orders/Orders';
 
 
 
@@ -37,6 +38,7 @@ function App() {
         <Route path='/modifproduct/:id' element={<SneakersAdminContainer/>}/>
         <Route path='/mainpaneladmin' element={<DashBoard/>}/>
         <Route path='carduser' element={<CardsUsers/>}/>
+        <Route path='orders' element={<Orders/>}/>
       </Routes>
     </BrowserRouter>
 
