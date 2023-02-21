@@ -4,7 +4,7 @@ import swal from 'sweetalert';
 import api from '@/Api/backend_sneakers';
 import Logo from '../Shared/Logo';
 import SubmitButton from '../Shared/Form/submitButton';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { stat } from 'fs';
 import { useSneakerStore } from '@/App/store/useSneakerStore';
@@ -14,7 +14,7 @@ import { number } from 'yup';
 
 
 interface FormData {
-  id?: number,
+  id?: string,
   brand_name: string,
   category_name: string[];
   name: string;
@@ -33,8 +33,11 @@ interface FormData {
 
 const ModificateProduct = () => {
   //const router = useRouter();
+  const {id}= useParams()
   const { token } = useAuthStore(state => state);
+  console.log("token",token)
   const { sneakers, singleSneaker,  fetchSneakers } = useSneakerStore(state => state);
+  console.log("id,useparams",id)
   const navigate = useNavigate();
   const [sneaker, setSneaker] = useState<FormData>();
   const [errors, setErrors] = useState({
@@ -56,7 +59,7 @@ const ModificateProduct = () => {
 
 
   const [form, setForm] = useState<FormData>({
-    id: 0,
+    id: `${id}`,
     brand_name: "",
     category_name: [],
     name: '',
@@ -80,7 +83,7 @@ const ModificateProduct = () => {
     console.log('data', data);
     try {
       await api.put('/sneakers',
-        data
+      data
         , {
           headers: {
             'Content-Type': 'application/json',
@@ -89,7 +92,7 @@ const ModificateProduct = () => {
         }
       );
       setForm({
-        id: 0,
+        id:"",
         brand_name: '',
         category_name: [],
         name: '',
@@ -104,7 +107,7 @@ const ModificateProduct = () => {
         status: '',
         rating: 0
       });
-      fetchSneakers()
+      // fetchSneakers()
       try {
         swal({
           title: "Excellent",
@@ -123,7 +126,7 @@ const ModificateProduct = () => {
       } catch (error) {
         console.log(error);
       }
-      navigate('/');
+      navigate('/mainpaneladmin');
 
     } catch (error) {
       console.log(error);
@@ -209,6 +212,13 @@ const ModificateProduct = () => {
     });
   }
 
+  function handleSelectStatus(e: { target: { value: any; }; }){
+    setForm({
+      ...form,
+      status: e.target.value
+    })
+  }
+
 
   return (
     <div className='bg-neutral-300 w-50'>
@@ -220,24 +230,6 @@ const ModificateProduct = () => {
         <h1 className='text-center text-2xl text-[#F53F00] mt-10'>Edit Product</h1>
         <div className='flex relative flex-col  items-center justify-center gap-6 grid grid-cols-2 gap-4'>
 
-
-
-        <div className='flex justify-end items-center relative'>Id
-            <input
-              type="text"
-              name='id'
-              value={form.id}
-              onChange={handleChange}
-              placeholder='userName'
-              className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400' />
-
-            <div className="text-red-700 underline decoration-pink-500">
-              {errors.name ?
-                <p className='bg-red;'>{errors.name}</p> : null
-              }
-
-            </div>
-          </div>
           <div className='flex justify-end items-center relative'>Name Product
             <input
               type="text"
@@ -356,12 +348,17 @@ const ModificateProduct = () => {
           <fieldset className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4'>
             <legend>Status</legend>
             <hr />
-            <label>
-              <input type='radio' name='status' value='New' onChange={handleChange} />New
+           <select value={form.status} name='status' onChange={handleSelectStatus}>
+           <option value='new'>New</option>
+           <option value='used'>Used</option>
+           </select>
+            {/* <label >
+              <input type='radio' name='status' value='new' onChange={handleChange} />New
             </label>
             <label>
-              <input type='radio' name='status' value='Used' onChange={handleChange} />Used
-            </label>
+              <input type='radio' name='status' value='used' onChange={handleChange} />Used
+            </label> */}
+          
 
             {errors.status &&
               <p className='bg-red;'>{errors.status}</p>
@@ -469,11 +466,28 @@ const ModificateProduct = () => {
             }
           </div>
 
+          <div className='flex justify-end items-center relative'>Rating
+            <input
+              type="text"
+              name='rating'
+              value={form.rating}
+              onChange={handleChange}
+              placeholder='Rating'
+              className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400' />
+
+            <div className="text-red-700 underline decoration-pink-500">
+              {errors.rating ?
+                <p className='bg-red;'>{errors.rating}</p> : null
+              }
+
+            </div>
+          </div>
+
 
           <div className='p-2 w-[250px]'>
           </div >
           <div className='justify-self-center'>
-            <SubmitButton text='Edit Profile' />
+            <SubmitButton text='Edit Product' />
           </div>
         </div>
         <span className=" rounded-lg w-[600px] h-0.5 bg-gray-200"></span>

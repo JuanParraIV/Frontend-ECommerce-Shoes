@@ -61,7 +61,6 @@ const FormCreateProduct = () => {
   const { token } = useAuthStore(state => state);
 
   const handleSubmit = async (data: FormData) => {
-
     try {
       await api.post('/sneakers',
         data
@@ -95,7 +94,7 @@ const FormCreateProduct = () => {
           }
         },
       });
-      navigate('/');
+      navigate('/mainpaneladmin');
 
     } catch (error) {
       console.log(error);
@@ -117,7 +116,10 @@ const FormCreateProduct = () => {
       ...form,
       [name]: value,
     }));
-
+    setErrors(validateProductForm({
+      ...form,
+      [name]: value
+    }))
   };
 
   useEffect(() => {
@@ -181,13 +183,13 @@ const FormCreateProduct = () => {
         <Logo />
         <h1 className='text-center text-2xl text-[#F53F00] mt-10'>Create New Product</h1>
         <div className='flex relative flex-col  items-center justify-center gap-5'>
-          <div className='flex justify-end items-center relative'>UserName
+          <div className='flex justify-end items-center relative'>Name
             <input
               type="text"
               name='name'
               value={form.name}
               onChange={handleChange}
-              placeholder='userName'
+              placeholder='Name'
               className='rounded-lg text-gray-400 p-3 border border-gray-400 placeholder:text-gray-400' />
 
             <div className="text-red-700 underline decoration-pink-500">
@@ -365,6 +367,9 @@ const FormCreateProduct = () => {
                 <option value='other'>Other</option>
               </select>
 
+              {errors.category_name ?
+                <p className='bg-red;'>{errors.category_name}</p> : null
+              }
               {form.category_name.map(el =>
                 <div>
                   <p>{el}</p>
@@ -373,9 +378,6 @@ const FormCreateProduct = () => {
               )}
             </div>
 
-            {errors.category_name ?
-              <p className='bg-red;'>{errors.category_name}</p> : null
-            }
           </div>
 
 

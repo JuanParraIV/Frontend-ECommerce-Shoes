@@ -3,6 +3,9 @@ import {RiSearchLine, RiFilter3Line} from "react-icons/ri";
 import { Link } from 'react-router-dom';
 import { SneakersType } from '@/Typing/Sneakers.type';
 import { useSneakerStore } from '@/App/store/useSneakerStore';
+import api from '@/Api/backend_sneakers';
+import { useAuthStore } from '@/App/store/useAuthStore';
+import swal from 'sweetalert';
 
 
 
@@ -12,11 +15,36 @@ type ProductProps = {
 
 
 const CardDashboar = ({product}: ProductProps) => {
-  
+  const {token}= useAuthStore(state=> state)
 const {deleteProduct} = useSneakerStore();
 
-const handleDelete = (id: number) => {
+const handleDelete = async (id: number) => {
+  await api.delete(`/sneakers/${id}`,
+   {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  })
   deleteProduct(id);
+  try {
+    swal({
+      title: "Excellent",
+      text: "Product deleted successfuly!",
+      icon: "success",
+      buttons: {
+        confirm: {
+          text: "Ok",
+          value: true,
+          visible: true,
+          className: "rounded-3xl bg-yellow-400 text-black text-center w-full px-5 py-2 my-8",
+          closeModal: true,
+        },
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
   
   return (

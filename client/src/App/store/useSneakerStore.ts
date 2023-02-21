@@ -26,7 +26,7 @@ export const useSneakerStore = create(
       },
       fetchSneakers: async () => {
         const { data } = await api.get<SneakersType[]>('/sneakers/all')
-
+        console.log(data)
         set(state => ({ ...state, sneakers: data }))
       },
       fetchingSingleSneaker: async (id: number) => {
@@ -36,9 +36,9 @@ export const useSneakerStore = create(
       clearSingleSneaker: () => {
         set(state => ({ ...state, singleSneaker: {} as SneakersType }))
       },
-      deleteProduct: async(id: number)=>{
+      deleteProduct: (id: number)=>{
         try {
-          await api.delete<SneakersType>(`sneakers/${id}`,{method: 'DELETE'})
+          // await api.delete<SneakersType>(`sneakers/${id}`,{method: 'DELETE'})
           const newCardSneakers = _get().sneakers.filter((p)=> p.id !== id)
           set({sneakers: newCardSneakers})
         } catch (error) {

@@ -15,4 +15,5 @@ export interface SneakersType {
   brandId: number
   categoryId: number
   isFavorite?: boolean
+  isBanned:boolean
 }

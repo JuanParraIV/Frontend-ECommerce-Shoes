@@ -10,23 +10,36 @@ import Filters from "../Filters/Filters";
 import { useFilterSneakerStore } from "@/App/store/useSneakerFilterStore";
 import { CategorySneakerStore } from "@/App/store/useCategoryStore";
 import { BrandSneakerStore } from "@/App/store/useBrandStore";
+import { useAuthStore } from "@/App/store/useAuthStore";
+import Product from "../Product/Product";
+import { SneakersType } from "@/Typing/Sneakers.type";
 
-const ProductsFeed = () => {
+
+type ProductProps = {
+  product: SneakersType;
+};
+
+const ProductsFeed = ( ) => {
   const { Filtered, fetchAll } = useFilterSneakerStore(state => state);
   const { fetchCategories } = CategorySneakerStore();
   const { fetchBrands } = BrandSneakerStore();
+  const {users}= useAuthStore()
+  console.log("filteres",Filtered)
+  console.log("users",users)
 
 
   const { favoriteSneakerIds } = FavoriteSneakerStore();
-
-  const totalProducts = Filtered.length;
+  const mapProducts= Filtered.filter(e=>e.isBanned===false)
+  console.log("mapProducts",mapProducts)
+  const totalProducts = mapProducts.length;
 
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
   const indexOfFirst = productsPerPage * currentPage - productsPerPage;
   const indexOfLast = productsPerPage * currentPage - 1;
   const currentElements =
-    Filtered && Filtered.slice(indexOfFirst, indexOfLast + 1);
+  mapProducts && mapProducts.slice(indexOfFirst, indexOfLast + 1);
+    console.log('current',currentElements)
 
   const paginated = (number: number) => {
     setCurrentPage(number);
@@ -43,8 +56,11 @@ const ProductsFeed = () => {
       <Filters />
       <CardsContainer>
         {currentElements?.map(p => (
-          <Card key={p.id} product={p}
-            isFavorite={favoriteSneakerIds.includes(p.id)} />
+          p.isBanned === false ? (
+            <Card key={p.id} product={p}
+              isFavorite={favoriteSneakerIds.includes(p.id)} />
+          ):
+          null
         ))}
       </CardsContainer>
       <Paginated
