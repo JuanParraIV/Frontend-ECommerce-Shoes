@@ -21,6 +21,8 @@ export interface Actions {
   logoutStore: () => void
   getAdminProfile:()=> Promise<void>
   getUsers: () => Promise<void>
+  deleteUser: (id:number) => any
+  // getAdmins: () =>  Promise<void>
 }
 export const useAuthStore = create(
   persist<State & Actions>(
@@ -29,7 +31,6 @@ export const useAuthStore = create(
       token: '',
       profile: null,
       users:[],
-
       setToken: (token: string) => set(state => ({ token })),
       setProfile: (profile: any) => set(state => ({ profile })),
       authLogin: async (login: LoginData) => {
@@ -69,9 +70,19 @@ export const useAuthStore = create(
         }))
       },
       getUsers: async () => {
-          const { data } = await api.get("/user")
+          const { data } = await api.get<UserType[]>("/user")
+          console.log(data)
           set(state => ({ ...state, users: data }))
+        },
+
+      deleteUser : (id: number) => {
+        try {
+          const newUsers = get().users.filter((u)=> u.id)
+          set({users: newUsers})
+        } catch (error) {
+          console.log(error)
         }
+      } 
     }),
     {
       name: 'Auth-store',
