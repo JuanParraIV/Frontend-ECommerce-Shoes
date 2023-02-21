@@ -9,17 +9,17 @@ type State = {
   token: string
   isAuthenticated: boolean
   profile: any
+  users: UserType[]
 
 }
 export interface Actions {
   setToken: (token: string) => void
   setProfile: (profile: any) => void
-  authLogin: (a: LoginData) => Promise<string>
+  authLogin: (login: LoginData) => Promise<string>
   getProfile: () => Promise<void>
   clearToken: () => void
   logoutStore: () => void
   getAdminProfile:()=> Promise<void>
-  users: UserType[]
   getUsers: () => Promise<void>
 }
 export const useAuthStore = create(
@@ -29,7 +29,7 @@ export const useAuthStore = create(
       token: '',
       profile: null,
       users:[],
-      
+
       setToken: (token: string) => set(state => ({ token })),
       setProfile: (profile: any) => set(state => ({ profile })),
       authLogin: async (login: LoginData) => {
@@ -69,9 +69,7 @@ export const useAuthStore = create(
         }))
       },
       getUsers: async () => {
-      
-          const { data } = await axios.get(" https://backend-sneakers.up.railway.app/user")
-          // console.log("data en zustan",data)
+          const { data } = await api.get("/user")
           set(state => ({ ...state, users: data }))
         }
     }),

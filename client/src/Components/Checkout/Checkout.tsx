@@ -27,6 +27,15 @@ interface UserInfo {
   cus_zip: string;
   cus_cardelement?: boolean;
 }
+interface CartItem {
+  name: string;
+  price: number;
+  count: number;
+  img: string;
+}
+interface UserInfoEmail extends UserInfo {
+  items: CartItem[];
+}
 
 interface Errors {
   cus_name?: string;
@@ -79,6 +88,7 @@ function validate(userInfo: UserInfo): Errors {
 }
 
 function Checkout() {
+  const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
   const [processing, setProcessing] = useState(false);
@@ -123,6 +133,19 @@ function Checkout() {
       [name]: value,
     }));
   }
+  const mailPurchase = (mailInfo: UserInfoEmail) => {
+    return async function () {
+      try {
+        let newMail = await api.post(
+          `/mail/purchase`,
+          mailInfo
+        );
+        return newMail.data;
+      } catch (error) {
+        throw error;
+      }
+    };
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
@@ -149,9 +172,9 @@ function Checkout() {
         amount: totalPrice,
         token: { token: isAuthenticated ? token : isGoogleAuthenticated ? tokenGoogle : undefined, userType },
         userInfo,
-      }
-      const JPD=JSON.stringify(paymentData)
-      console.log(JPD)
+      };
+      const JPD = JSON.stringify(paymentData);
+      console.log(JPD);
 
       const response = await api.post('/payment', JPD, {
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${paymentData.token.token}`, },
@@ -159,13 +182,13 @@ function Checkout() {
       });
 
       let mailInfo = {
-        name: userInfo.cus_name,
-        email: userInfo.cus_email,
-        phone: userInfo.cus_phone,
-        address: userInfo.cus_address,
-        city: userInfo.cus_city,
-        country: userInfo.cus_country,
-        zip: userInfo.cus_zip,
+        cus_name: userInfo.cus_name,
+        cus_email: userInfo.cus_email,
+        cus_phone: userInfo.cus_phone,
+        cus_address: userInfo.cus_address,
+        cus_city: userInfo.cus_city,
+        cus_country: userInfo.cus_country,
+        cus_zip: userInfo.cus_zip,
         total: totalPrice,
         items: cartItems.map((item) => {
           return {
@@ -176,13 +199,12 @@ function Checkout() {
           };
         }),
       };
-      /* dispatch(mailPurchase(mailInfo)); */
+      mailPurchase(mailInfo);
 
       const cardElement = elements.getElement(CardElement);
       if (cardElement) {
         cardElement.clear();
       }
-
       setUserInfo({
         cus_name: '',
         cus_email: '',
@@ -192,7 +214,27 @@ function Checkout() {
         cus_country: '',
         cus_zip: '',
       });
-    } catch (error) {
+      setTimeout(() => {
+        swal({
+          title: '¡Successful purchase!',
+          text: 'We have sent you an email with your order details.',
+          icon: 'success',
+          timer: 2000,
+          buttons: ['Aceptar']
+        }).then((result) => {
+          navigate("/");
+        });
+      }, 400);
+    } catch (error: unknown) {
+      setTimeout(() => {
+        swal({
+          icon: "error",
+          title: `Error: ${(error as Error).message}`,
+          timer: 2000,
+
+          buttons: ['Aceptar']
+        });
+      }, 400);
       console.log(error);
       setProcessing(false);
     }
