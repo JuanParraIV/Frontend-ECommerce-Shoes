@@ -20,7 +20,7 @@ const SearchBar = () => {
   };
   return (
     <form className='flex-grow' action="" onSubmit={handleSubmit}>
-      <div className="hidden sm:flex items-center h-10 rounded-md flex-grow cursor-pointer bg-yellow-400 hover:bg-yellow-500">
+      <div className="hidden sm:flex items-center h-10 rounded-md flex-grow cursor-pointer bg-yellow-400 hover:bg-yellow-500 w-[400px]">
         <input
           value={search}
           onChange={handleOnSearch}

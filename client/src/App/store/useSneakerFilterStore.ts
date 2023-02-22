@@ -17,6 +17,7 @@ export interface FilterSneakerStoreState {
   fetchByBrand: () => Promise<void>
   fetchByCategory: () => Promise<void>
   fetchByBrand_Category: () => Promise<void>
+  fetchByName: (query: string) => Promise<void>
   sortByPriceAsc: () => void;
   sortByPriceDesc: () => void;
   resetSort: () => void;
@@ -31,7 +32,10 @@ export const useFilterSneakerStore = create(
       FilteredSorted: [],
       filtersAdmin: {} as Filters,
       setFilters: value => set(state => ({ filters: { ...state.filters, ...value } })),
-
+      fetchByName: async (name: string) => {
+        const { data } = await api.get<SneakersType[]>(`sneakers?name=${name}`)
+        set(state => ({ ...state, Filtered: data, FilteredSorted: data }))
+      },
       fetchAll: async () => {
         const { brand, category} = get().filters
         const { data } = await api.get<SneakersType[]>('/sneakers/all')

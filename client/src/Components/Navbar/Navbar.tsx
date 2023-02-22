@@ -30,7 +30,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <>
-    
+
       {token.length <= 0 ? (
 
         <NavBarHeader>
@@ -51,9 +51,9 @@ export const Navbar: React.FC = () => {
             <div className="flex items-center text-white  text-xs space-x-6 mx-6 whitespace-nowrap">
               <div className="cursor-pointer link">
                 {isAuthenticated ? (
-                
+
                   <SubmitButton text='Log out' onClick={handleAuth0LogOut} />
-                  
+
                 ) : (
                   <Link to={'/login'}>
                     <SubmitButton text='Log in' />
@@ -107,14 +107,13 @@ export const Navbar: React.FC = () => {
             </ImageLogoContainer>
 
             {/* Custom search Element */}
-            <SearchBar />
             <div className="flex items-center text-white  text-xs space-x-6 mx-6 whitespace-nowrap">
               <div
                 className="cursor-pointer link"
               >
 
                 <UserPanel/>
-              
+
               </div>
               <button >
                 <div className=" relative link flex items-center"

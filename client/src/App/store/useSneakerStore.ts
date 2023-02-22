@@ -22,7 +22,7 @@ export const useSneakerStore = create(
 
       fetchSneakersByName: async (name: string) => {
         const { data } = await api.get<SneakersType[]>(`sneakers?name=${name}`)
-        set(state => ({ ...state, sneakersByName: data }))
+        set(state => ({ ...state, sneakersByName: data ,sneakers: data}))
       },
       fetchSneakers: async () => {
         const { data } = await api.get<SneakersType[]>('/sneakers/all')
