@@ -16,6 +16,7 @@ const DashBoard = () => {
   const{clearCart} = CartStore(state=>state) 
   const navigate = useNavigate()
   const {fetchSneakers} = useSneakerStore()
+  const { profile } = useAuthStore();
 
    function handleLogOut() {
     logoutStore();
@@ -52,11 +53,11 @@ const DashBoard = () => {
                       </Link>
                     </li>
                     <li>               
-                      <Link to='#' 
+                      <Link to='/carduser' 
                       className='flex items-center gap-4 hover:bg-orange-500 p-4 text-gray-400  hover:text-white rounded-lg 
                       transition-colors font-semibold'>
                        <RiContactsLine/>
-                         Admin
+                         Users
                       </Link>
                     </li>
                     <li>               
@@ -64,7 +65,7 @@ const DashBoard = () => {
                       className='flex items-center gap-4 hover:bg-orange-500 p-4 text-gray-400  hover:text-white rounded-lg 
                       transition-colors font-semibold'>
                        <RiBarChartGroupedLine/>
-                         History
+                         Orders
                       </Link>
                     </li>
                    
@@ -119,7 +120,7 @@ const DashBoard = () => {
                     </li>
                     <li>
                         <Link to='#' className='flex items-center gap-1'>
-                            Daniela Gomez <RiArrowDropDownLine/>
+                        {profile.firstName} {profile.lastName} <RiArrowDropDownLine/>
                         </Link>
                     </li>
                 </ul>
@@ -132,16 +133,6 @@ const DashBoard = () => {
                 <h1 className='text-3xl font-semibold'>Admin Board</h1>
             </div>
             <div className='grid grid-cols-1 md:grid-cols4 gap-4 items-center mb-6'>
-                <form className='col-span-2 '>
-                    <div className='relative'>
-                        <RiSearchLine className='absolute left-2 top-3 text-orange-600'/>
-                        <input
-                        type='text'
-                        className='bg-white py-2 pl-8 pr-4 outline-none w-full'
-                        placeholder='Search'/>
-                    </div>
-                </form>
-            
             <form className='col-span-1'> 
                 <div className='relative'>
                     <RiFilter3Line className='absolute left-2 top-3 text-orange-600'/>
