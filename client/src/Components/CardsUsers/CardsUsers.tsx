@@ -4,6 +4,8 @@ import React, { useEffect } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import api from '@/Api/backend_sneakers';
 import swal from 'sweetalert';
+import SideBar from '../DashBoard/SideBar';
+import Navbar from '../Navbar/Navbar';
 
 
 
@@ -48,8 +50,12 @@ const CardsUsers = () => {
 
 
   return (
-    <>
-      <body className="antialiased font-sans bg-gray-200">
+    <div >
+        <Navbar/>
+        <div className='min-h-screen grid grid-col-1 lg:grid-cols-5'>
+           <SideBar/>
+    <div className='col-span-4 bg-gray-100'>
+      <body className="antialiased font-sans ">
     <div className="container mx-auto px-4 sm:px-8">
         <div className="py-8">
             <div>
@@ -149,7 +155,11 @@ const CardsUsers = () => {
         </div>
     </div>
 </body>
-      </>
+     </div>      
+        </div>
+   
+    </div>
+    
   )
 }
 

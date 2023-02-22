@@ -16,6 +16,7 @@ import { useAuthStore } from '@/App/store/useAuthStore';
 import { CartStore } from '@/App/store/useCartStore';
 import { useNavigate } from 'react-router-dom';
 
+
 const UserPanel = () => {
     const { token, logoutStore, clearToken, profile} = useAuthStore();
     console.log(profile.rol)
@@ -41,6 +42,7 @@ const UserPanel = () => {
 
   return (
     <div>
+
 
       {profile.rol === 'admin' ? (
 
