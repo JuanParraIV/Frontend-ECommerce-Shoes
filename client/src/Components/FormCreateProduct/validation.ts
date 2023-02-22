@@ -60,7 +60,7 @@ export default function validateProductForm(formData: FormData): Errors {
     grid_picture_url: validateImage(formData.grid_picture_url),
     stock: validateStock(formData.stock),
     brand_name: validateBrand(formData.brand_name),
-    category_name: validateCategory(formData.category_name), 
+    category_name: validateCategory(formData.category_name),
     details: validateDescription(formData.details),
     status: validateStatus(formData.status),
     color: validateColor (formData.color),
