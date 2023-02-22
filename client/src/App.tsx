@@ -19,6 +19,7 @@ import Orders from './Components/Orders/Orders';
 
 
 
+
 function App() {
 
   return (
@@ -37,8 +38,8 @@ function App() {
         <Route path='/checkout' element={<CheckoutWithStripe/>}/>
         <Route path='/modifproduct/:id' element={<SneakersAdminContainer/>}/>
         <Route path='/mainpaneladmin' element={<DashBoard/>}/>
-        <Route path='carduser' element={<CardsUsers/>}/>
-        <Route path='orders' element={<Orders/>}/>
+        <Route path='/carduser' element={<CardsUsers/>}/>
+        <Route path='/orders' element={<Orders/>}/>
       </Routes>
     </BrowserRouter>
 
