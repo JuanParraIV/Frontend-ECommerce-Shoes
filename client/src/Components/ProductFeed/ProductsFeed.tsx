@@ -52,17 +52,8 @@ const ProductsFeed = ( ) => {
   }, []);
 
   return (
-    <div className=" flex flex-col justify-between">
+    <div className=" flex flex-col justify-between gap-5">
       <Filters />
-      <CardsContainer>
-        {currentElements?.map(p => (
-          p.isBanned === false ? (
-            <Card key={p.id} product={p}
-              isFavorite={favoriteSneakerIds.includes(p.id)} />
-          ):
-          null
-        ))}
-      </CardsContainer>
       <Paginated
         data={Filtered}
         setCurrentPage={setCurrentPage}
@@ -73,6 +64,15 @@ const ProductsFeed = ( ) => {
         indexOfLast={indexOfLast}
         paginated={paginated}
       />
+      <CardsContainer>
+        {currentElements?.map(p => (
+          p.isBanned === false ? (
+            <Card key={p.id} product={p}
+              isFavorite={favoriteSneakerIds.includes(p.id)} />
+          ):
+          null
+        ))}
+      </CardsContainer>
     </div>
   );
 };
