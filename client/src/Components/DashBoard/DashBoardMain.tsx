@@ -8,6 +8,7 @@ import dibujo from '../../assets/icons-DashBoard/dibujo.svg'
 import CardsDashboard from '../CardsDashBoard/CardsDashBoard';
 import { useNavigate } from 'react-router-dom';
 import { useSneakerStore } from '@/App/store/useSneakerStore';
+import Filters from '../Filters/Filters';
 
 const DashBoard = () => {
 
@@ -119,7 +120,7 @@ const DashBoard = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link to='#' className='flex items-center gap-1'>
+                        <Link to='/profile' className='flex items-center gap-1'>
                         {profile.firstName} {profile.lastName} <RiArrowDropDownLine/>
                         </Link>
                     </li>
@@ -133,15 +134,16 @@ const DashBoard = () => {
                 <h1 className='text-3xl font-semibold'>Admin Board</h1>
             </div>
             <div className='grid grid-cols-1 md:grid-cols4 gap-4 items-center mb-6'>
-            <form className='col-span-1'> 
+            {/* <form className='col-span-1'> 
                 <div className='relative'>
                     <RiFilter3Line className='absolute left-2 top-3 text-orange-600'/>
                     <input
                     type='text'
                     className='bg-white py-2 pl-8 pr-4 outline-none w-full'
-                    placeholder='Filters'/>           
+                    placeholder='Filters'/>  
+    
                 </div>
-            </form>
+            </form> */}
             <Link to='/formCreateProduct'>
             <button className='relative text-m pl-8 pr-4 flex items-center gap-4 hover:bg-orange-500 p-4 text-gray-400  hover:text-white rounded-lg 
                       transition-colors font-semibold'>

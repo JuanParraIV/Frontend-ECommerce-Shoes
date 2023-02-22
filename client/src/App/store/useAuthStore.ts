@@ -5,11 +5,13 @@ import { persist } from 'zustand/middleware'
 import { SneakersType } from '@/Typing/Sneakers.type'
 import { UserType } from '@/Typing/Users.type'
 import axios from 'axios'
+import { OrderTypes } from '@/Typing/Order.type'
 type State = {
   token: string
   isAuthenticated: boolean
   profile: any
   users: UserType[]
+  SneakersOrders:OrderTypes[]
 
 }
 export interface Actions {
@@ -22,6 +24,7 @@ export interface Actions {
   getAdminProfile:()=> Promise<void>
   getUsers: () => Promise<void>
   deleteUser: (id:number) => any
+  getOrders:() => Promise<void>
   // getAdmins: () =>  Promise<void>
 }
 export const useAuthStore = create(
@@ -31,6 +34,7 @@ export const useAuthStore = create(
       token: '',
       profile: null,
       users:[],
+      SneakersOrders:[],
       setToken: (token: string) => set(state => ({ token })),
       setProfile: (profile: any) => set(state => ({ profile })),
       authLogin: async (login: LoginData) => {
@@ -82,7 +86,17 @@ export const useAuthStore = create(
         } catch (error) {
           console.log(error)
         }
-      } 
+      }, 
+      getOrders:  async() => {
+        // const {token}= useAuthStore()
+        const {data} = await api.get('/transaction', {
+            headers: {
+                Authorization: `Bearer ${get().token}`,
+                // 'Content-Type': 'application/json',
+            },
+        })
+        set(state=> ({...state, SneakersOrders: data}))
+   }
     }),
     {
       name: 'Auth-store',
