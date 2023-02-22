@@ -18,7 +18,7 @@ interface FormData {
   retail_price_cents: number;
   grid_picture_url: string;
   stock: number;
-  brand_name: any;
+  brand_name: string;
   details: string;
   status: string;
   category_name: string[];
@@ -32,7 +32,7 @@ const FormCreateProduct = () => {
   const [sneaker, setSneaker] = useState([]);
   const [errors, setErrors] = useState({
     name: "",
-    retail_price_cents: 0,
+    retail_price_cents: 0, // set initial value to 0 (or any other number)
     grid_picture_url: "",
     stock: 0,
     brand_name: "",
@@ -110,17 +110,18 @@ const FormCreateProduct = () => {
 
 
   const handleChange = (event: React.FormEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = event.target as HTMLInputElement | HTMLSelectElement;
+  const { name, value } = event.currentTarget;
 
-    setForm(() => ({
-      ...form,
-      [name]: value,
-    }));
-    setErrors(validateProductForm({
-      ...form,
-      [name]: value
-    }))
-  };
+  setForm(prevForm => ({
+    ...prevForm,
+    [name]: value,
+  }));
+
+  setErrors(prevErrors => ({
+    ...prevErrors,
+    [name]: value,
+  }));
+};
 
   useEffect(() => {
     const getAllSneaker = async () => {

@@ -6,6 +6,7 @@ import { SneakersType } from '@/Typing/Sneakers.type';
 import { useAuthStore } from '@/App/store/useAuthStore';
 import { useGoogleAuthStore } from '@/App/store/useAuthGoogleStore';
 import api from '@/Api/backend_sneakers';
+import swal from 'sweetalert';
 
 
 
@@ -28,6 +29,12 @@ const Cart = () => {
           token: isAuthenticated ? token : isGoogleAuthenticated ? tokenGoogle : undefined, userType
         },
       };
+      swal({
+        icon: "error",
+        title: `Product Deleted`,
+        timer: 2000,
+        buttons: ['Aceptar']
+      });
       const response = await api.delete('/trolley', {
         headers: {
           'Content-Type': 'application/json',

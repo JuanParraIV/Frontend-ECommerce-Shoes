@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import api from '@/Api/backend_sneakers'
 import { SneakersType } from '@/Typing/Sneakers.type'
+import swal from 'sweetalert';
 
 export type CartItem = SneakersType & { quantity: number }
 
@@ -55,7 +56,13 @@ export const CartStore = create(
             totalQty,
           }
         })
-        alert(`${qty} ${product.name} added to cart`)
+        swal({
+          title: '¡Item Added!',
+          text: `Qty:x${qty} ${product.name} added to cart`,
+          icon: 'success',
+          timer: 2000,
+          buttons: ['Aceptar']
+        })
       },
       removeFromCart: (product: SneakersType) =>
         set(state => {
