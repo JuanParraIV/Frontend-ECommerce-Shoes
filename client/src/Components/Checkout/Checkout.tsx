@@ -92,7 +92,7 @@ function Checkout() {
   const stripe = useStripe();
   const elements = useElements();
   const [processing, setProcessing] = useState(false);
-  const { cartItems, totalPrice, totalQty } = CartStore(state => state);
+  const { cartItems, totalPrice, totalQty, clearCart} = CartStore(state => state);
   const { token, profile, isAuthenticated } = useAuthStore(state => state);
   const { tokenGoogle, profileGoogle, isGoogleAuthenticated } = useGoogleAuthStore(state => state);
 
@@ -200,7 +200,6 @@ function Checkout() {
         }),
       };
       mailPurchase(mailInfo);
-
       const cardElement = elements.getElement(CardElement);
       if (cardElement) {
         cardElement.clear();
@@ -214,6 +213,7 @@ function Checkout() {
         cus_country: '',
         cus_zip: '',
       });
+      clearCart()
       setTimeout(() => {
         swal({
           title: '¡Successful purchase!',

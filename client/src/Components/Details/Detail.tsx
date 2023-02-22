@@ -11,6 +11,7 @@ import { CartItem, CartStore } from "@/App/store/useCartStore";
 import { useGoogleAuthStore } from "@/App/store/useAuthGoogleStore";
 import { useAuthStore } from "@/App/store/useAuthStore";
 import api from "@/Api/backend_sneakers";
+import swal from "sweetalert";
 
 
 export const Details = () => {
@@ -43,22 +44,20 @@ export const Details = () => {
         amount: totalPrice,
         token: { token: isAuthenticated ? token : isGoogleAuthenticated ? tokenGoogle : undefined, userType },
       };
-      
+
       const response = await api.post('/trolley', trolleyData, {
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${trolleyData.token.token}`, },
       });
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleClick = async () => {
-    await addToCart(singleSneaker, quantity);
+    addToCart(singleSneaker, quantity);
   };
 
   useEffect(() => {
-
     postTrolley(cartItems, totalPrice);
   }, [cartItems])
 
