@@ -32,9 +32,9 @@ const UserProtected = ({ children }: IProtectedProps) => {
 
     if (loggedIn && decodedToken?.user_rol === 'user') {
       setDisplay(true);
-    } else {
-
-
+    }
+    if (loggedIn && decodedToken?.user_rol === 'admin') {
+      setDisplay(true);
     }
 
   }, [setDisplay, navigate, decodedToken, children]);
