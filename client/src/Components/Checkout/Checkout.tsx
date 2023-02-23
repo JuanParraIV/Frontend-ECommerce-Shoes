@@ -133,18 +133,17 @@ function Checkout() {
       [name]: value,
     }));
   }
-  const mailPurchase = (mailInfo: UserInfoEmail) => {
-    return async function () {
+  const mailPurchase = async (mailInfo: UserInfoEmail) => {
       try {
-        let newMail = await api.post(
-          `/mail/purchase`,
-          mailInfo
-        );
-        return newMail.data;
+        const { data } = await api.post('/mail/purchase',mailInfo,{
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        return data;
       } catch (error) {
         throw error;
       }
-    };
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
@@ -199,6 +198,7 @@ function Checkout() {
           };
         }),
       };
+      console.log('----->',mailInfo)
       mailPurchase(mailInfo);
       const cardElement = elements.getElement(CardElement);
       if (cardElement) {
