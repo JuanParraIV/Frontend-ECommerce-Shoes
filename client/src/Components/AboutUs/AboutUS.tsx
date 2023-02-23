@@ -16,6 +16,14 @@ const AboutUS = () => {
       linkedin: "https://www.linkedin.com/in/juanparraiv/",
       ocupation: "Full Stack Developer",
     },
+    {
+      img: "https://avatars.githubusercontent.com/u/99699184?v=4",
+      name: "Daniela Gomez",
+      nacionalidad: "Colombia",
+      git: "https://github.com/DaniGomezSanta",
+      linkedin: "https://www.linkedin.com/in/daniela-gomez-aaa839239/",
+      ocupation: "Full Stack Developer",
+    },
   ];
 
   return (

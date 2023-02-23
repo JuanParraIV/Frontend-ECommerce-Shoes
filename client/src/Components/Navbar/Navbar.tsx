@@ -9,6 +9,7 @@ import SubmitButton from '../Shared/Form/submitButton';
 import { CartStore } from '@/App/store/useCartStore';
 import { useGoogleAuthStore } from '@/App/store/useAuthGoogleStore';
 import UserPanel from '../UserPanel/UserPanel';
+import NavItems from './NavItems/NavItems';
 
 export const Navbar: React.FC = () => {
   const { totalQty } = CartStore(state => state);
@@ -47,8 +48,8 @@ export const Navbar: React.FC = () => {
             </ImageLogoContainer>
 
             {/* Custom search Element */}
-            <SearchBar />
-            <div className="flex items-center text-white  text-xs space-x-6 mx-6 whitespace-nowrap">
+            <NavItems/>
+            <div className="flex items-center text-white  text-xs space-x-6 mx-14 whitespace-nowrap">
               <div className="cursor-pointer link">
                 {isAuthenticated ? (
 
@@ -80,16 +81,7 @@ export const Navbar: React.FC = () => {
             </div>
           </NavBarContainer>
           {/* Botton Nav */}
-          <div className="flex items-center bg-gray-500 text-white text-sm space-x-3 p-2 pl-6">
-            <p className="link flex items-center">
-              <Bars3Icon className="h-6 mr-1 cursor-pointer" />
-              All
-            </p>
 
-            <p className="link">Most</p>
-            <p className="link">Products</p>
-            <p className="link">Customer Service</p>
-          </div>
         </NavBarHeader>
       ) :
 
@@ -107,6 +99,8 @@ export const Navbar: React.FC = () => {
             </ImageLogoContainer>
 
             {/* Custom search Element */}
+            <NavItems/>
+
             <div className="flex items-center text-white  text-xs space-x-6 mx-6 whitespace-nowrap">
               <div
                 className="cursor-pointer link"
@@ -133,16 +127,6 @@ export const Navbar: React.FC = () => {
             </div>
           </NavBarContainer>
           {/* Botton Nav */}
-          <div className="flex items-center bg-gray-500 text-white text-sm space-x-3 p-2 pl-6">
-            <p className="link flex items-center">
-              <Bars3Icon className="h-6 mr-1 cursor-pointer" />
-              All
-            </p>
-
-            <p className="link">Most</p>
-            <p className="link">Products</p>
-            <p className="link">Customer Service</p>
-          </div>
         </NavBarHeader>
 
       }
