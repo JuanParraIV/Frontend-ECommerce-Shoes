@@ -17,7 +17,7 @@ function Profile() {
   return (
     <>
       <Navbar />
-      {profile && (
+      {profile ? (
         <main className="profile-page">
         <section className="relative py-16 bg-blueGray-200">
           <h1 className='flex justify-center font-bold text-5xl text-yellow-200 underline decoration-orange-200'>Your Profile</h1>
@@ -74,8 +74,8 @@ function Profile() {
           </footer>
         </section>
       </main>
-      )}
-      {profileGoogle&& (
+      ) : null}
+      {profileGoogle ?  (
         <main className="profile-page">
         <section className="relative py-16 bg-blueGray-200">
           <h1 className='flex justify-center font-bold text-5xl text-yellow-200 underline decoration-orange-200'>Your Profile</h1>
@@ -115,7 +115,7 @@ function Profile() {
           </footer>
         </section>
       </main>
-      )}
+      ) : null}
       <Footer />
     </>
   );

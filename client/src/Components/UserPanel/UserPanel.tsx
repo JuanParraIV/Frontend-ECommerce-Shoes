@@ -47,10 +47,10 @@ const UserPanel: React.FC = () => {
     clearCart();
     navigate('/');
   }
-  const handleAuth0LogOut = async () => {
-    await logoutGoogleStore();
-    await logout();
-    await navigate('/');
+  const handleAuth0LogOut = () => {
+    logoutGoogleStore();
+    logout();
+    navigate('/');
 
   };
   const handleClose = () => {
