@@ -7,9 +7,10 @@ import SubmitButton from '../Shared/Form/submitButton';
 import { Link } from 'react-router-dom';
 import validateProductForm from './validation';
 import { useNavigate } from 'react-router-dom';
-import { stat } from 'fs';
-import { useSneakerStore } from '@/App/store/useSneakerStore';
 import { useAuthStore } from '@/App/store/useAuthStore';
+import * as yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 
 
 
@@ -26,22 +27,33 @@ interface FormData {
 
 }
 
+const schema = yup.object().shape({
+  email: yup.string().email('Enter a valid email').required('Email is required'),
+  userName: yup.string().required('UserName is required'),
+  firstName: yup.string().required('firstName is rquired'),
+})
+
 
 const EditProfileUser = () => {
-  //const router = useRouter();
+
+  const {register, formState: {errors}} = useForm<FormData>({
+    resolver: yupResolver(schema)
+  })
+
+  // const router = useRouter();
   const navigate = useNavigate();
   const [user, setUser] = useState<FormData>();
-  const [errors, setErrors] = useState({
-    userName: '',
-    firstName: '',
-    lastName: '',
-    contactNumber: '',
-    buyerAddress: '',
-    email: '',
-    password: '',
-    dni: '',
+  // const [errors, setErrors] = useState({
+  //   userName: '',
+  //   firstName: '',
+  //   lastName: '',
+  //   contactNumber: '',
+  //   buyerAddress: '',
+  //   email: '',
+  //   password: '',
+  //   dni: '',
 
-  });
+  // });
 
   const [form, setForm] = useState<FormData>({
     id: 0,
@@ -118,6 +130,7 @@ const EditProfileUser = () => {
       ...form,
       [name]: value,
     }));
+   
 
   };
 
@@ -144,10 +157,13 @@ const EditProfileUser = () => {
 
   return (
     <div className='bg-neutral-300 w-50'>
-      <form className='flex flex-col w-full items-center justify-center gap-5 py-12' onSubmit={(event) => {
+      <form className='flex flex-col w-full items-center justify-center gap-5 py-12'
+       onSubmit={(event) => {
         event.preventDefault();
         handleSubmit(form);
-      }} >
+      }}
+    
+       >
         <Logo />
         <h1 className='text-center text-2xl text-[#F53F00] mt-10'>Edit Your Profile</h1>
         <div className='flex relative flex-col  items-center justify-center gap-6 grid grid-cols-2 gap-4'>
@@ -155,14 +171,15 @@ const EditProfileUser = () => {
             <input
               className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
               type='text'
-              name='userName'
               placeholder='User Name'
               value={form.userName}
+              name="userName"
               onChange={handleChange} />
 
-            <div className="text-red-700 underline decoration-pink-500">
-              {errors.userName ?
-                <p className='bg-red;'>{errors.userName}</p> : null
+            <div >
+              {errors?.userName && (
+                <p className="text-red-500 text-xs italic">{errors.userName.message}</p> 
+              ) 
               }
 
             </div>
@@ -171,15 +188,16 @@ const EditProfileUser = () => {
             <input
               className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
               type='text'
-              name='firstName'
               placeholder='First Name'
+              name= "firstName"
               value={form.firstName}
               onChange={handleChange}
             />
 
-            <div className="text-red-700 underline decoration-pink-500">
-              {errors.firstName ?
-                <p className='bg-red;'>{errors.firstName}</p> : null
+            <div>
+              {errors?.firstName && (
+                <p className="text-red-500 text-xs italic">{errors.firstName.message}</p>
+              )
               }
 
             </div>
@@ -194,11 +212,11 @@ const EditProfileUser = () => {
               value={form.lastName}
               onChange={handleChange} />
 
-            <div className="text-red-700 underline decoration-pink-500">
+            {/* <div className="text-red-700 underline decoration-pink-500">
               {errors.lastName ?
                 <p className='bg-red;'>{errors.lastName}</p> : null
               }
-            </div>
+            </div> */}
           </div>
 
 
@@ -210,12 +228,12 @@ const EditProfileUser = () => {
               placeholder='Contact Number'
               value={form.contactNumber}
               onChange={handleChange} />
-
+{/* 
             <div className="text-red-700 underline decoration-pink-500">
               {errors.contactNumber ?
                 <p className='bg-red;'>{errors.contactNumber}</p> : null
               }
-            </div>
+            </div> */}
           </div>
 
           <div className='flex justify-end items-center relative'>Address
@@ -227,28 +245,29 @@ const EditProfileUser = () => {
               value={form.buyerAddress}
               onChange={handleChange} />
 
-            <div className="text-red-700 underline decoration-pink-500">
+            {/* <div className="text-red-700 underline decoration-pink-500">
               {errors.buyerAddress ?
                 <p className='bg-red;'>{errors.buyerAddress}</p> : null
               }
-            </div>
+            </div> */}
           </div>
 
           <div className='flex justify-end items-center relative'>Email
             <input
               className='bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-full-name" type="text" value="Jane Doe'
               type='text'
-              name='email'
+              // name='email'
               placeholder='Email'
               value={form.email}
+              name ="email"
               onChange={handleChange} />
 
-            <div className="text-red-700 underline decoration-pink-500">
-              {errors.email ?
-                <p className='bg-red;'>{errors.email}</p> : null
+              {errors?.email && (
+                <p className="text-red-500 text-xs italic">{errors.email.message}</p> 
+              )
               }
-            </div>
           </div>
+          
 
           <div className='flex justify-end items-center relative'>Password
             <input
@@ -259,11 +278,11 @@ const EditProfileUser = () => {
               value={form.password}
               onChange={handleChange} />
 
-            <div className="text-red-700 underline decoration-pink-500">
+            {/* <div className="text-red-700 underline decoration-pink-500">
               {errors.password ?
                 <p className='bg-red;'>{errors.password}</p> : null
               }
-            </div>
+            </div> */}
           </div>
 
           <div className='flex justify-end items-center relative'>Identity Document
@@ -275,11 +294,11 @@ const EditProfileUser = () => {
               value={form.dni}
               onChange={handleChange} />
 
-            <div className="text-red-700 underline decoration-pink-500">
+            {/* <div className="text-red-700 underline decoration-pink-500">
               {errors.dni ?
                 <p className='bg-red;'>{errors.dni}</p> : null
               }
-            </div>
+            </div> */}
           </div>
 
 
