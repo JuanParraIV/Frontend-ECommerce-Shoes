@@ -117,10 +117,10 @@ const FormCreateProduct = () => {
     [name]: value,
   }));
 
-  setErrors(prevErrors => ({
-    ...prevErrors,
-    [name]: value,
-  }));
+  // setErrors(prevErrors => ({
+  //   ...prevErrors,
+  //   [name]: value,
+  // }));
 };
 
   useEffect(() => {

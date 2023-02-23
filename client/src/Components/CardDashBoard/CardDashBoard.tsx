@@ -6,6 +6,7 @@ import { useSneakerStore } from '@/App/store/useSneakerStore';
 import api from '@/Api/backend_sneakers';
 import { useAuthStore } from '@/App/store/useAuthStore';
 import swal from 'sweetalert';
+import Swal from 'sweetalert2'
 
 
 
@@ -15,7 +16,7 @@ type ProductProps = {
 
 
 const CardDashboar = ({product}: ProductProps) => {
-  const {token}= useAuthStore(state=> state)
+const {token}= useAuthStore(state=> state)
 const {deleteProduct} = useSneakerStore();
 
 const handleDelete = async (id: number) => {
@@ -26,22 +27,25 @@ const handleDelete = async (id: number) => {
       Authorization: `Bearer ${token}`
     }
   })
-  deleteProduct(id);
   try {
-    swal({
-      title: "Excellent",
-      text: "Product deleted successfuly!",
-      icon: "success",
-      buttons: {
-        confirm: {
-          text: "Ok",
-          value: true,
-          visible: true,
-          className: "rounded-3xl bg-yellow-400 text-black text-center w-full px-5 py-2 my-8",
-          closeModal: true,
-        },
-      },
-    });
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteProduct(id);
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
   } catch (error) {
     console.log(error);
   }

@@ -33,6 +33,7 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.8.0",
     "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.7.2",
     "twin.macro": "^3.1.0",
     "vite-plugin-babel-macros": "^1.0.6",
     "vite-plugin-windicss": "^1.8.10",

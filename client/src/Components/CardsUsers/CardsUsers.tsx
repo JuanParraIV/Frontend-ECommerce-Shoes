@@ -2,10 +2,12 @@ import { useAuthStore } from '@/App/store/useAuthStore';
 // import { useUsersStore } from '@/App/store/useProfileStore';
 import React, { useEffect } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
+import {BsPersonXFill} from  "react-icons/bs"
 import api from '@/Api/backend_sneakers';
 import swal from 'sweetalert';
 import SideBar from '../DashBoard/SideBar';
 import Navbar from '../Navbar/Navbar';
+import Swal from 'sweetalert2'
 
 
 
@@ -22,21 +24,24 @@ const CardsUsers = () => {
     const handleDelete = async (id: number) => {
         await api.delete(`/user/${id}`)
         try {
-         deleteUser(id)
-          swal({
-            title: "Excellent",
-            text: "User deleted successfuly!",
-            icon: "success",
-            buttons: {
-              confirm: {
-                text: "Ok",
-                value: true,
-                visible: true,
-                className: "rounded-3xl bg-yellow-400 text-black text-center w-full px-5 py-2 my-8",
-                closeModal: true,
-              },
-            },
-          });
+         Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              deleteUser(id);
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+            }
+          })
         } catch (error) {
           console.log(error);
         }
@@ -141,12 +146,18 @@ const CardsUsers = () => {
                             </span>
                             }
                            </td>
-
+                           {user.rol === 'user' ? (
                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                <button className="text-gray-900 whitespace-no-wrap" onClick={()=>handleDelete(user.id)}>
                                    <DeleteIcon className='text-red-500'/>
                                </button>
                            </td>
+
+                           ):
+                           <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                               {/* <BsPersonXFill className='text-red-600'/> */}
+                           </td>
+                        }
                        </tr>
                         ))}
                     </table>                 
