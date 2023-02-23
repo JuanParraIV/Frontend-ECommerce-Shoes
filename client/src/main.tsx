@@ -13,7 +13,7 @@ const auth0Domain = 'dev-kodc0s8muewlew22.us.auth0.com';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Auth0Provider clientId={auth0ClientId} domain={auth0Domain} authorizationParams={{
-      redirect_uri: `${window.location.origin}/callback`
+      redirect_uri: `${window.location.origin}`
     }}>
       <QueryClientProvider client={queryClient}>
         <App />
