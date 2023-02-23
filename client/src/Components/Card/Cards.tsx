@@ -33,10 +33,26 @@ const Card = ({ product, isFavorite }: ProductProps) => {
   const { addToCart, cartItems, totalPrice } = CartStore(state => state);
   console.log(cartItems);
 
-  const [quantity, setQuantity] = useState(1);
 
-
-
+const newSingleSneaker: SneakersType={
+    id:product.id,
+    brand_name:product.brand_name,
+    category_name:product.category_name,
+    name:product.name,
+    color:product.color,
+    retail_price_cents:product.retail_price_cents,
+    size_range:product.size_range,
+    grid_picture_url:product.grid_picture_url,
+    original_picture_url:product.original_picture_url,
+    main_picture_url:product.main_picture_url,
+    details:product.details,
+    stock:product.stock,
+    status:product.status,
+    brandId:product.brandId,
+    categoryId:product.categoryId,
+    isBanned:product.isBanned,
+    rating:product.rating,
+  }
 
   const handleFavorite = () => {
     if (isFavorite) {
@@ -64,7 +80,7 @@ const Card = ({ product, isFavorite }: ProductProps) => {
   };
 
   const handleClick = async () => {
-    addToCart(singleSneaker, quantity);
+    addToCart(newSingleSneaker, 1);
   };
 
   useEffect(() => {
