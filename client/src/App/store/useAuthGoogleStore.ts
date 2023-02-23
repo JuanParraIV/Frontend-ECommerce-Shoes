@@ -32,7 +32,7 @@ export interface Actions {
   postUserGoogle: () => Promise<void>
   getProfile: () => Promise<void>
   clearToken: () => void
-  logoutGoogleStore: () => void
+  logoutGoogleStore: () => Promise<void>;
 }
 export const useGoogleAuthStore = create(
   persist<State & Actions>(
@@ -81,12 +81,14 @@ export const useGoogleAuthStore = create(
         set(state => ({ ...state, tokenGoogle: '' }))
       },
       logoutGoogleStore: () => {
-        set(state => ({
-          ...state,
-          isGoogleAuthenticated: false,
-          tokenGoogle: '',
-          profileGoogle: {} as userGoogleType,
-        }))
+        return new Promise((resolve) => {
+          set(() => ({
+            isGoogleAuthenticated: false,
+            tokenGoogle: '',
+            profileGoogle: {} as userGoogleType,
+          }));
+          resolve();
+        });
       },
     }),
     {
