@@ -1,6 +1,7 @@
 import { Marquee, MayLikeProductWrapper, MayLikeProductsContainer, ProductsHeading } from './style';
 import Product from '../Product/Product';
 import { useSneakerStore } from '@/App/store/useSneakerStore';
+import { Link } from 'react-router-dom';
 
 const MayLikeProducts = () => {
   const { sneakers } = useSneakerStore(state => state);
@@ -13,7 +14,9 @@ const MayLikeProducts = () => {
       <Marquee>
         <MayLikeProductsContainer>
           {sneakers?.map(product => (
-            <Product key={product.id} product={product} />
+            <Link to={`/product/${product.id}`} key={product.id}>
+              <Product  product={product} />
+            </Link>
           ))}
         </MayLikeProductsContainer>
       </Marquee>
