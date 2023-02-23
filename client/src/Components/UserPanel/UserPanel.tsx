@@ -50,7 +50,7 @@ const UserPanel: React.FC = () => {
   const handleAuth0LogOut = () => {
     logoutGoogleStore()
       .then(() => logout())
-      .then(() => navigate('/'));
+      //.then(() => navigate('/'));
   };
   const handleClose = () => {
     setAnchorEl(null);
