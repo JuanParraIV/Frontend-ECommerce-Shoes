@@ -11,6 +11,7 @@ import LoginAuth0Button from '../Shared/Form/LoginThirdParty';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useGoogleAuthStore } from '@/App/store/useAuthGoogleStore';
 import jwt_decode from "jwt-decode";
+import swal from 'sweetalert';
 
 export interface LoginData {
   userName: string;
@@ -21,6 +22,7 @@ interface DecodedToken {
   user_id: string;
   user_rol: string;
   exp: number;
+  userName?: string;
 }
 const LoginForm = () => {
   const { loginWithRedirect} = useAuth0();
@@ -51,6 +53,7 @@ const LoginForm = () => {
       console.log(decodedToken.user_rol);
       console.log(token);
       console.log(decodedToken);
+      let mensajeBienvenida = `¡Welcome, ${form.userName}!`;
       if (decodedToken.user_rol === "admin") {
         const resAdminProfile = await getAdminProfile();
         console.log(resAdminProfile);
@@ -63,6 +66,20 @@ const LoginForm = () => {
         password: "",
       });
       navigate('/');
+      swal({
+        title: "¡Welcome!",
+        text: mensajeBienvenida,
+        icon: "success",
+        buttons: {
+          confirm: {
+            text: "¡Cool!",
+            value: true,
+            visible: true,
+            className: "",
+            closeModal: true,
+          },
+        },
+      });
     }   catch (error) {
       console.log(error);
     }
@@ -104,7 +121,7 @@ const LoginForm = () => {
     </form>
     <div className='flex flex-col w-full items-center justify-center gap-5 '>
       <div className='flex relative flex-col  items-center justify-center gap-5'>
-      <LoginAuth0Button text='Log with Auth0' onClick={handleGoogleAuth0}/>
+      <LoginAuth0Button text='Log in with Google ' onClick={handleGoogleAuth0}/>
 
       </div>
       <span className=" rounded-lg w-[600px] h-0.5 bg-gray-200"></span>
